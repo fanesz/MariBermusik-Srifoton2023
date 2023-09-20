@@ -1,19 +1,23 @@
-import Database from "../config/database.js";
-const db_materi = new Database("materi");
+import { QuickDB } from "quick.db";
+const db = new QuickDB();
+const db_materi = db.table("materi");
 import struktur from "../struktur.json" assert { type: "json" };
 
 export const getMateri = async (req, res) => {
   try {
-    const materi = await db_materi.get();
-    res.json(materi);
+    console.log(req.query);
+    const materi = await db_materi.get(req.query.alatMusik);
+    res.json({ status: materi ? true : false, data: materi || null });
   } catch (error) {
-    res.json(error);
+    console.log(error);
+    res.json({ status: false, data: null });
   }
 }
 
 export const setMateri = async (req, res) => {
   try {
-    // await db_materi.set(`tes.data`, struktur);
+    const setMateri = await db_materi.set(`gitar`, struktur);
+    res.json(setMateri);
   } catch (error) {
     console.log(error);
   }
