@@ -3,20 +3,40 @@
 @tailwind utilities;
 
 @layer base{
-  nav{
-    @apply bg-lime-300 p-5 font-bold ;
+  *{
+    @apply font-mono
   }
 
-  ul{
-    @apply flex justify-between items-center;
+  nav{
+    @apply bg-lime-300 p-5 font-bold
+  }
+
+  #flex{
+    @apply flex justify-between items-center
   }
 
   li{
-    @apply mr-6 text-black p-3 rounded hover:scale-110 hover:text-blue-500 hover:bg-lime-400;
+    @apply mr-6 text-black p-3 rounded transition duration-300 hover:scale-110 hover:text-blue-500 hover:bg-lime-400
   }
 
   #logo{
-    @apply w-14 mx-auto;
+    @apply w-14 mx-auto
+  }
+
+  input[type="search"]{
+    @apply bg-slate-100 text-black border-gray-300 rounded h-10 p-3
+  }
+
+  button[type="submit"]{
+    @apply bg-blue-700 rounded transition duration-300 p-2 hover:bg-blue-900
+  }
+
+  svg{
+    @apply w-14
+  }
+
+  #profile{
+    @apply z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700
   }
 }
 
