@@ -1,12 +1,12 @@
 import { QuickDB } from "quick.db";
 const db = new QuickDB();
 const db_loggedUser = db.table("loggedUser");
-import { generateLoginID } from "../utils/utils.js";
+import { generateRandomString } from "../utils/utils.js";
 
 export const setLogin = async (req, res) => {
   try {
     const userInput = req.body;
-    const loginID = generateLoginID();
+    const loginID = generateRandomString(80);
     await db_loggedUser.set(loginID, userInput);
     res.send({ status: true, loginID: loginID });
   } catch (error) {

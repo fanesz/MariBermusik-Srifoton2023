@@ -5,10 +5,10 @@ export const generateUUID = () => {
   return uuidv4();
 }
 
-export const generateLoginID = () => {
+export const generateRandomString = (len) => {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let code = "";
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < len; i++) {
     code += chars[Math.floor(Math.random() * chars.length)];
   }
   return code;
