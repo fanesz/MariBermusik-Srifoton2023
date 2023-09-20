@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base{
+  nav{
+    @apply bg-lime-300 p-5 font-bold ;
+  }
+
+  ul{
+    @apply flex justify-between items-center;
+  }
+
+  li{
+    @apply mr-6 text-black p-3 rounded hover:scale-110 hover:text-blue-500 hover:bg-lime-400;
+  }
+
+  #logo{
+    @apply w-14 mx-auto;
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,7 +29,6 @@
 
 #root {
   margin: 0;
-  padding: 2rem;
   background-color: #242424;
   min-height: 100vh;
   min-width: 100vw;
