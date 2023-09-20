@@ -1,0 +1,62 @@
+{
+  "nama": "Gitar",
+  "pengertian": "Gitar adalah alat musik",
+  "cara": "Gitar mudah dimainkan",
+  "kesimpulan": "Gitar dapat disimpulkan benar-benar alat musik",
+  "tingkatan": {
+    "pemula": [
+      {
+        "id": 1,
+        "judul": "Sejarah Gitar",
+        "materi": [
+          "Bla Bla",
+          "Bla Bla"
+        ],
+        "link": [
+          "https://youtube.com/",
+          "https://youtube.com/"
+        ]
+      },
+      {
+        "id": 2,
+        "judul": "Bagian-Bagian Gitar",
+        "materi": [
+          "Bla Bla",
+          "Bla Bla"
+        ],
+        "link": [
+          "https://youtube.com/",
+          "https://youtube.com/"
+        ]
+      }
+    ],
+    "menengah": [
+      {
+        "id": 1,
+        "judul": "Mengenal Kunci Gitar",
+        "materi": [
+          "Bla Bla",
+          "Bla Bla"
+        ],
+        "link": [
+          "https://youtube.com/",
+          "https://youtube.com/"
+        ]
+      }
+    ],
+    "tingkat_lanjut": [
+      {
+        "id": 1,
+        "judul": "Teknik-teknik gitar",
+        "materi": [
+          "Bla Bla",
+          "Bla Bla"
+        ],
+        "link": [
+          "https://youtube.com/",
+          "https://youtube.com/"
+        ]
+      }
+    ]
+  }
+}
