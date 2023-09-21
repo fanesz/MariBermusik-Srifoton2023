@@ -4,7 +4,7 @@ import {
   getMateriByAlatMusik,
   getAlatMusikList,
   createMateri,
-  updateMateriByID,
+  editMateriByID,
   deleteMateriByID,
 } from "../components/materi.js";
 
@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", getMateriByAlatMusik);
 router.get("/list", getAlatMusikList);
 router.post("/create", createMateri);
-router.post("/update", updateMateriByID);
+router.post("/update", editMateriByID);
 router.post("/delete", deleteMateriByID);
 
 export default router;
