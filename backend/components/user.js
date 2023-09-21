@@ -5,12 +5,11 @@ const db_user = db.table("user");
 
 export const getUser = async (req, res) => {
   try {
-    const users = await db_user.get();
-    if (users === null) await db_user.set([]);
-    res.json(users);
+    const users = await db_user.get() || {};
+    res.json({ status: true, data: users });
   } catch (error) {
     console.log(error);
-    res.json(error);
+    res.json({ status: false });
   }
 }
 
@@ -19,14 +18,14 @@ export const createUser = async (req, res) => {
     const userInput = req.body;
     const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
     if (userData) {
-      res.json({ status: false, message: "Email sudah dipakai!" });
+      res.json({ status: false });
       return;
     }
     await db_user.set(generateUUID(), userInput);
-    res.json({ status: true, message: "Akun berhasil dibuat!" })
+    res.json({ status: true })
   } catch (error) {
     console.log(error);
-    res.json({ status: false, message: error });
+    res.json({ status: false });
   }
 }
 
@@ -35,9 +34,9 @@ export const updateUsername = async (req, res) => {
     const userInput = req.body;
     const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
     await db_user.set(`${userData.id}.username`, userInput.username);
-    res.json({ status: true, message: "Akun berhasil diupdate!" });
+    res.json({ status: true });
   } catch (error) {
     console.log(error);
-    res.json({ status: false, message: error });
+    res.json({ status: false });
   }
 }

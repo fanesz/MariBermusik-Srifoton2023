@@ -11,8 +11,7 @@ export const setSendVerificationCode = async (req, res) => {
 
     const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
     if (!userData) {
-      res.send({ status: false });
-      return;
+      return res.send({ status: false });
     }
 
     const userDataForgetPass = (await db_forgetPass.all()).find(u => u.value.email === userInput.email);
@@ -34,13 +33,11 @@ export const setSendVerificationCode = async (req, res) => {
 
 export const validatorVerificationCode = async (req, res) => {
   try { // params: { id }
-    const verificationCode = req.query.id;
-    const verificationCodeData = await db_forgetPass.get(verificationCode);
-    if (verificationCodeData) {
-      res.send({ status: true, email: verificationCodeData.email });
-    } else {
-      res.send({ status: false });
+    const verificationCodeData = await db_forgetPass.get(req.query.id);
+    if (!verificationCodeData) {
+      return res.send({ status: false });
     }
+    res.send({ status: true, email: verificationCodeData.email });
   } catch (error) {
     console.log(error);
     res.send({ status: false });
@@ -53,8 +50,7 @@ export const resetPassword = async (req, res) => {
     const newPassword = req.body.newPassword;
     const userData = (await db_user.all()).find(u => u.value.email === email);
     if (!userData) {
-      res.send({ status: false });
-      return;
+      return res.send({ status: false });
     }
     await db_user.set(userData.id, { ...userData.value, password: newPassword });
 

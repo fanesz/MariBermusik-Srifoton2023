@@ -41,19 +41,18 @@ export const getAlatMusikList = async (req, res) => {
 
 export const createMateri = async (req, res) => {
   try { // body: { loginID, materi, alatMusik }
-    const materi = JSON.parse(req.body.materi);
     // await db_materi.deleteAll();
-    const loginID = req.body.loginID;
-    const user = await db_loggedUser.get(loginID);
-    let prevMateri = await db_materi.get(req.body.alatMusik) || [];
+    const user = await db_loggedUser.get(req.body.loginID);
+    const prevMateri = await db_materi.get(req.body.alatMusik) || [];
     const newMateri = [
       ...prevMateri,
       {
         "materiID": prevMateri.length,
         "owner": user.email,
-        "data": materi
+        "data": JSON.parse(req.body.materi)
       }];
-    const setMateri = await db_materi.set(req.body.alatMusik, newMateri);
+      
+    await db_materi.set(req.body.alatMusik, newMateri);
     res.json({ status: true, materiID: prevMateri.length });
   } catch (error) {
     console.log(error);
