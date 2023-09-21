@@ -6,7 +6,7 @@ const db_loggedUser = db.table("loggedUser");
 
 export const getUser = async (req, res) => {
   try {
-    const users = await db_user.get() || {};
+    const users = await db_user.all() || {};
     res.json({ status: true, data: users });
   } catch (error) {
     console.log(error);
