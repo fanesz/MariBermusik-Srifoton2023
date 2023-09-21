@@ -43,14 +43,24 @@ export const createMateri = async (req, res) => {
   try { // body: { loginID, materi, alatMusik }
     const user = await db_loggedUser.get(req.body.loginID);
     const prevMateri = await db_materi.get(req.body.alatMusik) || [];
+    const userInput = JSON.parse(req.body.materi);
     const newMateri = [
       ...prevMateri,
       {
         "materiID": prevMateri.length,
         "owner": user.id,
-        "data": JSON.parse(req.body.materi)
+        "data": {
+          "nama": userInput.nama,
+          "deskripsi": userInput.deskripsi,
+          "tingkatan": userInput.tingkatan,
+          "rating": [],
+          "pengunjung": 0,
+          "createdAt": new Date(),
+          "updatedAt": new Date(),
+          "daftarMateri": userInput.daftarMateri
+        }
       }];
-      
+
     await db_materi.set(req.body.alatMusik, newMateri);
     res.json({ status: true, materiID: prevMateri.length });
   } catch (error) {
@@ -65,9 +75,20 @@ export const editMateriByID = async (req, res) => {
     const materi = await db_materi.get(params.alatMusik);
     const materiToUpdate = materi.find(m => m.materiID == params.materiID);
     const newMateri = materi.filter(m => m.materiID != params.materiID);
+    const userInput = JSON.parse(req.body.materi);
     const updatedMateri = {
-      ...materiToUpdate,
-      data: JSON.parse(req.body.materi)
+      "materiID": materiToUpdate.materiID,
+      "owner": materiToUpdate.owner,
+      "data": {
+        "nama": userInput.nama,
+        "deskripsi": userInput.deskripsi,
+        "tingkatan": userInput.tingkatan,
+        "rating": materiToUpdate.data.rating,
+        "pengunjung": materiToUpdate.data.pengunjung,
+        "createdAt": materiToUpdate.data.createdAt,
+        "updatedAt": new Date(),
+        "daftarMateri": userInput.daftarMateri
+      }
     };
     await db_materi.set(params.alatMusik, [...newMateri, updatedMateri]);
     res.json({ status: true });
