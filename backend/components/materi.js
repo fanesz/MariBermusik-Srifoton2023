@@ -1,38 +1,107 @@
 import { QuickDB } from "quick.db";
 const db = new QuickDB();
 const db_materi = db.table("materi");
-import struktur from "../struktur.json" assert { type: "json" };
+const db_loggedUser = db.table("loggedUser");
 
-export const getMateri = async (req, res) => {
-  try {
-    if (req.query.alatMusik === undefined) {
+export const getMateriByAlatMusik = async (req, res) => {
+  try { // params: { alatMusik?, materiID? }
+    const params = req.query;
+
+    if (params.alatMusik && params.materiID) {
+      const materiByID = (await db_materi.get(params.alatMusik)).find(m => m.materiID == params.materiID)
+      res.json({ status: true, data: materiByID || [] });
+
+    } else if (params.alatMusik && !params.materiID) {
+      const materiByAlatMusik = await db_materi.get(params.alatMusik);
+      res.json({ status: true, data: materiByAlatMusik || [] });
+
+    } else if (!params.alatMusik && !params.materiID) {
       const allMateri = await db_materi.all();
-      res.json({ status: true, data: allMateri });
+      res.json({ status: true, data: allMateri || [] });
+
     } else {
-      const materi = await db_materi.get(req.query.alatMusik);
-      res.json({ status: materi ? true : false, data: materi || null });
+      res.json({ status: false });
+
     }
   } catch (error) {
     console.log(error);
-    res.json({ status: false, data: null });
+    res.json({ status: false });
   }
 }
 
-export const getMateriList = async (req, res) => {
+export const getAlatMusikList = async (req, res) => {
   try {
-    const allMateri = await db_materi.all();
-    res.json({ status: true, data: allMateri.map(m => m.id)});
+    const alatMusikList = (await db_materi.all()).map(m => ({ id: m.id, totalMateri: m.value.length }));
+    res.json({ status: true, data: alatMusikList });
   } catch (error) {
     console.log(error);
-    res.json({ status: false, data: null });
+    res.json({ status: false });
   }
 }
 
-export const setMateri = async (req, res) => {
-  try {
-    const setMateri = await db_materi.set(`gitar`, struktur);
-    res.json(setMateri);
+export const createMateri = async (req, res) => {
+  try { // body: { loginID, materi, alatMusik }
+    const materi = JSON.parse(req.body.materi);
+    // await db_materi.deleteAll();
+    const loginID = req.body.loginID;
+    const user = await db_loggedUser.get(loginID);
+    let prevMateri = await db_materi.get(req.body.alatMusik) || [];
+    const newMateri = [
+      ...prevMateri,
+      {
+        "materiID": prevMateri.length,
+        "owner": user.email,
+        "data": materi
+      }];
+    const setMateri = await db_materi.set(req.body.alatMusik, newMateri);
+    res.json({ status: true, materiID: prevMateri.length });
   } catch (error) {
     console.log(error);
+    res.json({ status: false });
   }
 }
+
+export const updateMateriByID = async (req, res) => {
+  try { // params: { alatMusik, materiID }, body: { loginID, materi }
+    const params = req.query;
+    const user = await db_loggedUser.get(req.body.loginID);
+    const materi = await db_materi.get(params.alatMusik);
+    const materiToUpdate = materi.find(m => m.materiID == params.materiID);
+    const newMateri = materi.filter(m => m.materiID != params.materiID);
+
+    if (user.email !== materiToUpdate.owner) {
+      return res.json({ status: false });
+    }
+
+    const updatedMateri = {
+      ...materiToUpdate,
+      data: JSON.parse(req.body.materi)
+    };
+    await db_materi.set(params.alatMusik, [...newMateri, updatedMateri]);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+
+export const deleteMateriByID = async (req, res) => {
+  try { // params: { alatMusik, materiID }, body: { loginID }
+    const params = req.query;
+    const user = await db_loggedUser.get(req.body.loginID);
+    const materi = await db_materi.get(params.alatMusik);
+    const materiToDelete = materi.find(m => m.materiID == params.materiID);
+    const newMateri = materi.filter(m => m.materiID != params.materiID);
+    if (user.email !== materiToDelete.owner) {
+      return res.json({ status: false });
+    }
+    await db_materi.set(params.alatMusik, newMateri);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+
+
+

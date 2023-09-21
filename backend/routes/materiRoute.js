@@ -1,15 +1,19 @@
 import express from "express";
 
 import {
-  getMateri,
-  setMateri,
-  getMateriList,
+  getMateriByAlatMusik,
+  getAlatMusikList,
+  createMateri,
+  updateMateriByID,
+  deleteMateriByID,
 } from "../components/materi.js";
 
 const router = express.Router();
 
-router.get("/", getMateri);
-router.get("/list", getMateriList);
-router.get("/set", setMateri);
+router.get("/", getMateriByAlatMusik);
+router.get("/list", getAlatMusikList);
+router.post("/create", createMateri);
+router.post("/update", updateMateriByID);
+router.post("/delete", deleteMateriByID);
 
 export default router;
