@@ -20,7 +20,7 @@ export const setSendVerificationCode = async (req, res) => {
       await db_forgetPass.delete(userDataForgetPass.id);
     }
 
-    const verificationCode = generateRandomString(16);
+    const verificationCode = generateRandomString(50);
     await db_forgetPass.set(verificationCode, { email: userInput.email });
 
     sendMail(userInput.email, verificationCode, 'sendVerificationCode');
