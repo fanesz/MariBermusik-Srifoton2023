@@ -6,7 +6,7 @@ import { generateRandomString } from "../utils/utils.js";
 import sendMail from "../utils/mailer.js";
 
 export const setSendVerificationCode = async (req, res) => {
-  try {
+  try { // body: { email }
     const userInput = req.body;
 
     const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
@@ -33,7 +33,7 @@ export const setSendVerificationCode = async (req, res) => {
 }
 
 export const validatorVerificationCode = async (req, res) => {
-  try {
+  try { // params: { id }
     const verificationCode = req.query.id;
     const verificationCodeData = await db_forgetPass.get(verificationCode);
     if (verificationCodeData) {
@@ -48,7 +48,7 @@ export const validatorVerificationCode = async (req, res) => {
 }
 
 export const resetPassword = async (req, res) => {
-  try {
+  try { // body: { email, newPassword }
     const email = req.body.email;
     const newPassword = req.body.newPassword;
     const userData = (await db_user.all()).find(u => u.value.email === email);

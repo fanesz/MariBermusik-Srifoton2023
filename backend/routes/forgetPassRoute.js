@@ -11,6 +11,5 @@ const router = express.Router();
 router.post("/", setSendVerificationCode);
 router.get("/", validatorVerificationCode);
 router.post("/newPassword", resetPassword)
-// router.post("/", isLogin);
 
 export default router;

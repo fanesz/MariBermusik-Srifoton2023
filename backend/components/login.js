@@ -4,7 +4,7 @@ const db_loggedUser = db.table("loggedUser");
 import { generateRandomString } from "../utils/utils.js";
 
 export const setLogin = async (req, res) => {
-  try {
+  try { // body: { email }
     const userInput = req.body;
     const loginID = generateRandomString(80);
     await db_loggedUser.set(loginID, userInput);
@@ -16,7 +16,7 @@ export const setLogin = async (req, res) => {
 }
 
 export const setLogout = async (req, res) => {
-  try {
+  try { // body: { loginID }
     const loginID = req.body.loginID;
     await db_loggedUser.delete(loginID);
     res.send({ status: true });
@@ -27,7 +27,7 @@ export const setLogout = async (req, res) => {
 }
 
 export const isLogin = async (req, res) => {
-  try {
+  try { // body: { loginID }
     const userInput = req.body;
     const userData = await db_loggedUser.get(userInput.loginID);
     res.send({ status: userData ? true : false });

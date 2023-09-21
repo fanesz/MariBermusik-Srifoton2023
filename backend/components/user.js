@@ -15,7 +15,7 @@ export const getUser = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-  try {
+  try { // body: { email, password, username }
     const userInput = req.body;
     const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
     if (userData) {
@@ -31,10 +31,9 @@ export const createUser = async (req, res) => {
 }
 
 export const updateUsername = async (req, res) => {
-  try {
+  try { // body: { email, username }
     const userInput = req.body;
     const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
-    console.log(userData);
     await db_user.set(`${userData.id}.username`, userInput.username);
     res.json({ status: true, message: "Akun berhasil diupdate!" });
   } catch (error) {
