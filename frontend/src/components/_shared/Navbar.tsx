@@ -1,10 +1,12 @@
+import logo from "../../assets/logo.png";
+
 const Navbar = () => {
 
   return (
     <nav>
       <ul id="flex">
         <li><a href="#">
-          <img src="/img/logo.png" alt="MariBermusik Logo" id="logo" />
+          <img src={logo} alt="MariBermusik Logo" id="logo" />
           <span>MariBermusik</span>
         </a></li>
         <div>
