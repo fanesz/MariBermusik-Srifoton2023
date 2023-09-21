@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.post("/", setLogin);
 router.post("/out", setLogout);
-router.post("/isLogin", isLogin);
+router.post("/islogin", isLogin);
 
 export default router;
