@@ -41,14 +41,13 @@ export const getAlatMusikList = async (req, res) => {
 
 export const createMateri = async (req, res) => {
   try { // body: { loginID, materi, alatMusik }
-    // await db_materi.deleteAll();
     const user = await db_loggedUser.get(req.body.loginID);
     const prevMateri = await db_materi.get(req.body.alatMusik) || [];
     const newMateri = [
       ...prevMateri,
       {
         "materiID": prevMateri.length,
-        "owner": user.email,
+        "owner": user.id,
         "data": JSON.parse(req.body.materi)
       }];
       
@@ -68,7 +67,7 @@ export const updateMateriByID = async (req, res) => {
     const materiToUpdate = materi.find(m => m.materiID == params.materiID);
     const newMateri = materi.filter(m => m.materiID != params.materiID);
 
-    if (user.email !== materiToUpdate.owner) {
+    if (user.id !== materiToUpdate.owner) {
       return res.json({ status: false });
     }
 
@@ -91,7 +90,7 @@ export const deleteMateriByID = async (req, res) => {
     const materi = await db_materi.get(params.alatMusik);
     const materiToDelete = materi.find(m => m.materiID == params.materiID);
     const newMateri = materi.filter(m => m.materiID != params.materiID);
-    if (user.email !== materiToDelete.owner) {
+    if (user.id !== materiToDelete.owner) {
       return res.json({ status: false });
     }
     await db_materi.set(params.alatMusik, newMateri);
