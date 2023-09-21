@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 
 export default function sendMail(target, text, purpose) {
-  const email = 'ptayamku@gmail.com'
-  const pass = 'minrrfpqbsfmenoa'
+  const email = process.env.email;
+  const pass = process.env.password;
   const message = {
     from: email,
     to: target,
