@@ -9,32 +9,12 @@
     @apply bg-orange-200 p-4 lg:text-sm
   }
 
-  #flex{
-    @apply md:flex md:justify-between items-center text-center
-  }
-
   li{
-    @apply mx-3 text-black p-3 rounded transition duration-300 hover:scale-110 hover:text-blue-500 hover:bg-orange-300
+    @apply mx-3 xl:mx-2 md:mx-1 text-black p-3 rounded transition duration-300 hover:scale-110 hover:text-blue-500 hover:bg-orange-300 bg-gradient-to-r from-transparent to-white
   }
 
   #logo, #profile{
     @apply w-14 mx-4
-  }
-
-  input[type="search"]{
-    @apply bg-slate-100 text-black border-gray-300 rounded h-10 p-3
-  }
-
-  button[type="submit"]{
-    @apply bg-blue-700 rounded transition duration-300 p-2 hover:bg-blue-900
-  }
-
-  #profileMenu{
-    @apply z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700
-  }
-
-  #bigText{
-    @apply text-3xl
   }
 }
 
