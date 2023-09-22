@@ -1,10 +1,10 @@
-import MyComponents from "../components/rendy/MyComponents"
+import Hm from "../components/rendy/Hm"
 
 const Rendy = () => {
 
   return (
     <div>
-      <MyComponents />
+      <Hm />
     </div>
   )
 }
