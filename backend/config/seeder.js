@@ -127,6 +127,11 @@ const post2 = {
   ]
 }
 
+const user1 = { "email": "fanes23.pratama@gmail.com", "password": "admin123", "username": "Admin1", "akses": "admin" };
+const user2 = { "email": "pratama14.f@gmail.com", "password": "admins123", "username": "Admin2", "akses": "admin" };
+const loginID = "u2PXk66tiR6Uq4nxmyZe8cbQEyxiFusQFr8iSTjVVbqFeDpdjgZCkCPM4eK1HVR4v283DULSxacBUouv";
+const loggedUser = { "id": UUID, "email": "fanes23.pratama@gmail.com" };
+
 const clearDatabase = async () => {
   try {
     console.log("[SEEDER] Clearing database...");
@@ -146,10 +151,10 @@ const clearDatabase = async () => {
 const seedDatabase = async () => {
   try {
     console.log("[SEEDER] Seeding database...");
-    await db_user.set(UUID, '{"email":"fanes23.pratama@gmail.com","password":"admin123","username":"Admin1","akses":"admin"}');
-    await db_user.set(UUID2, '{"email":"pratama14.f@gmail.com","password":"admins123","username":"Admin2","akses":"admin"}');
+    await db_user.set(UUID, user1);
+    await db_user.set(UUID2, user2);
     await db_materi.set("gitar", materi);
-    await db_loggedUser.set("u2PXk66tiR6Uq4nxmyZe8cbQEyxiFusQFr8iSTjVVbqFeDpdjgZCkCPM4eK1HVR4v283DULSxacBUouv", `{"id":${UUID},"email":"fanes23.pratama@gmail.com"}`);
+    await db_loggedUser.set(loginID, loggedUser);
     await db_forum.set(UUID, post);
     await db_forum.set(UUID2, post2);
   } catch (err) {
