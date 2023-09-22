@@ -4,6 +4,17 @@ const db_loggedUser = db.table("loggedUser");
 const db_user = db.table("user");
 import { generateRandomString } from "../utils/utils.js";
 
+
+export const getLoginUser = async (req, res) => {
+  try { // -
+    const users = await db_loggedUser.all();
+    res.json({ status: true, data: users })
+  } catch (err) {
+    console.log(err);
+    res.json({ status: false })
+  }
+}
+
 export const setLogin = async (req, res) => {
   try { // body: { email, password }
     const userInput = req.body;
