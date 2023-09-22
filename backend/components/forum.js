@@ -88,22 +88,3 @@ export const deletePost = async (req, res) => {
 }
 
 
-const post = {
-  postID: 0,
-  owner: "owner",
-  title: "post1",
-  description: "description",
-  createdAt: "date",
-  comments: [
-    {
-      owner: "owner",
-      content: "content",
-      createdAt: "date",
-    },
-    {
-      owner: "owner",
-      content: "content",
-      createdAt: "date",
-    }
-  ]
-}
