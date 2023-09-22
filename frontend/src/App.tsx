@@ -3,6 +3,9 @@ import Home from "./pages/Home"
 import Forum from "./pages/Forum"
 import DaftarKursus from "./pages/DaftarKursus"
 import Kursus from "./pages/Kursus"
+import Fanes from "./test/Fanes"
+import Usman from "./test/Usman"
+import Rendy from "./test/Rendy"
 
 function App() {
   return (
@@ -13,6 +16,11 @@ function App() {
         <Route path='/daftarkursus' element={<DaftarKursus />} />
         <Route path='/kursus' element={<DaftarKursus />} />
         <Route path='/kursus/:id' element={<Kursus />} />
+
+        <Route path='/fanes' element={<Fanes />} />
+        <Route path='/usman' element={<Usman />} />
+        <Route path='/rendy' element={<Rendy />} />
+
       </Routes>
     </BrowserRouter>
   )
