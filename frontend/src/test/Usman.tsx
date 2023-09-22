@@ -1,12 +1,11 @@
-import MyComponents from "../components/usman/MyComponents"
+import TestingKategori from "../components/home/TestingKategori";
 
 const Usman = () => {
-
   return (
     <div>
-      <MyComponents />
+      <TestingKategori />
     </div>
-  )
-}
+  );
+};
 
-export default Usman
+export default Usman;
