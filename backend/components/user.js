@@ -46,12 +46,15 @@ export const createUser = async (req, res) => {
   }
 }
 
-// todo: check if username avaiable
 export const updateUsername = async (req, res) => {
   try { // body: { email, username }
     const userInput = req.body;
-    const userData = (await db_user.all()).find(u => u.value.email === userInput.email);
-    await db_user.set(`${userData.id}.username`, userInput.username);
+    const userData = await db_user.all();
+    if (userData.find(u => u.value.username === userInput.username)) {
+      return res.json({ status: false });
+    }
+    const userDataToUpdate = userData.find(u => u.value.email === userInput.email);
+    await db_user.set(`${userDataToUpdate.id}.username`, userInput.username);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
