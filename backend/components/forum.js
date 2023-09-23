@@ -14,8 +14,8 @@ export const getPost = async (req, res) => {
 }
 
 export const getPostByOwner = async (req, res) => {
-  try { // body: { loginID }
-    const user = await db_loggedUser.get(req.body.loginID);
+  try { // params: { loginID }
+    const user = await db_loggedUser.get(req.query.loginID);
     const posts = await db_forum.get(user.id) || [];
     res.json({ status: true, data: posts });
   } catch (error) {
@@ -54,16 +54,16 @@ export const createPost = async (req, res) => {
 }
 
 export const editPost = async (req, res) => {
-  try { // body: { loginID, title, description }, params: { postID }
-    const user = await db_loggedUser.get(req.body.loginID);
-    const postID = req.query.postID;
+  try { // body: { loginID, postID, title, description }
+    const userInput = req.body;
+    const user = await db_loggedUser.get(userInput.loginID);
     const userPost = await db_forum.get(user.id) || [];
-    const postToEdit = userPost.find(p => p.postID == postID);
-    const newPost = userPost.filter(p => p.postID != postID);
+    const postToEdit = userPost.find(p => p.postID == userInput.postID);
+    const newPost = userPost.filter(p => p.postID != userInput.postID);
     const editedPost = {
       ...postToEdit,
-      title: req.body.title,
-      description: req.body.description,
+      title: userInput.title,
+      description: userInput.description,
     };
     await db_forum.set(user.id, [...newPost, editedPost]);
     res.json({ status: true });
@@ -74,9 +74,9 @@ export const editPost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
-  try { // body: { loginID, postID }
-    const user = await db_loggedUser.get(req.body.loginID);
-    const postID = req.body.postID;
+  try { // params: { loginID, postID }
+    const user = await db_loggedUser.get(req.query.loginID);
+    const postID = req.query.postID;
     const prevPost = await db_forum.get(user.id) || [];
     const newPost = prevPost.filter(p => p.postID !== postID);
     await db_forum.set(user.id, newPost);

@@ -2,7 +2,11 @@
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundSize: {
+        "size-200": "200% 200%",
+      },
+    },
   },
   plugins: [],
 };

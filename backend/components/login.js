@@ -30,14 +30,13 @@ export const setLogin = async (req, res) => {
     res.json({ status: true, loginID: loginID });
   } catch (error) {
     console.log(error);
-    res.json({ status: false });
+    res.json({ status: false });  
   }
 }
 
 export const setLogout = async (req, res) => {
-  try { // body: { loginID }
-    const loginID = req.body.loginID;
-    await db_loggedUser.delete(loginID);
+  try { // params: { loginID }
+    await db_loggedUser.delete(req.query.loginID);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
@@ -46,9 +45,8 @@ export const setLogout = async (req, res) => {
 }
 
 export const isLogin = async (req, res) => {
-  try { // body: { loginID }
-    const userInput = req.body;
-    const userData = await db_loggedUser.get(userInput.loginID);
+  try { // params: { loginID }
+    const userData = await db_loggedUser.get(req.query.loginID);
     res.json({ status: userData ? true : false });
   } catch (error) {
     console.log(error);
