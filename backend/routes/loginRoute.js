@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", getLoginUser);
 router.post("/", setLogin);
-router.post("/out", setLogout);
-router.post("/islogin", isLogin);
+router.delete("/", setLogout);
+router.get("/islogin", isLogin);
 
 export default router;

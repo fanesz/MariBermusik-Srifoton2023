@@ -30,7 +30,7 @@ export const setLogin = async (req, res) => {
     res.json({ status: true, loginID: loginID });
   } catch (error) {
     console.log(error);
-    res.json({ status: false });
+    res.json({ status: false });  
   }
 }
 

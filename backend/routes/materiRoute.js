@@ -11,9 +11,9 @@ import {
 const router = express.Router();
 
 router.get("/", getMateriByAlatMusik);
-router.get("/list", getAlatMusikList);
-router.post("/create", createMateri);
-router.post("/update", editMateriByID);
-router.post("/delete", deleteMateriByID);
+router.get("/alatmusik", getAlatMusikList);
+router.post("/", createMateri);
+router.patch("/", editMateriByID);
+router.delete("/", deleteMateriByID);
 
 export default router;
