@@ -13,11 +13,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/user', validateToken, userRoute);
-app.use('/materi', validateToken, materiRoute);
-app.use('/login', validateToken, loginRoute);
-app.use('/forgetPass', validateToken, forgetPassRoute);
-app.use('/forum', validateToken, forumRoute);
+app.use('/api/user', validateToken, userRoute);
+app.use('/api/materi', validateToken, materiRoute);
+app.use('/api/login', validateToken, loginRoute);
+app.use('/api/forgetPass', validateToken, forgetPassRoute);
+app.use('/api/forum', validateToken, forumRoute);
 
 
 app.listen(5000, () => console.log('Server running at port 5000'));
