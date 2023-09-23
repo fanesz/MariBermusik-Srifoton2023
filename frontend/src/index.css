@@ -10,7 +10,7 @@
   }
 
   li{
-    @apply mx-3 xl:mx-2 md:mx-1 text-black p-3 rounded transition duration-300 hover:scale-110 hover:text-blue-500 hover:bg-orange-300 bg-gradient-to-r from-transparent to-white
+    @apply mx-3 xl:mx-2 md:mx-1 cursor-pointer text-black p-3 rounded transition-all duration-500 hover:scale-110 hover:text-blue-500 bg-gradient-to-br  via-amber-100 from-orange-200 bg-size-200 hover:bg-right-bottom
   }
 
   #logo, #profile{
