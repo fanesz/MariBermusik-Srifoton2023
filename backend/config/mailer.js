@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import "dotenv/config";
 
 export default function sendMail(target, text, purpose) {
   const email = process.env.email;

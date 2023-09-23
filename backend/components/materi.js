@@ -99,7 +99,7 @@ export const editMateriByID = async (req, res) => {
 }
 
 export const deleteMateriByID = async (req, res) => {
-  try { // params: { alatMusik, materiID }, body: { loginID }
+  try { // params: { alatMusik, materiID }
     const params = req.query;
     const materi = await db_materi.get(params.alatMusik);
     const newMateri = materi.filter(m => m.materiID != params.materiID);
