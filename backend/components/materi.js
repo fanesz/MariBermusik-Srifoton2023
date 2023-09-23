@@ -40,7 +40,7 @@ export const getAlatMusikList = async (req, res) => {
 }
 
 export const createMateri = async (req, res) => {
-  try { // body: { loginID, materi, alatMusik }
+  try { // body: { loginID, alatMusik, materi }
     const user = await db_loggedUser.get(req.body.loginID);
     const prevMateri = await db_materi.get(req.body.alatMusik) || [];
     const userInput = JSON.parse(req.body.materi);
@@ -70,11 +70,10 @@ export const createMateri = async (req, res) => {
 }
 
 export const editMateriByID = async (req, res) => {
-  try { // params: { alatMusik, materiID }, body: { loginID, materi }
-    const params = req.query;
-    const materi = await db_materi.get(params.alatMusik);
-    const materiToUpdate = materi.find(m => m.materiID == params.materiID);
-    const newMateri = materi.filter(m => m.materiID != params.materiID);
+  try { // body: { alatMusik, materiID, loginID, materi }
+    const materi = await db_materi.get(req.body.alatMusik);
+    const materiToUpdate = materi.find(m => m.materiID == req.body.materiID);
+    const newMateri = materi.filter(m => m.materiID != req.body.materiID);
     const userInput = JSON.parse(req.body.materi);
     const updatedMateri = {
       "materiID": materiToUpdate.materiID,
@@ -90,7 +89,7 @@ export const editMateriByID = async (req, res) => {
         "daftarMateri": userInput.daftarMateri
       }
     };
-    await db_materi.set(params.alatMusik, [...newMateri, updatedMateri]);
+    await db_materi.set(req.body.alatMusik, [...newMateri, updatedMateri]);
     res.json({ status: true });
   } catch (error) {
     console.log(error);
