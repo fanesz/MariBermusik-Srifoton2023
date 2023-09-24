@@ -1,10 +1,6 @@
-import Navbar from "../components/_shared/Navbar"
-
 const Forum = () => {
-  return (
-    <>
-    <Navbar />
-    <div className="p-10">
+    return (
+        <div className="p-10">
             <h1 className="text-3xl p-5">Forum Diskusi</h1>
             <section className="flex justify-around items-center">  
                 <form action="" className="p-10">
@@ -60,8 +56,7 @@ const Forum = () => {
                 </div>
             </section>
         </div>
-        </>
-  )
+    )
 }
 
 export default Forum

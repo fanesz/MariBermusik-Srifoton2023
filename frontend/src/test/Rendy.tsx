@@ -1,11 +1,14 @@
 import Hm from "../components/rendy/Hm"
 import Kategori from "../components/rendy/Kategori"
+import Forum from "../components/rendy/Forum"
 
 const Rendy = () => {
 
   return (
     <div>
-      <Kategori />
+      {/* <Hm /> */}
+      {/* <Kategori /> */}
+      <Forum />
     </div>
   )
 }

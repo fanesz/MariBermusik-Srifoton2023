@@ -1,8 +1,12 @@
 import gitar from "../assets/gitar.jpg";
 import profile from "../assets/profile.png";
+import Navbar from "../components/_shared/Navbar"
+
 
 const DaftarKursus = () => {
   return (
+    <>
+    <Navbar />
     <div className="p-10">
             <h1 className="text-3xl p-5">Gitar</h1>
             <section className="flex justify-around">
@@ -58,6 +62,7 @@ const DaftarKursus = () => {
                 </div>
             </section>
         </div>
+        </>
   )
 }
 
