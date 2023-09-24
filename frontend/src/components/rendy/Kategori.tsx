@@ -1,9 +1,9 @@
-import gitar from "../assets/gitar.jpg";
-import profile from "../assets/profile.png";
+import gitar from "../../assets/gitar.jpg";
+import profile from "../../assets/profile.png";
 
-const DaftarKursus = () => {
-  return (
-    <div className="p-10">
+const Kategori = () => {
+    return (
+        <div className="p-10">
             <h1 className="text-3xl p-5">Gitar</h1>
             <section className="flex justify-around">
                 <div className="shadow-lg border border-gray-500 rounded">
@@ -58,7 +58,7 @@ const DaftarKursus = () => {
                 </div>
             </section>
         </div>
-  )
+    )
 }
 
-export default DaftarKursus
+export default Kategori;
