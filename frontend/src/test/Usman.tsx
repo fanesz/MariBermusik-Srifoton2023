@@ -1,4 +1,4 @@
-import TestingKategori from "../components/home/TestingKategori";
+import TestingKategori from "../components/usman/testingkategori";
 
 const Usman = () => {
   return (
