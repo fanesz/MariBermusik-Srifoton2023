@@ -1,6 +1,7 @@
 import Hm from "../components/rendy/Hm"
 import Kategori from "../components/rendy/Kategori"
 import Forum from "../components/rendy/Forum"
+import PostForum from "../components/rendy/PostForum"
 
 const Rendy = () => {
 
@@ -8,7 +9,8 @@ const Rendy = () => {
     <div>
       {/* <Hm /> */}
       {/* <Kategori /> */}
-      <Forum />
+      {/* <Forum /> */}
+      <PostForum />
     </div>
   )
 }
