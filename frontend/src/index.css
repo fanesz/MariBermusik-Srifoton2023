@@ -1,27 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base{
 
-  nav{
-    @apply bg-orange-200 p-4 lg:text-sm
-  }
 
-  li{
-    @apply mx-3 xl:mx-2 md:mx-1 cursor-pointer text-black p-3 rounded transition-all duration-500 hover:scale-110 hover:text-blue-500 bg-gradient-to-br  via-amber-100 from-orange-200 bg-size-200 hover:bg-right-bottom
-  }
-
-  #logo, #profile{
-    @apply w-14 mx-4
-  }
 }
 
 * {
   box-sizing: border-box;
   text-decoration: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: roboto;
 }
 
 #root {

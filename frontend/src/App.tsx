@@ -4,9 +4,7 @@ import Forum from "./pages/Forum"
 import PostForum from "./pages/PostForum"
 import DaftarKursus from "./pages/DaftarKursus"
 import Kursus from "./pages/Kursus"
-import Fanes from "./test/Fanes"
-import Usman from "./test/Usman"
-import Rendy from "./test/Rendy"
+import Test from "./pages/_test"
 
 function App() {
   return (
@@ -19,10 +17,7 @@ function App() {
         <Route path='/kursus' element={<DaftarKursus />} />
         <Route path='/kursus/:id' element={<Kursus />} />
 
-        <Route path='/fanes' element={<Fanes />} />
-        <Route path='/usman' element={<Usman />} />
-        <Route path='/rendy' element={<Rendy />} />
-
+        <Route path='/test' element={<Test />} />
       </Routes>
     </BrowserRouter>
   )

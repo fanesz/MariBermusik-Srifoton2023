@@ -1,55 +1,91 @@
+import { Bars3Icon } from "@heroicons/react/24/solid";
 import logo from "../../assets/logo.png";
 import profile from "../../assets/profile.png";
+import { Menu, Transition } from '@headlessui/react'
 
 const Navbar = () => {
   return (
-    <nav>
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-around mx-auto p-2 gap-3">
-        {/* logo */}
-        <li className="flex justify-center text-center">
-          <a href="#"><img src={logo} alt="MariBermusik Logo" id="logo"/></a>
-          <span className="text-3xl text-emerald-950 hover:text-black">Mari</span>
-          <span className="text-3xl text-emerald-400 hover:text-emerald-500">Bermusik</span>
-          <span className="text-3xl text-emerald-950 hover:text-black">.</span>
-        </li>
-          {/* navbar button */}
-          <button data-collapse-toggle="navbarDropdown" type="button" className="p-2 w-10 h-10 text-gray-500 md:hidden focus:ring-2 focus:ring-orange-400 rounded-md transition-all hover:scale-110 bg-gradient-to-br via-amber-100 from-orange-200 bg-size-200 hover:bg-right-bottom" aria-controls="navbarDropdown" >
-            <svg viewBox="0 0 17 14"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/></svg>
-          </button>
-          <div className="hidden w-full md:block md:w-auto" id="navbarDropdown">
-            <ul className="md:flex md:justify-around items-center text-center">
-              {/* search */}
-              <li>
-                <form action="">
-                  <input className="bg-slate-100 text-black border-gray-300 rounded h-10 w-64 p-3" type="search" placeholder="Search musical instrumental ..." />
-                  <button type="submit" className="bg-blue-700 rounded transition duration-300 p-2 hover:bg-blue-900">Search</button>
-                </form>
-              </li>
-              {/* nav item */}
-              <ul className="sm:flex sm:justify-around items-center text-center my-3">
-                <a href="#"><li>Home</li></a>
-                <a href="#"><li>Category List</li></a>
-                <a href="#"><li>Forum</li></a>
-                <a href="#"><li>About</li></a>
-              </ul>
-              {/* profile */}
-              <li className="flex justify-center xl:order-last" data-dropdown-toggle="profileMenu" data-dropdown-trigger="hover">
-                <img id="profile" src={profile}/>
-                <div id="profileMenu" className="hidden rounded-lg">
-                  <ul aria-labelledby="profile">
-                    <div className="p-3 bg-gradient-to-br  via-amber-100 from-orange-200 rounded cursor-default">
-                      <span className="block text-sm text-gray-900 dark:text-white">Hoho</span>
-                      <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">hoho@gmail.com</span>
-                    </div>
-                    <a href="#"><li>Profile</li></a>
-                    <a href="#"><li>Setting</li></a>
-                    <a href="#"><li>Sign out</li></a>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <nav className="flex items-center justify-between bg-orange-200 p-4">
+
+      <div className="flex justify-center text-center md:ms-7 ms-3">
+        <div className="mt-auto mb-auto">
+          <a href="#">
+            <img src={logo} alt="MariBermusik Logo" className="md:h-12 h-6" />
+          </a>
+        </div>
+        <div className="hidden xl:block text-3xl mt-auto mb-auto ms-4 font-bold">
+          <span className="text-emerald-950 hover:text-black">Mari</span>
+          <span className="text-emerald-400 hover:text-emerald-500">Bermusik</span>
+          <span className="text-emerald-950 hover:text-black">.</span>
+        </div>
       </div>
+
+      {/* Menu Desktop */}
+      <div className="hidden md:flex me-7 gap-10">
+        <div className="flex mt-auto mb-auto gap-8 border font-medium">
+          <a href="#" className="border">Home</a>
+          <a href="#" className="border">Category List</a>
+          <a href="#" className="border">Forum</a>
+          <a href="#" className="border">About</a>
+        </div>
+        <div className="border flex">
+          <Menu as="div" className="relative">
+            <Menu.Button as="button" className="">
+              <img id="profile" src={profile} className="h-12" />
+            </Menu.Button>
+            <Transition
+              enter="transition-transform origin-top duration-400"
+              enterFrom="scale-y-0 opacity-0"
+              enterTo="scale-y-100 opacity-100"
+              leave={`transition-transform origin-down duration-300`}
+              leaveFrom="scale-y-100 opacity-100"
+              leaveTo="scale-y-0 opacity-100"
+            >
+              <Menu.Items className="absolute bg-gray-100 bg-opacity-90 border border-gray-300 rounded-md py-1 right-0 w-32">
+                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
+                  Fanes Pratama
+                </Menu.Item>
+                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
+                  nama
+                </Menu.Item>
+                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
+                  nama
+                </Menu.Item>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+      </div>
+
+      {/* Menu Phone */}
+      <div className="md:hidden me-3">
+        <Menu as="div" className="relative pt-1">
+          <Menu.Button>
+            <Bars3Icon className="h-9" />
+          </Menu.Button>
+          <Transition
+            enter="transition-transform origin-top duration-400"
+            enterFrom="scale-y-0 opacity-0"
+            enterTo="scale-y-100 opacity-100"
+            leave={`transition-transform origin-down duration-300`}
+            leaveFrom="scale-y-100 opacity-100"
+            leaveTo="scale-y-0 opacity-100"
+          >
+            <Menu.Items className="bg-gray-100 bg-opacity-90 border border-gray-300 rounded-md py-1">
+              <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
+                Fanes Pratama
+              </Menu.Item>
+              <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
+                nama
+              </Menu.Item>
+              <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
+                nama
+              </Menu.Item>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+
     </nav>
   )
 }
