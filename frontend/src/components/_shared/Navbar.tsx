@@ -8,7 +8,41 @@ const Navbar = () => {
   return (
     <nav className="flex items-center justify-between bg-navbar_color p-4">
 
-      <div className="flex justify-center text-center md:ms-7 ms-3">
+      {/* Menu Phone */}
+      <div className="md:hidden">
+        <Menu as="div" className="relative">
+          <Menu.Button>
+            <Bars3Icon className="h-9" />
+          </Menu.Button>
+          <Transition
+            enter="transition-transform origin-top duration-400"
+            enterFrom="scale-y-0 opacity-0"
+            enterTo="scale-y-100 opacity-100"
+            leave={`transition-transform origin-down duration-300`}
+            leaveFrom="scale-y-100 opacity-100"
+            leaveTo="scale-y-0 opacity-100"
+          >
+            <Menu.Items className="absolute w-dropdown_navbar bg-navbar_color p-4 left-0 mt-8 bg-opacity-90 border border-gray-300 rounded-md py-1">
+              <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
+              <div>
+                <ul className="text-center">
+                  {/* nav item */}
+                  <ul className="flex flex-col gap-5 my-3">
+                    <Link to="/" className="navbar_menu_items"><li>Home</li></Link>
+                    <Link to="/daftarKursus" className="navbar_menu_items"><li>Category List</li></Link>
+                    <Link to="/forum" className="navbar_menu_items"><li>Forum</li></Link>
+                    <Link to="/" className="navbar_menu_items"><li>About</li></Link>
+                  </ul>
+                </ul>
+              </div>
+              </Menu.Item>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+      
+      {/* Logo */}
+      <div className="flex justify-center text-center ms-5">
         <div className="mt-auto mb-auto hover:scale-110 transition">
           <Link to="/">
             <img src={logo} alt="MariBermusik Logo" className="md:h-12 h-6" />
@@ -22,14 +56,16 @@ const Navbar = () => {
       </div>
 
       {/* Menu Desktop */}
-      <div className="hidden md:flex me-7 gap-10">
-        <div className="flex mt-auto mb-auto gap-2 text-lg font-medium">
+      <div className="hidden md:flex me-7">
+        <div className="flex mt-auto mb-auto gap-6 text-lg font-medium">
           <Link to="/" className="navbar_menu_items">Home</Link>
           <Link to="/daftarKursus" className="navbar_menu_items">Category List</Link>
           <Link to="/forum" className="navbar_menu_items">Forum</Link>
           <Link to="/" className="navbar_menu_items">About</Link>
         </div>
-        <div className="flex">
+      </div>
+
+      <div className="flex me-5">
           <Menu as="div" className="relative">
             <Menu.Button as="button" className="">
               <img className="h-12 hover:scale-105 transition-all" id="profile" src={profile} />
@@ -42,7 +78,7 @@ const Navbar = () => {
               leaveFrom="scale-y-100 opacity-100"
               leaveTo="scale-y-0 opacity-100"
             >
-              <Menu.Items className="absolute bg-gray-100 bg-opacity-90 border border-gray-300 rounded-md py-1 right-0 w-32">
+              <Menu.Items className="absolute bg-gray-100 bg-opacity-90 border border-gray-300 rounded-md py-1 right-0 mt-7">
                 <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
                   Fanes Pratama
                 </Menu.Item>
@@ -56,69 +92,6 @@ const Navbar = () => {
             </Transition>
           </Menu>
         </div>
-      </div>
-
-      {/* Menu Phone */}
-      <div className="md:hidden me-3">
-        <Menu as="div" className="relative pt-1">
-          <Menu.Button>
-            <Bars3Icon className="h-9" />
-          </Menu.Button>
-          <Transition
-            enter="transition-transform origin-top duration-400"
-            enterFrom="scale-y-0 opacity-0"
-            enterTo="scale-y-100 opacity-100"
-            leave={`transition-transform origin-down duration-300`}
-            leaveFrom="scale-y-100 opacity-100"
-            leaveTo="scale-y-0 opacity-100"
-          >
-            <Menu.Items className="absolute w-screen bg-navbar_color p-4 right-0 bg-opacity-90 border border-gray-300 rounded-md py-1">
-              <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
-              <div>
-                <ul className="text-center">
-                  {/* nav item */}
-                  <ul className="flex flex-col gap-5 my-3">
-                    <Link to="/" className="navbar_menu_items"><li>Home</li></Link>
-                    <Link to="/daftarKursus" className="navbar_menu_items"><li>Category List</li></Link>
-                    <Link to="/forum" className="navbar_menu_items"><li>Forum</li></Link>
-                    <Link to="/" className="navbar_menu_items"><li>About</li></Link>
-                  </ul>
-                  {/* profile */}
-                  <li className="flex justify-center xl:order-last" data-dropdown-toggle="profileMenu" data-dropdown-trigger="hover">
-                  <Menu as="div" className="relative">
-            <Menu.Button as="button" className="">
-              <img className="h-12 hover:scale-105 transition-all" id="profile" src={profile} />
-            </Menu.Button>
-            <Transition
-              enter="transition-transform origin-top duration-400"
-              enterFrom="scale-y-0 opacity-0"
-              enterTo="scale-y-100 opacity-100"
-              leave={`transition-transform origin-down duration-300`}
-              leaveFrom="scale-y-100 opacity-100"
-              leaveTo="scale-y-0 opacity-100"
-            >
-              <Menu.Items className=" bg-gray-100 bg-opacity-90 border border-gray-300 rounded-md py-1 right-0 w-32">
-                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
-                  Fanes Pratama
-                </Menu.Item>
-                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
-                  nama
-                </Menu.Item>
-                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
-                  nama
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-                  </li>
-                </ul>
-              </div>
-              </Menu.Item>
-            </Menu.Items>
-          </Transition>
-        </Menu>
-      </div>
-
     </nav>
   )
 }
