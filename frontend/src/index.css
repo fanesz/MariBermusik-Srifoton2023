@@ -5,6 +5,9 @@
 
 @layer base{
 
+  .navbar_menu_items {
+    @apply hover:bg-orange-300 hover:bg-opacity-50 rounded-md p-2 px-4 transition-all duration-300 ;
+  }
 
 }
 
