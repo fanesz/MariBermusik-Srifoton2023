@@ -1,16 +1,10 @@
-import CategoryPreview from "../components/Home/CategoryPreview";
-import TestingKategori from "../components/usman/testingkategori";
-import Navbar from "../components/_shared/Navbar";
+import CategoryPreview from "../components/usman/CategoryPreview";
 
 const Test = () => {
   return (
-    // <Navbar />
-    // <TestingKategori />
-    <div className="w-full">
-      <div className="w-1/2 h-[50rem]">
-        <CategoryPreview />
-        {/* <TestingKategori /> */}
-      </div>
+    // CategoryPreview
+    <div className="w-full p-8">
+      <CategoryPreview />
     </div>
   );
 };
