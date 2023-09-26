@@ -2,7 +2,6 @@ import Navbar from "../components/_shared/Navbar"
 const PostForum = () => {
     return (
         <>
-        <Navbar />
         <div className="p-10">
             <h1 className="text-3xl p-5">Post Forum</h1>
             <section className="p-10 mx-16 border border-blue-800 rounded-xl shadow-xl">

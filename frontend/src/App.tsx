@@ -5,10 +5,12 @@ import PostForum from "./pages/PostForum"
 import DaftarKursus from "./pages/DaftarKursus"
 import Kursus from "./pages/Kursus"
 import Test from "./pages/_test"
+import Navbar from "./components/_shared/Navbar"
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/forum' element={<Forum />} />

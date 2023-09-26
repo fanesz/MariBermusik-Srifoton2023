@@ -8,9 +8,6 @@ const Home = () => {
 
   return (
     <>
-      <div className="">
-        <Navbar />
-      </div>
 
       <div className="">
         <TopSection />
