@@ -1,8 +1,38 @@
 import gitar from "../assets/gitar.jpg";
 import profile from "../assets/profile.png";
 
+type TTingkatKesulitan = {
+  title: string;
+  deskripsi: string[];
+}
 
 const DaftarKursus = () => {
+
+
+  const tingkatKesulitan: TTingkatKesulitan[] = [
+    {
+      title: "Pemula",
+      deskripsi: [
+        "Details",
+        "Gitar adalah alat musik"
+      ]
+    },
+    {
+      title: "Menengah",
+      deskripsi: [
+        "Details",
+        "Mengenal kunci gitar"
+      ]
+    },
+    {
+      title: "Tingkat Lanjut",
+      deskripsi: [
+        "Details",
+        "Teknik-teknik gitar"
+      ]
+    }
+  ]
+
   return (
     <div className="border border-blue-300 px-16 pt-10">
 
@@ -15,21 +45,14 @@ const DaftarKursus = () => {
 
         {/* tingkat kesulitan */}
         <div className="flex justify-center gap-16 border border-yellow-500">
-          <div className="shadow-lg border border-gray-500 rounded">
-            <p className="text-white bg-green-600 rounded p-5">Pemula</p>
-            <p className="p-5">Details</p>
-            <p className="p-5">Gitar adalah alat musik</p>
-          </div>
-          <div className="shadow-lg border border-gray-500 rounded">
-            <p className="text-white bg-green-600 rounded p-5">Menengah</p>
-            <p className="p-5">Details</p>
-            <p className="p-5">Mengenal kunci gitar</p>
-          </div>
-          <div className="shadow-lg border border-gray-500 rounded">
-            <p className="text-white bg-green-600 rounded p-5">Tingkat Lanjut</p>
-            <p className="p-5">Details</p>
-            <p className="p-5">Teknik-teknik gitar</p>
-          </div>
+          {tingkatKesulitan.map((item, index) => (
+            <div className="shadow-lg border border-gray-500 rounded" key={index}>
+              <div className="text-white bg-green-600 rounded p-5">{item.title}</div>
+              {item.deskripsi.map((item, index) => (
+                <div className="p-5" key={index}>{item}</div>
+              ))}
+            </div>
+          ))}
         </div>
 
         {/* kursus */}
