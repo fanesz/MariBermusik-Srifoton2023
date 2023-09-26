@@ -2,9 +2,10 @@ import CategoryPreview from "../components/usman/CategoryPreview";
 
 const Test = () => {
   return (
-    // CategoryPreview
     <div className="w-full p-8">
-      <CategoryPreview />
+      <div className="w-1/2 h-[50rem]">
+        <CategoryPreview />
+      </div>
     </div>
   );
 };

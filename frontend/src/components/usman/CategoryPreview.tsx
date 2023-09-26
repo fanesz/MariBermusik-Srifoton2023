@@ -36,10 +36,10 @@ const CategoryPreview = () => {
       <h1 className="text-3xl font-bold mb-4">Category List</h1>
       <p className="text-lg font-normal mb-8">Here is the list of services category we have, look it up!</p>
 
-      <Carousel className="rounded-md w-80 h-84">
+      <Carousel className="rounded-lg">
         {carouselItems.map((item, index) => (
-          <div className="relative " key={index}>
-            <img src={item.imageSrc} alt={item.altText} style={{ width: "334.84px", height: "486px" }} className="object-cover rounded-md" />
+          <div className="relative" key={index}>
+            <img src={item.imageSrc} alt={item.altText} className="object-cover w-full rounded-md h-96" />
             <div className="absolute inset-0 grid w-full h-full place-items-center bg-black/75">
               <div className="w-3/4 text-center md:w-2/4">
                 <Typography variant="h1" color="white" className="mb-2 text-sm md:text-base lg:text-lg">
