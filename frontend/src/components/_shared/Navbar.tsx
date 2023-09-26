@@ -3,52 +3,39 @@ import logo from "../../assets/logo.png";
 import profile from "../../assets/profile.png";
 import { Menu, Transition } from '@headlessui/react';
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+type TMenu = {
+  nama: string,
+  link: string
+}
 
 const Navbar = () => {
-  return (
-    <nav className="flex items-center justify-between bg-navbar_color p-4">
 
-      {/* Menu Phone */}
-      <div className="md:hidden">
-        <Menu as="div" className="relative">
-          <Menu.Button>
-            <Bars3Icon className="h-9" />
-          </Menu.Button>
-          <Transition
-            enter="transition-transform origin-top duration-400"
-            enterFrom="scale-y-0 opacity-0"
-            enterTo="scale-y-100 opacity-100"
-            leave={`transition-transform origin-down duration-300`}
-            leaveFrom="scale-y-100 opacity-100"
-            leaveTo="scale-y-0 opacity-100"
-          >
-            <Menu.Items className="absolute w-dropdown_navbar bg-navbar_color p-4 left-0 mt-8 bg-opacity-90 border border-gray-300 rounded-md py-1">
-              <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
-              <div>
-                <ul className="text-center">
-                  {/* nav item */}
-                  <ul className="flex flex-col gap-5 my-3">
-                    <Link to="/" className="navbar_menu_items"><li>Home</li></Link>
-                    <Link to="/daftarKursus" className="navbar_menu_items"><li>Category List</li></Link>
-                    <Link to="/forum" className="navbar_menu_items"><li>Forum</li></Link>
-                    <Link to="/" className="navbar_menu_items"><li>About</li></Link>
-                  </ul>
-                </ul>
-              </div>
-              </Menu.Item>
-            </Menu.Items>
-          </Transition>
-        </Menu>
-      </div>
-      
+  const navbarMenu: TMenu[] = [
+    { nama: "Home", link: "/" },
+    { nama: "Category List", link: "/daftarKursus" },
+    { nama: "Forum", link: "/forum" },
+    { nama: "About", link: "/" }
+  ]
+
+  const [profileMenu, setProfileMenu] = useState<TMenu[]>([
+    { nama: "Fanes Pratama", link: "/profile" },
+    { nama: "Setting", link: "/setting" },
+    { nama: "Logout", link: "/logout" }
+  ])
+
+  return (
+    <nav className="flex justify-between bg-navbar_color p-4">
+
       {/* Logo */}
       <div className="flex justify-center text-center ms-5">
-        <div className="mt-auto mb-auto hover:scale-110 transition">
+        <div className="mt-auto mb-auto hover:scale-110 transition duration-200">
           <Link to="/">
-            <img src={logo} alt="MariBermusik Logo" className="md:h-12 h-6" />
+            <img src={logo} alt="MariBermusik Logo" className="2xl:h-[4.5vh] md:h-10 h-6" />
           </Link>
         </div>
-        <div className="hidden xl:block text-3xl mt-auto mb-auto ms-4 font-bold cursor-pointer">
+        <div className="hidden xl:block 2xl:text-[1.5vw] md:text-2xl text-sm mt-auto mb-auto ms-4 font-bold cursor-pointer">
           <span className="text-green-900 hover:text-black duration-200">Mari</span>
           <span className="text-green-200 hover:text-green-300 duration-200">Bermusik</span>
           <span className="text-green-900 hover:text-black duration-200">.</span>
@@ -56,19 +43,18 @@ const Navbar = () => {
       </div>
 
       {/* Menu Desktop */}
-      <div className="hidden md:flex me-7">
-        <div className="flex mt-auto mb-auto gap-6 text-lg font-medium">
+      <div className="hidden md:flex lg:gap-6 me-7">
+        <div className="flex mt-auto mb-auto gap-2 2xl:text-[1vw] md:text-base font-medium">
           <Link to="/" className="navbar_menu_items">Home</Link>
           <Link to="/daftarKursus" className="navbar_menu_items">Category List</Link>
           <Link to="/forum" className="navbar_menu_items">Forum</Link>
           <Link to="/" className="navbar_menu_items">About</Link>
         </div>
-      </div>
 
-      <div className="flex me-5">
-          <Menu as="div" className="relative">
+        <div className="flex">
+          <Menu as="div" className="relative z-10">
             <Menu.Button as="button" className="">
-              <img className="h-12 hover:scale-105 transition-all" id="profile" src={profile} />
+              <img className="2xl:h-[4.5vh] md:h-12 hover:scale-105 transition-all" id="profile" src={profile} />
             </Menu.Button>
             <Transition
               enter="transition-transform origin-top duration-400"
@@ -78,21 +64,64 @@ const Navbar = () => {
               leaveFrom="scale-y-100 opacity-100"
               leaveTo="scale-y-0 opacity-100"
             >
-              <Menu.Items className="absolute bg-gray-100 bg-opacity-90 border border-gray-300 rounded-md py-1 right-0 mt-7">
-                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1 truncate">
-                  Fanes Pratama
-                </Menu.Item>
-                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
-                  nama
-                </Menu.Item>
-                <Menu.Item as="div" className="border-t border-opacity-50 px-4 py-1">
-                  nama
-                </Menu.Item>
-              </Menu.Items>
+              <div className="absolute bg-gray-100 bg-opacity-50 rounded-md py-1 right-0 w-44">
+                <Menu.Items className="">
+
+                  {profileMenu.map((item, index) => (
+
+                    <Menu.Item key={index}>
+                      <Link to={item.link} className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 cursor-pointer">
+                        {item.nama}
+                      </Link>
+                    </Menu.Item>
+
+                  ))}
+                </Menu.Items>
+              </div>
             </Transition>
           </Menu>
         </div>
-    </nav>
+      </div>
+
+      {/* Menu Phone */}
+      <div className="md:hidden">
+        <Menu as="div" className="relative z-10">
+          <Menu.Button className="me-3">
+            <Bars3Icon className="h-9" />
+          </Menu.Button>
+          <Transition
+            enter="transition-transform origin-right duration-400"
+            enterFrom="scale-y-0 opacity-0"
+            enterTo="scale-y-100 opacity-100"
+            leave={`transition-transform origin-down duration-300`}
+            leaveFrom="scale-y-100 opacity-100"
+            leaveTo="scale-y-0 opacity-100"
+          >
+            <Menu.Items className="absolute shadow-lg bg-navbar_color bg-opacity-60 backdrop-blur-md -right-4 w-[20rem] border border-white border-opacity-30 rounded-md py-2">
+              <div>
+                {navbarMenu.map((item, index) => (
+                  <Menu.Item key={index}>
+                    <Link to={item.link} className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 text-center">
+                      {item.nama}
+                    </Link>
+                  </Menu.Item>
+                ))}
+              </div>
+              <div className="border-t border-white border-opacity-50">
+                {profileMenu?.map((item, index) => (
+                  <Menu.Item key={index}>
+                    <Link to={item.link} className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 text-center">
+                      {item.nama}
+                    </Link>
+                  </Menu.Item>
+                ))}
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+
+    </nav >
   )
 }
 
