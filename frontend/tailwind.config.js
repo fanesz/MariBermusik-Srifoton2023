@@ -8,7 +8,11 @@ module.exports = withMT({
     colors: {
       'navbar_color': '#fed7aa',
     },
-    extend: {},
+    extend: {
+      width:{
+        'dropdown_navbar': '93vw',
+      }
+    },
   },
   plugins: [],
 });
