@@ -9,9 +9,7 @@ module.exports = withMT({
       'navbar_color': '#fed7aa',
     },
     extend: {
-      width:{
-        'dropdown_navbar': '93vw',
-      }
+
     },
   },
   plugins: [],

@@ -1,4 +1,4 @@
-import CategoryPreview from "../components/usman/CategoryPreview";
+import CategoryPreview from "../components/Home/CategoryPreview";
 
 const Test = () => {
   return (

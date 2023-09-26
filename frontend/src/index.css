@@ -23,3 +23,12 @@
   min-width: 100vw;
   color: black;
 }
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
