@@ -15,7 +15,7 @@ const DaftarKursusByAlatMusik = () => {
     const res = await getMateriByAlatMusik(id);
     if (res.status) setMateri(res.data);
     console.log(res.data);
-    
+
   }
 
   useEffect(() => {
@@ -24,24 +24,42 @@ const DaftarKursusByAlatMusik = () => {
 
   // return (<></>)
   return (
-    <div className="border border-blue-300 px-16 pt-10">
+    <div className="border border-blue-300 w-[55vw] ms-auto me-auto pt-10">
 
-      {/* judul */}
+
+
       <div className="text-2xl border border-red-300">
         <span>Daftar Kursus</span>
       </div>
 
       <div className="border border-black mt-8">
 
-        {/* kursus */}
-        <div className="mt-10 border border-green-500">
-          {materi?.map((item, index) => (
-            <div key={index}>
+        <div>
+          <div className="border border-orange-600">
+            Search bar
+          </div>
 
+          <div className="mt-8 border border-green-500 flex">
+
+            <div className="border border-black w-4/6">
+              {[...Array(50)].map((item, index) => (
+                <div>
+                  tes
+                </div>
+              ))}
             </div>
-          ))}
-          
-          {/* {pilihan.map((materi, index) => (
+
+            <div className="border border-blue-900 w-2/6 h-fit">
+              filter
+            </div>
+
+          </div>
+
+
+
+
+
+          {/* {materi.map((materi, index) => (
             <div key={index}>
               {materi.data.map((data, index) => (
                 <div className="flex justify-center mb-5" key={index}>
