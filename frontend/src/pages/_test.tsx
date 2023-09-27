@@ -1,11 +1,13 @@
 import CategoryPreview from "../components/Home/CategoryPreview";
+import Kategori from "../components/rendy/Kategori";
 
 const Test = () => {
   return (
     <div className="w-full p-8">
-      <div className="w-1/2 h-[50rem]">
-        <CategoryPreview />
-      </div>
+      
+        {/* <CategoryPreview /> */}
+        <Kategori/>
+      
     </div>
   );
 };
