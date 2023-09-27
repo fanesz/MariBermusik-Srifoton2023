@@ -8,10 +8,11 @@ const ENDPOINT = {
   forum: '/forum',
 }
 
-const param = (paramArr: string[]) => {
+const param = (paramArr: string[][]) => {
   let params = "";
   for (let i = 0; i < paramArr.length; i++) {
-    params += `?${paramArr[i]}=${paramArr[i]}`
+    if (paramArr[i][1] === '') continue;
+    params += `?${paramArr[i][0]}=${paramArr[i][1]}`
   }
   return params;
 }
@@ -21,7 +22,7 @@ const param = (paramArr: string[]) => {
 export const getUser = async () => {
   try {
     const res = await api.get(ENDPOINT.user);
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -29,8 +30,8 @@ export const getUser = async () => {
 
 export const getUserByLoginID = async (loginID: string) => {
   try {
-    const res = await api.get(ENDPOINT.user + param([loginID]));
-    return res;
+    const res = await api.get(ENDPOINT.user + param([['loginID', loginID]]));
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -43,7 +44,7 @@ export const createUser = async (email: string, password: string, username: stri
       password: password,
       username: username
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -55,7 +56,7 @@ export const updateUsername = async (email: string, username: string) => {
       email: email,
       username: username
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -63,11 +64,13 @@ export const updateUsername = async (email: string, username: string) => {
 
 // === MATERI ===
 
-export const getMateriByAlatMusik = async (alatMusik: string, materiID: string) => {
+export const getMateriByAlatMusik = async (alatMusik?: string, materiID?: string) => {
   try {
-    const res = await api.get(ENDPOINT.materi + param([alatMusik, materiID]));
-    return res;
+    const res = await api.get(ENDPOINT.materi + param([['alatMusik', alatMusik || ''], ['materiID', materiID || '']]));
+    return res.data;
   } catch (err) {
+    console.log(err);
+
     return false;
   }
 }
@@ -75,7 +78,7 @@ export const getMateriByAlatMusik = async (alatMusik: string, materiID: string) 
 export const getAlatMusikList = async () => {
   try {
     const res = await api.get(ENDPOINT.materi);
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -88,7 +91,7 @@ export const createMateri = async (loginID: string, alatMusik: string, materi: a
       alatMusik: alatMusik,
       materi: materi
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -102,7 +105,7 @@ export const editMateriByID = async (loginID: string, alatMusik: string, materiI
       materiID: materiID,
       materi: materi
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -110,8 +113,8 @@ export const editMateriByID = async (loginID: string, alatMusik: string, materiI
 
 export const deleteMateriByID = async (alatMusik: string, materiID: string) => {
   try {
-    const res = await api.delete(ENDPOINT.materi + param([alatMusik, materiID]));
-    return res;
+    const res = await api.delete(ENDPOINT.materi + param([['alatMusik', alatMusik], ['materiID', materiID]]));
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -122,7 +125,7 @@ export const deleteMateriByID = async (alatMusik: string, materiID: string) => {
 export const getLoginUser = async () => {
   try {
     const res = await api.get(ENDPOINT.login);
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -134,7 +137,7 @@ export const setLogin = async (email: string, password: string) => {
       email: email,
       password: password
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -142,8 +145,8 @@ export const setLogin = async (email: string, password: string) => {
 
 export const setLogout = async (loginID: string) => {
   try {
-    const res = await api.delete(ENDPOINT.login + param([loginID]));
-    return res;
+    const res = await api.delete(ENDPOINT.login + param([['loginID', loginID]]));
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -151,8 +154,8 @@ export const setLogout = async (loginID: string) => {
 
 export const isLogin = async (loginID: string) => {
   try {
-    const res = await api.get(ENDPOINT.login + "/islogin" + param([loginID]));
-    return res;
+    const res = await api.get(ENDPOINT.login + "/islogin" + param([['loginID', loginID]]));
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -164,7 +167,7 @@ export const setSendVerificationCode = async (email: string) => {
     const res = await api.post(ENDPOINT.forgetPass, {
       email: email
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -172,8 +175,8 @@ export const setSendVerificationCode = async (email: string) => {
 
 export const validatorVerificationCode = async (id: string) => {
   try {
-    const res = await api.get(ENDPOINT.forgetPass + param([id]));
-    return res;
+    const res = await api.get(ENDPOINT.forgetPass + param([['id', id]]));
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -185,7 +188,7 @@ export const resetPassword = async (email: string, newPassword: string) => {
       email: email,
       newPassword: newPassword
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -196,7 +199,7 @@ export const resetPassword = async (email: string, newPassword: string) => {
 export const getPost = async () => {
   try {
     const res = await api.get(ENDPOINT.forum);
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -204,8 +207,8 @@ export const getPost = async () => {
 
 export const getPostByOwner = async (loginID: string) => {
   try {
-    const res = await api.get(ENDPOINT.forum + param([loginID]));
-    return res;
+    const res = await api.get(ENDPOINT.forum + param([['loginID', loginID]]));
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -218,7 +221,7 @@ export const createPost = async (loginID: string, title: string, description: st
       title: title,
       description: description
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -232,7 +235,7 @@ export const editPost = async (loginID: string, postID: string, title: string, d
       title: title,
       description: description
     });
-    return res;
+    return res.data;
   } catch (err) {
     return false;
   }
@@ -241,8 +244,8 @@ export const editPost = async (loginID: string, postID: string, title: string, d
 
 export const deletePost = async (loginID: string, postID: string) => {
   try {
-    const res = await api.delete(ENDPOINT.forum + param([loginID, postID]));
-    return res;
+    const res = await api.delete(ENDPOINT.forum + param([['loginID', loginID], ['postID', postID]]));
+    return res.data;
   } catch (err) {
     return false;
   }
