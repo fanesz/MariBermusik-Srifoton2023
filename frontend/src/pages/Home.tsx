@@ -22,9 +22,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="">
-        <Footer />
-      </div>
+
     </>
   )
 }

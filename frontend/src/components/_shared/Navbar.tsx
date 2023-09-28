@@ -1,9 +1,11 @@
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import logo from "../../assets/logo.png";
 import profile from "../../assets/profile.png";
 import { Menu, Transition } from '@headlessui/react';
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+import Modal from "./Modal";
+import { Dialog } from '@headlessui/react'
 
 type TMenu = {
   nama: string,
@@ -25,8 +27,19 @@ const Navbar = () => {
     { nama: "Logout", link: "/logout" }
   ])
 
+
+
+  const isLogin = false;
+
+  const [loginModal, setLoginModal] = useState(false);
+
+
+
   return (
     <nav className="flex justify-between bg-navbar_color p-4">
+
+    <Modal isOpen={loginModal} setModal={setLoginModal} />
+
 
       {/* Logo */}
       <div className="flex justify-center text-center ms-5">
@@ -43,7 +56,7 @@ const Navbar = () => {
       </div>
 
       {/* Menu Desktop */}
-      <div className="hidden md:flex lg:gap-6 me-7">
+      <div className="hidden md:flex gap-5 me-7">
         <div className="flex mt-auto mb-auto gap-2 2xl:text-[1vw] md:text-base font-medium">
           <Link to="/" className="navbar_menu_items">Home</Link>
           <Link to="/daftarKursus" className="navbar_menu_items">Category List</Link>
@@ -51,7 +64,15 @@ const Navbar = () => {
           <Link to="/" className="navbar_menu_items">About</Link>
         </div>
 
-        <div className="flex">
+        {/* after login */}
+        <div className={`${isLogin ? 'hidden' : 'flex'} mt-auto mb-auto 2xl:text-[1vw] md:text-base font-medium navbar_menu_items -ms-3 bg-green-200 bg-opacity-70 cursor-pointer hover:bg-opacity-100 hover:bg-green-300`} onClick={() => setLoginModal(true)}>
+          Login
+        </div>
+
+
+
+        {/* after login */}
+        <div className={`${isLogin ? 'flex' : 'hidden'}`}>
           <Menu as="div" className="relative z-10">
             <Menu.Button as="button" className="">
               <img className="2xl:h-[4.5vh] md:h-12 hover:scale-105 transition-all" id="profile" src={profile} />
@@ -81,6 +102,9 @@ const Navbar = () => {
             </Transition>
           </Menu>
         </div>
+
+
+
       </div>
 
       {/* Menu Phone */}
