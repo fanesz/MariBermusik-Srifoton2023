@@ -5,6 +5,7 @@ import PostForum from "./pages/PostForum"
 import Kursus from "./pages/Kursus"
 import Test from "./pages/_test"
 import Navbar from "./components/_shared/Navbar"
+import Footer from "./components/_shared/Footer"
 import DaftarKursusByAlatMusik from "./pages/DaftarKursusByAlatMusik"
 import DaftarKursus from "./pages/DaftarKursus"
 
@@ -24,6 +25,7 @@ function App() {
 
         <Route path='/test' element={<Test />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
