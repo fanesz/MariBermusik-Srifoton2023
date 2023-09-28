@@ -9,6 +9,28 @@
     @apply hover:bg-orange-300 hover:bg-opacity-50 rounded-md p-2 px-4 transition-all duration-300 ;
   }
 
+  .border1 {
+    @apply border border-red-600
+  }
+  .border2 {
+    @apply border border-orange-500
+  }
+  .border3 {
+    @apply border border-yellow-500
+  }
+  .border4 {
+    @apply border border-green-500
+  }
+  .border5 {
+    @apply border border-blue-500
+  }
+  .border6 {
+    @apply border border-indigo-500
+  }
+  .border7 {
+    @apply border border-purple-500
+  }
+
 }
 
 * {
