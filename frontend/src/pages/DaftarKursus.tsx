@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAlatMusikList } from "../api/services";
+import { Link } from 'react-router-dom';
 
 const DaftarKursus = () => {
 
@@ -22,8 +23,10 @@ const DaftarKursus = () => {
   return (
     <div>
       {alatMusik.map((item, index) => (
-        <div key={index}>
-          {item}
+        <div className="bg-brown-500 border border-blue-900">
+          <Link to={`/daftarkursus/${item}`} key={index}>
+            {item}
+          </Link>
         </div>
       ))}
     </div>
