@@ -12,7 +12,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberme, setRememberme] = useState(true);
-  const [terimaInfo, setTerimaInfo] = useState(false);
+  const [terimaEmail, setTerimaEmail] = useState(false);
   const [errmsg, setErrmsg] = useState("");
   const [successmsg, setSuccessmsg] = useState("");
   const [lupaPassword, setLupaPassword] = useState(false);
@@ -74,7 +74,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
     }
   }
   const handleRememberme = () => setRememberme(prev => !prev);
-  const handleTerimaInfo = () => setTerimaInfo(prev => !prev);
+  const handleTerimaEmail = () => setTerimaEmail(prev => !prev);
 
   // handler untuk menampilkan modal lupa password
   const handleLupaPassword = (inp: boolean) => {
@@ -103,7 +103,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
 
     // send data
     setLoader(prev => ({ ...prev, signup: true }));
-    const res = await createUser(email, password, username);
+    const res = await createUser(email, password, username, terimaEmail);
     setLoader(prev => ({ ...prev, signup: false }));
     if (res.status) {
       handleSetSuccessmsg("Akun berhasil dibuat!");
@@ -195,10 +195,10 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
       <div className='mt-4 flex cursor-pointer'>
         <input type='checkbox'
           className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
-          checked={terimaInfo} onChange={handleTerimaInfo} />
+          checked={terimaEmail} onChange={handleTerimaEmail} />
         <label
           className='ms-2 text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
-          onClick={handleTerimaInfo}>
+          onClick={handleTerimaEmail}>
           Saya ingin terima informasi terbaru terkait MariBermusik melalui Email.
         </label>
       </div>

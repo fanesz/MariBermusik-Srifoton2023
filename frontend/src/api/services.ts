@@ -37,12 +37,13 @@ export const getUserByLoginID = async (loginID: string) => {
   }
 }
 
-export const createUser = async (email: string, password: string, username: string) => {
+export const createUser = async (email: string, password: string, username: string, terimaEmail: boolean) => {
   try {
     const res = await api.post(ENDPOINT.user, {
       email: email,
       password: password,
-      username: username
+      username: username,
+      terimaEmail: terimaEmail
     });
     return res.data;
   } catch (err) {
