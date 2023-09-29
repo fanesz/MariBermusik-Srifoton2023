@@ -38,7 +38,7 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between bg-navbar_color p-4">
 
-    <Modal isOpen={loginModal} setModal={setLoginModal} />
+      <Modal isOpen={loginModal} setModal={setLoginModal} />
 
 
       {/* Logo */}
@@ -64,12 +64,10 @@ const Navbar = () => {
           <Link to="/" className="navbar_menu_items">About</Link>
         </div>
 
-        {/* after login */}
+        {/* before login */}
         <div className={`${isLogin ? 'hidden' : 'flex'} mt-auto mb-auto 2xl:text-[1vw] md:text-base font-medium navbar_menu_items -ms-3 bg-green-200 bg-opacity-70 cursor-pointer hover:bg-opacity-100 hover:bg-green-300`} onClick={() => setLoginModal(true)}>
           Login
         </div>
-
-
 
         {/* after login */}
         <div className={`${isLogin ? 'flex' : 'hidden'}`}>
@@ -131,7 +129,22 @@ const Navbar = () => {
                   </Menu.Item>
                 ))}
               </div>
-              <div className="border-t border-white border-opacity-50">
+
+              {/* before login */}
+              <div className={`${isLogin ? 'hidden' : 'block'}`}>
+                <div className="border-t border-white border-opacity-50">
+                  <Menu.Item>
+                    {({ close }) => (
+                      <div className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 text-center" onClick={() => { setLoginModal(true); close; }}>
+                        Login
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+              </div>
+
+              {/* after login */}
+              <div className={`${isLogin ? 'block' : 'hidden'} border-t border-white border-opacity-50`}>
                 {profileMenu?.map((item, index) => (
                   <Menu.Item key={index}>
                     <Link to={item.link} className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 text-center">
@@ -140,6 +153,7 @@ const Navbar = () => {
                   </Menu.Item>
                 ))}
               </div>
+
             </Menu.Items>
           </Transition>
         </Menu>

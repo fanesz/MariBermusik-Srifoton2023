@@ -33,6 +33,10 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
     setTerimaInfo(prev => !prev)
   }
 
+  const handleLupaPassword = (inp: boolean) => {
+    setLupaPassword(inp);
+  }
+
   const handleSignIn = () => {
 
   }
@@ -40,6 +44,8 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
   const handleSignUp = () => {
 
   }
+
+  const [lupaPassword, setLupaPassword] = useState(false);
 
   const login_logout_tab = (
     <Tab.Group defaultIndex={0} as="div" className="border-x border-b border-gray-300">
@@ -74,15 +80,22 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
               Sign In
             </button>
           </div>
-          <div className='mt-3'>
-            <input type='checkbox'
-              className='rounded focus:ring-offset-0 focus:ring-0'
-              checked={rememberme} onChange={handleRememberme} />
-            <label
-              className='ms-2 text-gray-700'
-              onClick={handleRememberme}>
-              Remember Me
-            </label>
+          <div className='mt-3 flex justify-between'>
+            <div className='cursor-pointer'>
+              <input type='checkbox'
+                className='rounded focus:ring-offset-0 focus:ring-0 cursor-pointer'
+                checked={rememberme} onChange={handleRememberme} />
+              <label
+                className='ms-2 text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
+                onClick={handleRememberme}>
+                Remember Me
+              </label>
+            </div>
+            <div
+              className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
+              onClick={() => handleLupaPassword(true)}>
+              Lupa Password?
+            </div>
           </div>
         </Tab.Panel>
 
@@ -109,12 +122,12 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
               placeholder='Password'
               value={password} onChange={handleSetPassword} />
           </div>
-          <div className='mt-4 flex'>
+          <div className='mt-4 flex cursor-pointer'>
             <input type='checkbox'
-              className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5'
+              className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
               checked={terimaInfo} onChange={handleTerimaInfo} />
             <label
-              className='ms-2 text-gray-700 text-sm'
+              className='ms-2 text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
               onClick={handleTerimaInfo}>
               Saya ingin terima informasi terbaru terkait MariBermusik melalui Email.
             </label>
@@ -131,10 +144,34 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
     </Tab.Group>
   )
 
+  const lupa_password_modal = (
+    <div>
+      <div className='mt-4'>
+        <EnvelopeIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
+        <input type='email' spellCheck={false}
+          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
+          placeholder='Email'
+          value={password} onChange={handleSetPassword} />
+      </div>
+      <div
+        className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer mt-1 text-right me-1'
+        onClick={() => handleLupaPassword(false)}>
+        Sign In?
+      </div>
+      <div className='mt-4'>
+        <button
+          className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none'
+          onClick={handleSignIn}>
+          Kirim kode verifikasi
+        </button>
+      </div>
+    </div>
+  )
+
   return (
     <Transition
       appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setModal(false)}>
+      <Dialog as="div" className="relative z-10" onClose={() => { setModal(false); setTimeout(() => { setLupaPassword(false); }, 300); }}>
         <Transition.Child as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -159,7 +196,7 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
                 <Dialog.Title className="text-lg text-center font-semibold text-gray-600">
                   <div className="flex justify-between">
                     <div className='w-full'>
-                      Please Login to Continue
+                      {lupaPassword ? "Lupa Password" : "Login untuk melanjutkan"}
                     </div>
                     <div className='mt-auto mb-auto'>
                       <XMarkIcon className="h-5 cursor-pointer hover:bg-gray-300 rounded" onClick={() => setModal(false)} />
@@ -169,7 +206,7 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
 
                 <div className="rounded-md mt-2 bg-white bg-opacity-70 p-5 ">
                   <div className="">
-                    {login_logout_tab}
+                    {lupaPassword ? lupa_password_modal : login_logout_tab}
                   </div>
                 </div>
 
