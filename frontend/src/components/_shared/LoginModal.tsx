@@ -2,7 +2,7 @@ import { Dialog, Tab, Transition } from '@headlessui/react';
 import { EnvelopeIcon, KeyIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Dispatch, Fragment, useState } from 'react';
 
-const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
+const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
 
   const { isOpen, setModal } = props;
 
@@ -221,4 +221,4 @@ const Modal = (props: { isOpen: boolean, setModal: Dispatch<boolean> }) => {
 
 
 
-export default Modal
+export default LoginModal

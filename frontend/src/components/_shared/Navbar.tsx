@@ -4,7 +4,7 @@ import profile from "../../assets/profile.png";
 import { Menu, Transition } from '@headlessui/react';
 import { Link } from "react-router-dom";
 import { Fragment, useState } from "react";
-import Modal from "./Modal";
+import LoginModal from "./LoginModal";
 import { Dialog } from '@headlessui/react'
 
 type TMenu = {
@@ -38,8 +38,7 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between bg-navbar_color p-4">
 
-      <Modal isOpen={loginModal} setModal={setLoginModal} />
-
+      <LoginModal isOpen={loginModal} setModal={setLoginModal} />
 
       {/* Logo */}
       <div className="flex justify-center text-center ms-5">
