@@ -30,7 +30,7 @@ export const getUser = async () => {
 
 export const getUserByLoginID = async (loginID: string) => {
   try {
-    const res = await api.get(ENDPOINT.user + param([['loginID', loginID]]));
+    const res = await api.get(ENDPOINT.user + "/id" + param([['loginID', loginID]]));
     return res.data;
   } catch (err) {
     return false;
@@ -154,7 +154,7 @@ export const setLogout = async (loginID: string) => {
   }
 }
 
-export const isLogin = async (loginID: string) => {
+export const userIsLogin = async (loginID: string) => {
   try {
     const res = await api.get(ENDPOINT.login + "/islogin" + param([['loginID', loginID]]));
     return res.data;
