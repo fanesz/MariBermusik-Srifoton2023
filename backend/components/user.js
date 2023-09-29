@@ -37,6 +37,7 @@ export const createUser = async (req, res) => {
       email: userInput.email,
       password: userInput.password,
       username: userInput.username,
+      terimaEmail: userInput.terimaEmail,
       akses: "user"
     });
     res.json({ status: true })
@@ -46,15 +47,17 @@ export const createUser = async (req, res) => {
   }
 }
 
-export const updateUsername = async (req, res) => {
-  try { // body: { email, username }
+export const updateUser = async (req, res) => {
+  try { // body: { email, username, terimaEmail }
     const userInput = req.body;
     const userData = await db_user.all();
     if (userData.find(u => u.value.username === userInput.username)) {
       return res.json({ status: false });
-    }
+    };
     const userDataToUpdate = userData.find(u => u.value.email === userInput.email);
     await db_user.set(`${userDataToUpdate.id}.username`, userInput.username);
+    await db_user.set(`${userDataToUpdate.id}.terimaEmail`, userInput.terimaEmail);
+
     res.json({ status: true });
   } catch (error) {
     console.log(error);

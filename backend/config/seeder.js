@@ -127,8 +127,8 @@ const post2 = {
   ]
 }
 
-const user1 = { "email": "fanes23.pratama@gmail.com", "password": "admin123", "username": "Admin1", "akses": "admin" };
-const user2 = { "email": "pratama14.f@gmail.com", "password": "admins123", "username": "Admin2", "akses": "admin" };
+const user1 = { "email": "fanes23.pratama@gmail.com", "password": "admin123", "username": "Admin1", "terimaEmail": true, "akses": "admin" };
+const user2 = { "email": "pratama14.f@gmail.com", "password": "admins123", "username": "Admin2", "terimaEmail": false, "akses": "admin" };
 const loginID = "u2PXk66tiR6Uq4nxmyZe8cbQEyxiFusQFr8iSTjVVbqFeDpdjgZCkCPM4eK1HVR4v283DULSxacBUouv";
 const loggedUser = { "id": UUID, "email": "fanes23.pratama@gmail.com" };
 

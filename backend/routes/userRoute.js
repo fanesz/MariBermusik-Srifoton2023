@@ -4,7 +4,7 @@ import {
   getUser,
   createUser,
   getUserByLoginID,
-  updateUsername,
+  updateUser,
 } from "../components/user.js";
 
 const router = express.Router();
@@ -12,6 +12,6 @@ const router = express.Router();
 router.get("/", getUser);
 router.get("/id", getUserByLoginID);
 router.post("/", createUser);
-router.patch("/", updateUsername);
+router.patch("/", updateUser);
 
 export default router;
