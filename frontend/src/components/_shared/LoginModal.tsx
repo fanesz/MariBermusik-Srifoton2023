@@ -1,7 +1,7 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { EnvelopeIcon, KeyIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Dispatch, Fragment, useState } from 'react';
-import { createUser, setLogin } from '../../api/services';
+import { createUser, sendVerificationCode, setLogin } from '../../api/services';
 import LoaderAnimation from '../../assets/LoaderAnimation';
 import { removeLocalStorage, setLocalStorage } from '../../utils/LocalStorage';
 const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIsLogin: Dispatch<boolean> }) => {
@@ -76,13 +76,12 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
   const handleRememberme = () => setRememberme(prev => !prev);
   const handleTerimaEmail = () => setTerimaEmail(prev => !prev);
 
+
   // handler untuk menampilkan modal lupa password
-  const handleLupaPassword = (inp: boolean) => {
-    setLupaPassword(inp);
-  }
+  const handleLupaPasswordModal = (inp: boolean) => setLupaPassword(inp);
 
 
-  // handler untuk login dan signup
+  // handler untuk login, signup, dan lupa password
   const handleSignIn = async () => {
     setLoader(prev => ({ ...prev, login: true }));
     const res = await setLogin(email, password);
@@ -110,6 +109,23 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
       setCurrentTab(0);
     } else {
       handleSetErrmsg("Email sudah terdaftar!");
+    }
+  }
+  const handleLupaPassword = async () => {
+    // validator
+    if (!email.includes("@")) return handleSetErrmsg("Email tidak valid!");
+
+    // send data
+    setLoader(prev => ({ ...prev, lupaPassword: true }));
+    const res = await sendVerificationCode(email);
+    setLoader(prev => ({ ...prev, lupaPassword: false }));
+    if (res.status) {
+      handleSetSuccessmsg("Kode verifikasi berhasil dikirim!");
+      setTimeout(() => {
+        handleLupaPasswordModal(false);
+      }, 3000);
+    } else {
+      handleSetErrmsg("Email tidak terdaftar!");
     }
   }
 
@@ -157,7 +173,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
         </div>
         <div
           className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
-          onClick={() => handleLupaPassword(true)}>
+          onClick={() => handleLupaPasswordModal(true)}>
           Lupa Password?
         </div>
       </div>
@@ -237,18 +253,24 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
         <input type='email' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Email'
-          value={password} onChange={handleSetPassword} />
+          value={email} onChange={handleSetEmail} />
       </div>
       <div
-        className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer mt-1 text-right me-1'
-        onClick={() => handleLupaPassword(false)}>
+        className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer mt-1 text-right me-1 mb-2'
+        onClick={() => handleLupaPasswordModal(false)}>
         Sign In?
+      </div>
+      <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
+        {errmsg}
+      </div>
+      <div className={`text-sm text-green-500 ${successmsg.length > 0 ? 'block' : 'hidden'}`}>
+        {successmsg}
       </div>
       <div className='mt-4'>
         <button
-          className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none'
-          onClick={handleSignIn}>
-          Kirim kode verifikasi
+          className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'
+          onClick={handleLupaPassword}>
+          {loader.lupaPassword ? <LoaderAnimation className='w-2 h-2' /> : "Kirim kode verifikasi"}
         </button>
       </div>
     </div>

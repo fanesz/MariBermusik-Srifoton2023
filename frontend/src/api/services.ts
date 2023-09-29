@@ -165,7 +165,7 @@ export const userIsLogin = async (loginID: string) => {
 }
 
 // === FORGETPASS ===
-export const setSendVerificationCode = async (email: string) => {
+export const sendVerificationCode = async (email: string) => {
   try {
     const res = await api.post(ENDPOINT.forgetPass, {
       email: email

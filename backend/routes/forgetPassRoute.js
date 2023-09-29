@@ -1,14 +1,14 @@
 import express from "express";
 
 import {
-  setSendVerificationCode,
+  sendVerificationCode,
   validatorVerificationCode,
   resetPassword
 } from "../components/forgetPass.js";
 
 const router = express.Router();
 
-router.post("/", setSendVerificationCode);
+router.post("/", sendVerificationCode);
 router.get("/", validatorVerificationCode);
 router.post("/newPassword", resetPassword)
 

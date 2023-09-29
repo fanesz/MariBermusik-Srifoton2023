@@ -5,7 +5,7 @@ const db_user = db.table("user");
 import { generateRandomString } from "../utils/utils.js";
 import sendMail from "../config/mailer.js";
 
-export const setSendVerificationCode = async (req, res) => {
+export const sendVerificationCode = async (req, res) => {
   try { // body: { email }
     const userInput = req.body;
 
