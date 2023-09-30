@@ -9,6 +9,7 @@ import Footer from "./components/_shared/Footer"
 import DaftarKursusByAlatMusik from "./pages/DaftarKursusByAlatMusik"
 import DaftarKursus from "./pages/DaftarKursus"
 import ResetPassword from "./pages/ResetPassword"
+import Setting from "./pages/Setting"
 
 function App() {
   return (
@@ -21,13 +22,14 @@ function App() {
           <Route path='/postForum' element={<PostForum />} />
           <Route path='/daftarkursus' element={<DaftarKursus />} />
           <Route path='/daftarkursus/:id' element={<DaftarKursusByAlatMusik />} />
+          <Route path='/resetpassword/:id' element={<ResetPassword />} />
+          <Route path='/setting' element={<Setting />} />
 
           {/* <Route path='/kursus' element={<DaftarKursus />} /> */}
           {/* <Route path='/kursus/:id' element={<Kursus />} /> */}
 
           <Route path='/test' element={<Test />} />
 
-          <Route path='/resetpassword/:id' element={<ResetPassword />} />
 
         </Routes>
       </div>
