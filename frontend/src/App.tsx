@@ -10,6 +10,7 @@ import DaftarKursusByAlatMusik from "./pages/DaftarKursusByAlatMusik"
 import DaftarKursus from "./pages/DaftarKursus"
 import ResetPassword from "./pages/ResetPassword"
 import Setting from "./pages/Setting"
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/daftarkursus/:id' element={<DaftarKursusByAlatMusik />} />
           <Route path='/resetpassword/:id' element={<ResetPassword />} />
           <Route path='/setting' element={<Setting />} />
+          <Route path='/profile' element={<Profile />} />
 
           {/* <Route path='/kursus' element={<DaftarKursus />} /> */}
           {/* <Route path='/kursus/:id' element={<Kursus />} /> */}
