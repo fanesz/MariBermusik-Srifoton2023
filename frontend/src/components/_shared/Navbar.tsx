@@ -30,6 +30,7 @@ const Navbar = () => {
   // pengecekan apakah user sudah login
   useEffect(() => {
     const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return;
     const fetchData = async (loginID: string) => {
       const res = await userIsLogin(loginID);
       if (res.status) setIsLogin(true);
@@ -41,6 +42,7 @@ const Navbar = () => {
   // mendapatkan username dari user yang login
   useEffect(() => {
     const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return setIsLogin(false);
     const fetchData = async (loginID: string) => {
       const res = await getUserByLoginID(loginID);
       if (res.status) {

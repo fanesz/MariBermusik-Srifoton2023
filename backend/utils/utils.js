@@ -5,7 +5,7 @@ export const generateUUID = () => {
 }
 
 export const generateRandomString = (len) => {
-  const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyz";
   let code = "";
   for (let i = 0; i < len; i++) {
     code += chars[Math.floor(Math.random() * chars.length)];

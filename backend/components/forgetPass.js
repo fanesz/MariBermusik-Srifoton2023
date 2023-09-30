@@ -22,7 +22,7 @@ export const sendVerificationCode = async (req, res) => {
     const verificationCode = generateRandomString(50);
     await db_forgetPass.set(verificationCode, { email: userInput.email });
 
-    sendMail(userInput.email, verificationCode, 'sendVerificationCode');
+    sendMail(userInput.email, `${process.env.BASE_URL}resetpassword/${verificationCode}`, 'sendVerificationCode');
 
     res.send({ status: true });
   } catch (error) {

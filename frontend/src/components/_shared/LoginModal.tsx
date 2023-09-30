@@ -157,7 +157,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
         <button
           className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'
           onClick={handleSignIn}>
-          {loader.login ? <LoaderAnimation className='w-2 h-2' /> : "Sign In"}
+          {loader.login ? <LoaderAnimation className='w-2 h-2' color='bg-white' /> : "Sign In"}
         </button>
       </div>
       <div className='mt-3 flex justify-between'>

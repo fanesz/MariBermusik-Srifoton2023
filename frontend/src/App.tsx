@@ -8,23 +8,29 @@ import Navbar from "./components/_shared/Navbar"
 import Footer from "./components/_shared/Footer"
 import DaftarKursusByAlatMusik from "./pages/DaftarKursusByAlatMusik"
 import DaftarKursus from "./pages/DaftarKursus"
+import ResetPassword from "./pages/ResetPassword"
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/forum' element={<Forum />} />
-        <Route path='/postForum' element={<PostForum />} />
-        <Route path='/daftarkursus' element={<DaftarKursus />} />
-        <Route path='/daftarkursus/:id' element={<DaftarKursusByAlatMusik />} />
+      <div className="min-h-[60vh]">
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/forum' element={<Forum />} />
+          <Route path='/postForum' element={<PostForum />} />
+          <Route path='/daftarkursus' element={<DaftarKursus />} />
+          <Route path='/daftarkursus/:id' element={<DaftarKursusByAlatMusik />} />
 
-        {/* <Route path='/kursus' element={<DaftarKursus />} /> */}
-        {/* <Route path='/kursus/:id' element={<Kursus />} /> */}
+          {/* <Route path='/kursus' element={<DaftarKursus />} /> */}
+          {/* <Route path='/kursus/:id' element={<Kursus />} /> */}
 
-        <Route path='/test' element={<Test />} />
-      </Routes>
+          <Route path='/test' element={<Test />} />
+
+          <Route path='/resetpassword/:id' element={<ResetPassword />} />
+
+        </Routes>
+      </div>
       <Footer />
     </BrowserRouter>
   )
