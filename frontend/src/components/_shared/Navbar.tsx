@@ -2,11 +2,11 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 import logo from "../../assets/logo.png";
 import profile from "../../assets/profile.png";
 import { Menu, Transition } from '@headlessui/react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
 import { getLocalStorage, removeLocalStorage } from "../../utils/LocalStorage";
-import { getUserByLoginID, userIsLogin } from "../../api/services";
+import { getUserByLoginID, setLogout, userIsLogin } from "../../api/services";
 
 type TMenu = {
   nama: string,
@@ -25,40 +25,39 @@ const Navbar = () => {
   const [username, setUsername] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
+  const navigate = useNavigate();
 
 
   // pengecekan apakah user sudah login
   useEffect(() => {
-    const loginID = getLocalStorage("loginID") || '';
-    if (loginID.length < 1) return;
-    const fetchData = async (loginID: string) => {
-      const res = await userIsLogin(loginID);
+    const fetchData = async () => {
+      const res = await userIsLogin();
       if (res.status) setIsLogin(true);
     }
-    fetchData(loginID);
+    fetchData();
   }, []);
 
 
   // mendapatkan username dari user yang login
   useEffect(() => {
-    const loginID = getLocalStorage("loginID") || '';
-    if (loginID.length < 1) return setIsLogin(false);
-    const fetchData = async (loginID: string) => {
-      const res = await getUserByLoginID(loginID);
+    const fetchData = async () => {
+      const res = await getUserByLoginID();
       if (res.status) {
         setUsername(res.data.username);
       } else {
         handleLogout();
       }
     }
-    fetchData(loginID);
+    fetchData();
   }, [isLogin]);
 
 
   // handler untuk logout
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await setLogout();
     removeLocalStorage("loginID");
     setIsLogin(false);
+    navigate('/');
   }
 
 

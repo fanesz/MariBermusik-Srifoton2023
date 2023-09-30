@@ -1,4 +1,5 @@
 import api from ".";
+import { getLocalStorage } from "../utils/LocalStorage";
 
 const ENDPOINT = {
   user: '/user',
@@ -28,8 +29,10 @@ export const getUser = async () => {
   }
 }
 
-export const getUserByLoginID = async (loginID: string) => {
+export const getUserByLoginID = async () => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.get(ENDPOINT.user + "/id" + param([['loginID', loginID]]));
     return res.data;
   } catch (err) {
@@ -87,8 +90,10 @@ export const getAlatMusikList = async () => {
   }
 }
 
-export const createMateri = async (loginID: string, alatMusik: string, materi: any) => {
+export const createMateri = async (alatMusik: string, materi: any) => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.post(ENDPOINT.materi, {
       loginID: loginID,
       alatMusik: alatMusik,
@@ -100,8 +105,10 @@ export const createMateri = async (loginID: string, alatMusik: string, materi: a
   }
 }
 
-export const editMateriByID = async (loginID: string, alatMusik: string, materiID: string, materi: any) => {
+export const editMateriByID = async (alatMusik: string, materiID: string, materi: any) => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.patch(ENDPOINT.materi, {
       loginID: loginID,
       alatMusik: alatMusik,
@@ -146,8 +153,10 @@ export const setLogin = async (email: string, password: string) => {
   }
 }
 
-export const setLogout = async (loginID: string) => {
+export const setLogout = async () => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.delete(ENDPOINT.login + param([['loginID', loginID]]));
     return res.data;
   } catch (err) {
@@ -155,8 +164,10 @@ export const setLogout = async (loginID: string) => {
   }
 }
 
-export const userIsLogin = async (loginID: string) => {
+export const userIsLogin = async () => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.get(ENDPOINT.login + "/islogin" + param([['loginID', loginID]]));
     return res.data;
   } catch (err) {
@@ -208,8 +219,10 @@ export const getPost = async () => {
   }
 }
 
-export const getPostByOwner = async (loginID: string) => {
+export const getPostByOwner = async () => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.get(ENDPOINT.forum + param([['loginID', loginID]]));
     return res.data;
   } catch (err) {
@@ -217,8 +230,10 @@ export const getPostByOwner = async (loginID: string) => {
   }
 }
 
-export const createPost = async (loginID: string, title: string, description: string) => {
+export const createPost = async (title: string, description: string) => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.post(ENDPOINT.forum, {
       loginID: loginID,
       title: title,
@@ -230,8 +245,10 @@ export const createPost = async (loginID: string, title: string, description: st
   }
 }
 
-export const editPost = async (loginID: string, postID: string, title: string, description: string) => {
+export const editPost = async (postID: string, title: string, description: string) => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.patch(ENDPOINT.forum, {
       loginID: loginID,
       postID: postID,
@@ -245,8 +262,10 @@ export const editPost = async (loginID: string, postID: string, title: string, d
 }
 
 
-export const deletePost = async (loginID: string, postID: string) => {
+export const deletePost = async (postID: string) => {
   try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
     const res = await api.delete(ENDPOINT.forum + param([['loginID', loginID], ['postID', postID]]));
     return res.data;
   } catch (err) {

@@ -29,22 +29,18 @@ const Setting = () => {
 
   // pengecekan apakah user sudah login
   useEffect(() => {
-    const loginID = getLocalStorage("loginID") || '';
-    if (loginID.length < 1) return navigate('/');
-    const fetchData = async (loginID: string) => {
-      const res = await userIsLogin(loginID);
+    const fetchData = async () => {
+      const res = await userIsLogin();
       if (!res.status) navigate('/');
     }
-    fetchData(loginID);
+    fetchData();
   }, []);
 
 
   // mendapatkan username dari user yang login
   useEffect(() => {
-    const loginID = getLocalStorage("loginID") || '';
-    if (loginID.length < 1) return navigate('/');
-    const fetchData = async (loginID: string) => {
-      const res = await getUserByLoginID(loginID);
+    const fetchData = async () => {
+      const res = await getUserByLoginID();
       if (res.status) {
         setUser({
           email: res.data.email,
@@ -56,7 +52,7 @@ const Setting = () => {
         navigate('/');
       }
     }
-    fetchData(loginID);
+    fetchData();
   }, []);
 
 
