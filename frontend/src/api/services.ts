@@ -19,7 +19,6 @@ const param = (paramArr: string[][]) => {
 }
 
 // === USER ===
-
 export const getUser = async () => {
   try {
     const res = await api.get(ENDPOINT.user);
@@ -34,6 +33,15 @@ export const getUserByLoginID = async () => {
     const loginID = getLocalStorage("loginID") || '';
     if (loginID.length < 1) return false;
     const res = await api.get(ENDPOINT.user + "/id" + param([['loginID', loginID]]));
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
+
+export const getUUIDByUsername = async (username: string) => {
+  try {
+    const res = await api.get(ENDPOINT.user + "/username" + param([['username', username]]));
     return res.data;
   } catch (err) {
     return false;
@@ -91,7 +99,7 @@ export const getAlatMusikList = async () => {
 
 export const getMateriByID = async (id: string) => {
   try {
-    const res = await api.get(ENDPOINT.materi+'/user'+param([['id', id]]));
+    const res = await api.get(ENDPOINT.materi + '/user' + param([['id', id]]));
     return res.data;
   } catch (err) {
     return false;

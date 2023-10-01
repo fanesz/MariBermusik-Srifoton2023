@@ -25,6 +25,18 @@ export const getUserByLoginID = async (req, res) => {
   }
 }
 
+
+export const getUUIDByUsername = async (req, res) => {
+  try { // params: { username }
+    const user = (await db_user.all()).find(u => u.value.username === req.query.username);
+    res.json({ status: true, data: user.id });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+
+
 export const createUser = async (req, res) => {
   try { // body: { email, password, username }
     const userInput = req.body;
