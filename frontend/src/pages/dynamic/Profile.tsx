@@ -41,8 +41,6 @@ const Profile = () => {
 
   const getMateri = async (UUID: string) => {
     const res = await getMateriByID(UUID);
-    console.log(res.data);
-
     if (res.status) {
       setListMateri(res.data);
     }
@@ -54,7 +52,7 @@ const Profile = () => {
     <div className='w-full max-w-5xl transform ms-auto me-auto mt-20'>
       <div className='rounded-md p-5 border border-gray-400 shadow-md'>
 
-        <div className="text-center text-xl font-semibold text-gray-700">
+        <div className="text-center text-2xl font-semibold text-gray-700">
           Profile
         </div>
 

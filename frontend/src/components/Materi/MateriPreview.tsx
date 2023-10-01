@@ -10,7 +10,7 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
 
   const image = (
     <img
-      className="w-full h-full object-cover rounded-md"
+      className="w-full h-full object-cover rounded-s-md"
       src={getAlatMusikImg(materi.alatMusik)}
     />
   )
