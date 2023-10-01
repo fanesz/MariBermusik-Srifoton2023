@@ -26,7 +26,9 @@ export const setLogin = async (req, res) => {
     if (userData.value.password !== userInput.password) {
       return res.json({ status: false, message: "Wrong Password!" });
     }
+    
     await db_loggedUser.set(loginID, { id: userData.id, email: userInput.email });
+
     res.json({ status: true, loginID: loginID });
   } catch (error) {
     console.log(error);

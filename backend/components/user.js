@@ -18,7 +18,7 @@ export const getUserByLoginID = async (req, res) => {
   try { // params: { loginID }
     const loggedUser = await db_loggedUser.get(req.query.loginID);
     const user = await db_user.get(loggedUser.id);
-    res.json({ status: true, data: user });
+    res.json({ status: true, data: { UUID: loggedUser.id, user: user } });
   } catch (error) {
     console.log(error);
     res.json({ status: false });

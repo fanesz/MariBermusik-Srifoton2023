@@ -156,7 +156,6 @@ const seedDatabase = async () => {
     await db_materi.set("gitar", materi);
     await db_materi.set("biola", materi);
     await db_materi.set("piano", materi);
-    await db_loggedUser.set(loginID, loggedUser);
     await db_forum.set(UUID, post);
     await db_forum.set(UUID2, post2);
   } catch (err) {
