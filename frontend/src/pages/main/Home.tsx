@@ -1,8 +1,8 @@
-import Navbar from "../components/_shared/Navbar"
-import Footer from "../components/_shared/Footer"
-import TopSection from "../components/Home/TopSection";
-import MainSection from "../components/Home/MainSection";
-import CategoryPreview from "../components/Home/CategoryPreview";
+import Navbar from "../../components/_shared/Navbar"
+import Footer from "../../components/_shared/Footer"
+import TopSection from "../../components/Home/TopSection";
+import MainSection from "../../components/Home/MainSection";
+import CategoryPreview from "../../components/Home/CategoryPreview";
 
 const Home = () => {
 

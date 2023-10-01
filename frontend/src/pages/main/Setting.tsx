@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { getLocalStorage } from '../utils/LocalStorage';
-import { getUserByLoginID, updateUser, userIsLogin } from '../api/services';
+import { getLocalStorage } from '../../utils/LocalStorage';
+import { getUserByLoginID, updateUser, userIsLogin } from '../../api/services';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-import LoaderAnimation from '../assets/LoaderAnimation';
+import LoaderAnimation from '../../assets/LoaderAnimation';
 
 type TUser = {
   email: string,

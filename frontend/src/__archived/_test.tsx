@@ -1,5 +1,5 @@
 import CategoryPreview from "../components/Home/CategoryPreview";
-import Kategori from "../components/rendy/Kategori";
+import Kategori from "./Kategori";
 
 const Test = () => {
   return (

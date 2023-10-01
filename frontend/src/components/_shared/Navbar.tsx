@@ -17,7 +17,7 @@ const Navbar = () => {
 
   const navbarMenu: TMenu[] = [
     { nama: "Home", link: "/" },
-    { nama: "Category List", link: "/daftarKursus" },
+    { nama: "Materi", link: "/materi" },
     { nama: "Forum", link: "/forum" },
     { nama: "About", link: "/about" }
   ]

@@ -1,8 +1,8 @@
 import { KeyIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
-import LoaderAnimation from "../assets/LoaderAnimation";
-import { resetPassword, validatorVerificationCode } from "../api/services";
+import LoaderAnimation from "../../assets/LoaderAnimation";
+import { resetPassword, validatorVerificationCode } from "../../api/services";
 
 const ResetPassword = () => {
 

@@ -1,11 +1,9 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
-import drum from "../../assets/drum.jpg";
-import gitar from "../../assets/gitar.jpg";
-import piano from "../../assets/piano.jpg";
+import { getAlatMusikImg } from "../../utils/AlatMusikList";
 
 const carouselItems = [
   {
-    imageSrc: drum,
+    imageSrc: getAlatMusikImg("drum"),
     altText: "image 1",
     title: "The Beauty of Nature (drum)",
     description: "It is not so much for its beauty that the forest makes a claim upon men's hearts, as for that subtle something, that quality of air that emanation from old trees, that so wonderfully changes and renews a weary spirit.",
@@ -13,7 +11,7 @@ const carouselItems = [
     buttonVariant: "Gallery",
   },
   {
-    imageSrc: piano,
+    imageSrc: getAlatMusikImg("piano"),
     altText: "image 2",
     title: "The Beauty of Music (piano)",
     description: "Music has the power to touch the deepest parts of our souls, evoking emotions and memories that transcend words.",
@@ -21,7 +19,7 @@ const carouselItems = [
     buttonVariant: "Sheet Music",
   },
   {
-    imageSrc: gitar,
+    imageSrc: getAlatMusikImg("gitar"),
     altText: "image 3",
     title: "The Beauty of Strings (gitar)",
     description: "The sound of strings resonates with the heart, creating melodies that can soothe, inspire, and uplift our spirits.",

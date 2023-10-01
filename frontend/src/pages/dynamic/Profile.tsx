@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from 'react'
-import { getLocalStorage } from '../utils/LocalStorage';
-import { getMateriByID, getUUIDByUsername, getUserByLoginID, userIsLogin } from '../api/services';
+import { getLocalStorage } from '../../utils/LocalStorage';
+import { getMateriByID, getUUIDByUsername, getUserByLoginID, userIsLogin } from '../../api/services';
 import { useNavigate, useParams } from 'react-router-dom';
-import MateriPreview from '../components/forum/MateriPreview';
-import { TListMateri } from '../types/Materi';
+import MateriPreview from '../../components/Materi/MateriPreview';
+import { TListMateri } from '../../types/Materi';
 
 
 const Profile = () => {
