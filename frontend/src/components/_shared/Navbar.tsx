@@ -42,8 +42,9 @@ const Navbar = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getUserByLoginID();
+      
       if (res.status) {
-        setUsername(res.data.username);
+        setUsername(res.data.user.username);
       } else {
         handleLogout();
       }

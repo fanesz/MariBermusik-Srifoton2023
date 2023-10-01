@@ -43,11 +43,11 @@ const Setting = () => {
       const res = await getUserByLoginID();
       if (res.status) {
         setUser({
-          email: res.data.email,
-          username: res.data.username,
-          terimaEmail: res.data.terimaEmail
+          email: res.data.user.email,
+          username: res.data.user.username,
+          terimaEmail: res.data.user.terimaEmail
         });
-        setOldData({ username: res.data.username, terimaEmail: res.data.terimaEmail });
+        setOldData({ username: res.data.user.username, terimaEmail: res.data.user.terimaEmail });
       } else {
         navigate('/');
       }
