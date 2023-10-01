@@ -26,6 +26,7 @@ function App() {
           <Route path='/resetpassword/:id' element={<ResetPassword />} />
           <Route path='/setting' element={<Setting />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:id' element={<Profile />} />
 
           {/* <Route path='/kursus' element={<DaftarKursus />} /> */}
           {/* <Route path='/kursus/:id' element={<Kursus />} /> */}
