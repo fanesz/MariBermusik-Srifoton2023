@@ -24,7 +24,7 @@ const Setting = () => {
     updateSetting: false
   });
   const [hasChanged, setHasChanged] = useState(false);
-  const [oldUsername, setOldUsername] = useState('');
+  const [oldData, setOldData] = useState({ username: '', terimaEmail: false });
 
 
   // pengecekan apakah user sudah login
@@ -47,7 +47,7 @@ const Setting = () => {
           username: res.data.username,
           terimaEmail: res.data.terimaEmail
         });
-        setOldUsername(res.data.username);
+        setOldData({ username: res.data.username, terimaEmail: res.data.terimaEmail });
       } else {
         navigate('/');
       }
@@ -79,14 +79,15 @@ const Setting = () => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9_]+$/.test(input) || input.length === 0) {
       setUser(prev => ({ ...prev, username: input }));
-      if (input === oldUsername) setHasChanged(false);
+      if (input === oldData.username && oldData.terimaEmail === user.terimaEmail) setHasChanged(false);
     } else {
       handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
     }
   }
   const handleTerimaEmail = () => {
-    setHasChanged(true);
     setUser(prev => ({ ...prev, terimaEmail: !prev.terimaEmail }));
+    if(oldData.username !== user.username) return setHasChanged(true);
+    setHasChanged(oldData.terimaEmail !== !user.terimaEmail ? true : false);
   }
 
 
@@ -97,6 +98,7 @@ const Setting = () => {
     const res = await updateUser(user.email, user.username, user.terimaEmail);
     setLoader(prev => ({ ...prev, updateSetting: false }));
     if (res.status) {
+      setOldData({ username: user.username, terimaEmail: user.terimaEmail });
       handleSetSuccessmsg("Berhasil update setting")
     } else if (res.message) {
       handleSetErrmsg(res.message)

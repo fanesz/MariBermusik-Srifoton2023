@@ -90,15 +90,17 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
       setLocalStorage("loginID", res.loginID);
       setModal(false);
       setIsLogin(true);
+      setEmail("");
+      setPassword("");
     } else {
       handleSetErrmsg(res.message);
     }
   }
   const handleSignUp = async () => {
     // validator
+    if (!/^[a-zA-Z0-9.].*[@].*[a-zA-Z.]+$/.test(email)) return handleSetErrmsg("Email tidak valid!");
     if (password.length < 6) return handleSetErrmsg("Password minimal 6 karakter!");
     if (username.length < 3) return handleSetErrmsg("Username minimal 3 karakter!");
-    if (!email.includes("@")) return handleSetErrmsg("Email tidak valid!");
 
     // send data
     setLoader(prev => ({ ...prev, signup: true }));
@@ -107,6 +109,9 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
     if (res.status) {
       handleSetSuccessmsg("Akun berhasil dibuat!");
       setCurrentTab(0);
+      setEmail("");
+      setPassword("");
+      setUsername("");
     } else {
       handleSetErrmsg("Email sudah terdaftar!");
     }
@@ -124,11 +129,17 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
       setTimeout(() => {
         handleLupaPasswordModal(false);
       }, 3000);
+      setEmail("");
     } else {
       handleSetErrmsg("Email tidak terdaftar!");
     }
   }
 
+  const handleKeyboardEvent = (e: any, action: Function) => {
+    if (e.key === 'Enter') {
+      action();
+    }
+  }
 
   // Components
   const Tab_SignIn = (
@@ -138,14 +149,14 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
         <input type='email' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Email'
-          value={email} onChange={handleSetEmail} />
+          value={email} onChange={handleSetEmail} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignIn)} />
       </div>
       <div className='mt-4 mb-2'>
         <KeyIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
         <input type='password' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Password'
-          value={password} onChange={handleSetPassword} />
+          value={password} onChange={handleSetPassword} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignIn)} />
       </div>
       <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
         {errmsg}
@@ -186,21 +197,21 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
         <input type='email' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Email'
-          value={email} onChange={handleSetEmail} />
+          value={email} onChange={handleSetEmail} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignUp)} />
       </div>
       <div className='mt-4'>
         <UserCircleIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
         <input type='text' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Username'
-          value={username} onChange={handleSetUsername} />
+          value={username} onChange={handleSetUsername} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignUp)} />
       </div>
       <div className='mt-4 mb-2'>
         <KeyIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
         <input type='password' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Password'
-          value={password} onChange={handleSetPassword} />
+          value={password} onChange={handleSetPassword} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignUp)} />
       </div>
       <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
         {errmsg}
@@ -253,7 +264,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
         <input type='email' spellCheck={false}
           className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
           placeholder='Email'
-          value={email} onChange={handleSetEmail} />
+          value={email} onChange={handleSetEmail} onKeyDown={(e: any) => handleKeyboardEvent(e, handleLupaPassword)} />
       </div>
       <div
         className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer mt-1 text-right me-1 mb-2'
