@@ -43,8 +43,8 @@ export const getMateriByID = async (req, res) => {
   try { // query: { id }
     const ID = req.query.id;
     const materi = await db_materi.all();
-    const materiByID = materi.filter(m => m.value.find(m => m.owner == ID));
-    res.json({ status: true, data: materiByID});
+    const filteredMateri = materi.map(m => m.value.filter(m => m.owner == ID)).flat();
+    res.json({ status: true, data: filteredMateri });
   } catch (error) {
     console.log(error);
     res.json({ status: false });
@@ -60,6 +60,7 @@ export const createMateri = async (req, res) => {
       ...prevMateri,
       {
         "materiID": prevMateri.length,
+        "alatMusik": req.body.alatMusik,
         "owner": user.id,
         "data": {
           "nama": userInput.nama,
@@ -89,6 +90,7 @@ export const editMateriByID = async (req, res) => {
     const userInput = JSON.parse(req.body.materi);
     const updatedMateri = {
       "materiID": materiToUpdate.materiID,
+      "alatMusik": materiToUpdate.alatMusik,
       "owner": materiToUpdate.owner,
       "data": {
         "nama": userInput.nama,
