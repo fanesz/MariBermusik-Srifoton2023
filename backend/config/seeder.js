@@ -12,82 +12,56 @@ const UUID2 = "59d1756f-5259-4527-bc72-640db97372b5";
 
 const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-const materi = (alatMusik) => {
+const dataMateri = (nama, desc, tingkatan, date) => {
+  return {
+    "nama": nama,
+    "deskripsi": desc,
+    "tingkatan": tingkatan,
+    "rating": [Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5)],
+    "pengunjung": Math.floor(Math.random() * 100),
+    "createdAt": date,
+    "daftarMateri": [
+      {
+        "id": 0,
+        "judul": "Sejarah",
+        "materi": lorem,
+        "link": [
+          "https://youtube.com/",
+          "https://youtube.com/"
+        ]
+      },
+      {
+        "id": 1,
+        "judul": "Pencipta",
+        "materi": lorem,
+        "link": [
+          "https://youtube.com/",
+          "https://youtube.com/"
+        ]
+      }
+    ]
+  }
+}
+
+const materi = (alatMusik, owner) => {
   return [
     {
       materiID: 0,
       alatMusik: alatMusik,
-      owner: UUID,
-      data: {
-        "nama": "Dasar Dasar Gitar",
-        "deskripsi": "Mempelajari Dasar-dasar gitar",
-        "tingkatan": "pemula",
-        "rating": [4, 5, 3, 4, 2, 3],
-        "pengunjung": 12,
-        "createdAt": new Date(),
-        "daftarMateri": [
-          {
-            "id": 0,
-            "judul": "Sejarah Gitar",
-            "materi": lorem,
-            "link": [
-              "https://youtube.com/",
-              "https://youtube.com/"
-            ]
-          },
-          {
-            "id": 1,
-            "judul": "Pencipta Gitar",
-            "materi": lorem,
-            "link": [
-              "https://youtube.com/",
-              "https://youtube.com/"
-            ]
-          }
-        ]
-      }
+      owner: owner,
+      data: dataMateri(`Dasar Dasar ${alatMusik}`, `Mempelajari Dasar-dasar ${alatMusik}, dimulai dari pengenalan bagian-bagian alat musik, hingga cara bermain`, "pemula", "2023-10-01T11:28:33.724Z")
     },
     {
       materiID: 1,
       alatMusik: alatMusik,
-      owner: UUID2,
-      data: {
-        "nama": "Kunci gantung gitar",
-        "deskripsi": "Mempelajari Kunci gantung gitar",
-        "tingkatan": "menengah",
-        "rating": [4, 4, 4, 5, 5],
-        "pengunjung": 5,
-        "createdAt": new Date(),
-        "daftarMateri": [
-          {
-            "id": 0,
-            "judul": "Apa itu Kunci Gantung",
-            "materi": lorem,
-            "link": [
-              "https://youtube.com/",
-              "https://youtube.com/"
-            ]
-          },
-          {
-            "id": 1,
-            "judul": "Cara memainkan Kunci Gantung",
-            "materi": lorem,
-            "link": [
-              "https://youtube.com/",
-              "https://youtube.com/"
-            ]
-          },
-          {
-            "id": 2,
-            "judul": "Kesalahan dalam memainkan Kunci Gantung",
-            "materi": lorem,
-            "link": [
-              "https://youtube.com/",
-              "https://youtube.com/"
-            ]
-          }
-        ]
-      }
+      owner: owner,
+      data: dataMateri(`Kunci dasar ${alatMusik}`, `Mempelajari kunci-kunci ${alatMusik}, mengenalkan kunci-kunci dasar yang sering digunakan`, "menengah", "2023-09-28T11:28:33.724Z")
+    },
+    {
+      materiID: 2,
+      alatMusik: alatMusik,
+      owner: owner,
+      data: dataMateri(`Bermain ${alatMusik} seperti pro`, `Mengamati dan meniru bagaimana seorang pro bermain ${alatMusik}`, "sulit", "2022-10-01T11:28:33.724Z")
     }
   ]
 }
@@ -157,9 +131,10 @@ const seedDatabase = async () => {
     console.log("[SEEDER] Seeding database...");
     await db_user.set(UUID, user1);
     await db_user.set(UUID2, user2);
-    await db_materi.set("gitar", materi("gitar"));
-    await db_materi.set("biola", materi("biola"));
-    await db_materi.set("piano", materi("piano"));
+    await db_materi.set("gitar", materi("gitar", UUID));
+    await db_materi.set("biola", materi("biola", UUID));
+    await db_materi.set("piano", materi("piano", UUID));
+    await db_materi.set("gitar", materi("gitar", UUID2));
     await db_forum.set(UUID, post);
     await db_forum.set(UUID2, post2);
   } catch (err) {
