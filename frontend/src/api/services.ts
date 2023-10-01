@@ -69,7 +69,6 @@ export const updateUser = async (email: string, username: string, terimaEmail: b
 }
 
 // === MATERI ===
-
 export const getMateriByAlatMusik = async (alatMusik?: string, materiID?: string) => {
   try {
     const res = await api.get(ENDPOINT.materi + param([['alatMusik', alatMusik || ''], ['materiID', materiID || '']]));
@@ -84,6 +83,15 @@ export const getMateriByAlatMusik = async (alatMusik?: string, materiID?: string
 export const getAlatMusikList = async () => {
   try {
     const res = await api.get(ENDPOINT.materi);
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
+
+export const getMateriByID = async (id: string) => {
+  try {
+    const res = await api.get(ENDPOINT.materi+'/user'+param([['id', id]]));
     return res.data;
   } catch (err) {
     return false;

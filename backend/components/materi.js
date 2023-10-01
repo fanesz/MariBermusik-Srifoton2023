@@ -39,6 +39,18 @@ export const getAlatMusikList = async (req, res) => {
   }
 }
 
+export const getMateriByID = async (req, res) => {
+  try { // query: { id }
+    const ID = req.query.id;
+    const materi = await db_materi.all();
+    const materiByID = materi.filter(m => m.value.find(m => m.owner == ID));
+    res.json({ status: true, data: materiByID});
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+
 export const createMateri = async (req, res) => {
   try { // body: { loginID, alatMusik, materi }
     const user = await db_loggedUser.get(req.body.loginID);

@@ -3,6 +3,7 @@ import express from "express";
 import {
   getMateriByAlatMusik,
   getAlatMusikList,
+  getMateriByID,
   createMateri,
   editMateriByID,
   deleteMateriByID,
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.get("/", getMateriByAlatMusik);
 router.get("/alatmusik", getAlatMusikList);
+router.get("/user", getMateriByID);
 router.post("/", createMateri);
 router.patch("/", editMateriByID);
 router.delete("/", deleteMateriByID);
