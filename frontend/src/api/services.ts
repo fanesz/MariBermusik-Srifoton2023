@@ -90,7 +90,7 @@ export const getMateriByAlatMusik = async (alatMusik?: string, materiID?: string
 
 export const getAlatMusikList = async () => {
   try {
-    const res = await api.get(ENDPOINT.materi);
+    const res = await api.get(ENDPOINT.materi+"/alatmusik");
     return res.data;
   } catch (err) {
     return false;

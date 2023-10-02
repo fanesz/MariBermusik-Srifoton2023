@@ -45,8 +45,6 @@ const Navbar = () => {
       
       if (res.status) {
         setUsername(res.data.user.username);
-      } else {
-        handleLogout();
       }
     }
     fetchData();
