@@ -36,6 +36,8 @@ const ListMateri = () => {
     alatMusik: "semua",
   })
   const [filterModal, setFilterModal] = useState(false);
+  const [cariMateri, setCariMateri] = useState('');
+
 
   // mendapatkan semua data materi
   useEffect(() => {
@@ -150,6 +152,17 @@ const ListMateri = () => {
         pengunjung_least: false,
         [key]: true
       }
+    });
+  }
+
+
+  // handle cari materi
+  const handleSetCariMateri = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCariMateri(e.target.value);
+    setMateri(prev => {
+      const filteredItem = prev.filter((materi: TListMateri) => materi.data.nama.toLowerCase().includes(e.target.value.toLowerCase()));
+      const otherItem = prev.filter((materi: TListMateri) => !materi.data.nama.toLowerCase().includes(e.target.value.toLowerCase()));
+      return filteredItem.concat(otherItem);
     });
   }
 
@@ -343,13 +356,20 @@ const ListMateri = () => {
             </div>
           </div>
 
-          <div className="md:w-4/6 p-4">
-            {materi.map((materi, index) => (
-              <MateriPreview key={index}
-                className='mb-5'
-                materi={materi}
-              />
-            ))}
+          <div className="md:w-4/6 px-4">
+            <div className="border border-gray-400 shadow rounded-md relative">
+              <MagnifyingGlassIcon className="absolute top-1/2 transform -translate-y-1/2 w-6 h-6 ms-3 fill-gray-700" />
+              <input className="w-full ps-10 py-1.5 text-gray-800 focus:border-none focus:outline-none rounded-md" placeholder="Cari Materi" spellCheck={false} 
+              value={cariMateri} onChange={handleSetCariMateri}/>
+            </div>
+            <div className="mt-4">
+              {materi.map((materi, index) => (
+                <MateriPreview key={index}
+                  className='mb-5'
+                  materi={materi}
+                />
+              ))}
+            </div>
           </div>
 
           {/* desktop view */}
