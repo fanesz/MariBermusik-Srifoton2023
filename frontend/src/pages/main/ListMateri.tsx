@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { getAlatMusikList, getMateriByAlatMusik } from "../../api/services";
 import MateriPreview from "../../components/Materi/MateriPreview";
 import { TListMateri } from "../../types/Materi";
-import { ChevronDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
-import { Listbox, Transition } from "@headlessui/react";
+import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Dialog, Listbox, Transition } from "@headlessui/react";
 
 type TCurrentValue = {
   id: string,
@@ -35,6 +35,7 @@ const ListMateri = () => {
     pengunjung_least: false,
     alatMusik: "semua",
   })
+  const [filterModal, setFilterModal] = useState(false);
 
   // mendapatkan semua data materi
   useEffect(() => {
@@ -236,13 +237,13 @@ const ListMateri = () => {
   )
   const filter_menu = (
     <div className="">
-      <div className="flex">
+      <div className="md:flex hidden">
         <FunnelIcon className="w-4 h-4 mt-auto mb-auto me-1" />
         <div className="text-lg font-medium text-gray-700">
           Filter
         </div>
       </div>
-      <div className="border border-gray-400 rounded-md px-5 pe-8 py-2 pb-4 shadow-md mt-1">
+      <div className="border border-gray-400 w-full rounded-md px-5 pe-8 py-2 pb-4 shadow-md mt-1">
 
         <div>
           {filter_alatMusik}
@@ -261,9 +262,58 @@ const ListMateri = () => {
   )
   const button_buat_materi = (
     <div className="group relative py-2 overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer">
-      <div className="absolute inset-0 w-3 bg-green-400 transition-all duration-500 ease-out group-hover:w-full"></div>
-      <span className="relative text-gray-800 group-hover:text-white transition-colors duration-300">Buat Materi</span>
+      <div className="absolute inset-0 md:w-3 bg-green-400 transition-all duration-500 ease-out group-hover:w-full"></div>
+      <span className="relative md:text-gray-800 text-white group-hover:text-white transition-colors duration-300">Buat Materi</span>
     </div>
+  )
+  const modal_filter = (
+    <Transition
+      appear show={filterModal} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={() => { setFilterModal(false) }}>
+        <Transition.Child as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0">
+          <div className="fixed inset-0 bg-black bg-opacity-25" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95">
+              <Dialog.Panel className="w-full h-fit transform overflow-hidden rounded-2xl bg-gray-200 px-5 py-4 text-left align-middle shadow-xl transition-all">
+
+                <Dialog.Title className="text-lg text-center font-semibold text-gray-600">
+                  <div className="flex justify-between">
+                    <div className='w-full'>
+                      Filter
+                    </div>
+                    <div className='mt-auto mb-auto'>
+                      <XMarkIcon className="h-5 cursor-pointer hover:bg-gray-300 rounded" onClick={() => setFilterModal(false)} />
+                    </div>
+                  </div>
+                </Dialog.Title>
+
+                <div className="rounded-md mt-2 bg-white bg-opacity-70 p-5 ">
+                  <div className="">
+                    {filter_menu}
+                  </div>
+                </div>
+
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
   )
 
   return (
@@ -272,9 +322,28 @@ const ListMateri = () => {
         <div className="text-center text-2xl font-semibold text-gray-700">
           Materi
         </div>
-        <div className="flex mt-5 justify-end pe-20">
+        <div className="md:flex mt-5 lg:justify-end justify-center xl:pe-20 lg:pe-16">
 
-          <div className="w-4/6 p-4">
+          {modal_filter}
+
+          {/* phone view */}
+          <div className="p-4 md:hidden flex gap-5 px-5">
+            <div className="w-4/5">
+              {button_buat_materi}
+            </div>
+            <div className="w-1/5">
+              <div
+                className="flex sm:ps-5 gap-2 h-full rounded-md bg-gray-300 cursor-pointer"
+                onClick={() => setFilterModal(true)}>
+                <FunnelIcon className="w-5 h-5 my-auto sm:mx-0 mx-auto fill-gray-700" />
+                <div className="mt-auto mb-auto sm:block hidden text-gray-700">
+                  Filter
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="md:w-4/6 p-4">
             {materi.map((materi, index) => (
               <MateriPreview key={index}
                 className='mb-5'
@@ -283,7 +352,8 @@ const ListMateri = () => {
             ))}
           </div>
 
-          <div className="p-4">
+          {/* desktop view */}
+          <div className="p-4 md:block hidden">
             {button_buat_materi}
             <div className="mt-2">
               {filter_menu}
