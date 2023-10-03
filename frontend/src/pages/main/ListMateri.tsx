@@ -4,6 +4,7 @@ import MateriPreview from "../../components/Materi/MateriPreview";
 import { TListMateri } from "../../types/Materi";
 import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
+import CreateMateriModal from "../../components/Materi/CreateMateriModa";
 
 type TCurrentValue = {
   id: string,
@@ -36,6 +37,7 @@ const ListMateri = () => {
     alatMusik: "semua",
   })
   const [filterModal, setFilterModal] = useState(false);
+  const [createMateriModal, setCreateMateriModal] = useState(false);
   const [cariMateri, setCariMateri] = useState('');
 
 
@@ -274,7 +276,9 @@ const ListMateri = () => {
     </div >
   )
   const button_buat_materi = (
-    <div className="group relative py-2 overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer">
+    <div
+      className="group relative py-2 overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer"
+      onClick={() => setCreateMateriModal(true)}>
       <div className="absolute inset-0 md:w-3 bg-green-400 transition-all duration-500 ease-out group-hover:w-full"></div>
       <span className="relative md:text-gray-800 text-white group-hover:text-white transition-colors duration-300">Buat Materi</span>
     </div>
@@ -338,6 +342,7 @@ const ListMateri = () => {
         <div className="md:flex mt-5 lg:justify-end justify-center xl:pe-20 lg:pe-16">
 
           {modal_filter}
+          <CreateMateriModal isOpen={createMateriModal} setModal={setCreateMateriModal} />
 
           {/* phone view */}
           <div className="p-4 md:hidden flex gap-5 px-5">
@@ -359,8 +364,8 @@ const ListMateri = () => {
           <div className="md:w-4/6 px-4">
             <div className="border border-gray-400 shadow rounded-md relative">
               <MagnifyingGlassIcon className="absolute top-1/2 transform -translate-y-1/2 w-6 h-6 ms-3 fill-gray-700" />
-              <input className="w-full ps-10 py-1.5 text-gray-800 focus:border-none focus:outline-none rounded-md" placeholder="Cari Materi" spellCheck={false} 
-              value={cariMateri} onChange={handleSetCariMateri}/>
+              <input className="w-full ps-10 py-1.5 text-gray-800 focus:border-none focus:outline-none rounded-md" placeholder="Cari Materi" spellCheck={false}
+                value={cariMateri} onChange={handleSetCariMateri} />
             </div>
             <div className="mt-4">
               {materi.map((materi, index) => (
