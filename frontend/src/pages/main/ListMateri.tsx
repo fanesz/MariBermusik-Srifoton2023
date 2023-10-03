@@ -63,6 +63,8 @@ const ListMateri = () => {
       }
     }
     fetchData();
+    console.log(materi);
+
   }, [])
 
 
@@ -91,7 +93,7 @@ const ListMateri = () => {
         ...prev,
         alatMusik: alatMusik
       }
-    })
+    });
   }
   const filterByDate = (reverse: boolean) => {
     const sort = (a: TListMateri, b: TListMateri) => {
@@ -241,7 +243,7 @@ const ListMateri = () => {
       <div>
         Kesulitan
       </div>
-      {[['Pemula', 'green'], ['Menengah', 'orange'], ['Sulit', 'red']].map((item, index) => (
+      {[['Pemula', 'green'], ['Menengah', 'yellow'], ['Sulit', 'red']].map((item, index) => (
         <div className={`w-fit px-3 py-1 rounded-md text-white cursor-pointer opacity-90 mt-1 shadow-sm truncate bg-${item[1]}-400 hover:bg-${item[1]}-600`} onClick={() => filterByKesulitan(item[0])}>
           {item[0]}
         </div>
