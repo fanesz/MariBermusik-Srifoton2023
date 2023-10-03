@@ -4,7 +4,7 @@ import MateriPreview from "../../components/Materi/MateriPreview";
 import { TListMateri } from "../../types/Materi";
 import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import CreateMateriModal from "../../components/Materi/CreateMateriModa";
+import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 
 type TCurrentValue = {
   id: string,
@@ -226,12 +226,12 @@ const ListMateri = () => {
   const filter_data = (
     <div>
       {filterByOption.map((items, index) => (
-        <div className="mt-3">
+        <div key={index} className="mt-3">
           <div>
             {items.title}
           </div>
           {items.data.map((item, index) => (
-            <div className="" onClick={() => handleRadioButton(item.key)}>
+            <div key={index} className="" onClick={() => handleRadioButton(item.key)}>
               <input className="focus:ring-0 focus:border-none focus:ring-offset-0 me-2" type="radio" checked={!!filterBy[item.key as keyof TFilterBy]} onChange={() => handleRadioButton(item.key)} />
               <label className="text-gray-800">{item.text}</label>
             </div>
@@ -245,8 +245,12 @@ const ListMateri = () => {
       <div>
         Kesulitan
       </div>
-      {[['Pemula', 'green'], ['Menengah', 'yellow'], ['Sulit', 'red']].map((item, index) => (
-        <div className={`w-fit px-3 py-1 rounded-md text-white cursor-pointer opacity-90 mt-1 shadow-sm truncate bg-${item[1]}-400 hover:bg-${item[1]}-600`} onClick={() => filterByKesulitan(item[0])}>
+      {[
+        ['Pemula', 'bg-green-400 hover:bg-green-600'],
+        ['Menengah', 'bg-orange-400 hover:bg-orange-600'],
+        ['Sulit', 'bg-red-400 hover:bg-red-600']
+      ].map((item, index) => (
+        <div key={index} className={`w-fit px-3 py-1 rounded-md text-white cursor-pointer opacity-90 mt-1 shadow-sm truncate ${item[1]}`} onClick={() => filterByKesulitan(item[0])}>
           {item[0]}
         </div>
       ))}
