@@ -10,22 +10,23 @@ type TCurrentValue = {
   value: TListMateri[]
 }
 type TListAlatMusik = {
-  key: number,
-  data: {
-    id: string,
-    totalMateri: number
-  }
+  id: string,
+  totalMateri: number
 }
-type TAccListMateri = {
-  key: number,
-  data: TListMateri[]
+type TFilterBy = {
+  date_newest: boolean,
+  date_oldest: boolean,
+  rating_highest: boolean,
+  rating_lowest: boolean,
+  pengunjung_most: boolean,
+  pengunjung_least: boolean,
+  alatMusik: string
 }
 
 const ListMateri = () => {
-  const [materi, setMateri] = useState([]);
-  const [tempMateri, setTempMateri] = useState<TListMateri[]>([] as TListMateri[]);
+  const [materi, setMateri] = useState<TListMateri[]>([]);
   const [listAlatMusik, setListAlatMusik] = useState<TListAlatMusik[]>([]);
-  const [filterBy, setFilterBy] = useState({
+  const [filterBy, setFilterBy] = useState<TFilterBy>({
     date_newest: false,
     date_oldest: false,
     rating_highest: false,
@@ -35,98 +36,108 @@ const ListMateri = () => {
     alatMusik: "semua",
   })
 
+  // mendapatkan semua data materi
   useEffect(() => {
     const fetchData = async () => {
       const res = await getMateriByAlatMusik();
-      const result = res.data.reduce((ac: TAccListMateri[], cv: TCurrentValue) => {
-        return ac.concat({ key: 0, data: cv.value });
-      }, []);
-      setMateri(result);
+      if (res.status) {
+        const result = res.data.reduce((ac: TListMateri[], cv: TCurrentValue) => {
+          return ac.concat(cv.value);
+        }, []);
+        setMateri(result);
+      }
     }
     fetchData();
   }, []);
 
+
+  // mendapatkan semua data alat musik dan total materi
   useEffect(() => {
     const fetchData = async () => {
       const res = await getAlatMusikList();
       if (res.status) {
-        setListAlatMusik([
-          { key: 0, id: "semua", totalMateri: -1 },
-          res.data.reduce((ac: TListMateri[], cv: TCurrentValue) => {
-
-            return ac.concat(cv.value);
-          }, [])
-        ]);
+        setListAlatMusik([{ id: 'semua', totalMateri: -1 }, ...res.data]);
       }
     }
     fetchData();
-    return (
-      setListAlatMusik([{ key: 0, data: { id: "semua", totalMateri: -1 } }])
-    )
   }, [])
 
-  const filterByDate = (reverse: boolean) => {
+
+  // filtering function
+  const handleFilteringMateri = (filterer: (a: TListMateri, b: TListMateri) => number) => {
     setMateri(
-      prev => [...prev].sort((a: TListMateri, b: TListMateri) => {
-        const dateA = new Date(a.data.createdAt).getTime();
-        const dateB = new Date(b.data.createdAt).getTime();
-        return reverse ? dateA - dateB : dateB - dateA;
-      })
+      prev => {
+        if (filterBy.alatMusik === "semua") {
+          return prev.sort(filterer);
+        } else {
+          const filtered = prev.filter((materi: TListMateri) => materi.alatMusik === filterBy.alatMusik).sort(filterer);
+          const unfiltered = prev.filter((materi: TListMateri) => materi.alatMusik !== filterBy.alatMusik);
+          return filtered.concat(unfiltered);
+        }
+      }
     )
   }
+  const filterByAlatMusik = (alatMusik: string) => {
+    setMateri(prev => {
+      const filteredItem = prev.filter((materi: TListMateri) => materi.alatMusik === alatMusik);
+      const otherItem = prev.filter((materi: TListMateri) => materi.alatMusik !== alatMusik);
+      return filteredItem.concat(otherItem);
+    });
+    setFilterBy(prev => {
+      return {
+        ...prev,
+        alatMusik: alatMusik
+      }
+    })
+  }
+  const filterByDate = (reverse: boolean) => {
+    const sort = (a: TListMateri, b: TListMateri) => {
+      const dateA = new Date(a.data.createdAt).getTime();
+      const dateB = new Date(b.data.createdAt).getTime();
+      return reverse ? dateA - dateB : dateB - dateA;
+    }
+    handleFilteringMateri(sort);
+  }
   const filterByRating = (reverse: boolean) => {
-    setMateri(
-      prev => [...prev].sort((a: TListMateri, b: TListMateri) => {
-        const ratingA = a.data.rating.reduce((ac: number, cv: number) => ac + cv, 0) / a.data.rating.length
-        const ratingB = b.data.rating.reduce((ac: number, cv: number) => ac + cv, 0) / b.data.rating.length
-
-        return reverse ? ratingA - ratingB : ratingB - ratingA;
-      })
-    )
+    const sort = (a: TListMateri, b: TListMateri) => {
+      const ratingA = a.data.rating.reduce((ac: number, cv: number) => ac + cv, 0) / a.data.rating.length
+      const ratingB = b.data.rating.reduce((ac: number, cv: number) => ac + cv, 0) / b.data.rating.length
+      return reverse ? ratingA - ratingB : ratingB - ratingA;
+    }
+    handleFilteringMateri(sort);
+  }
+  const filterByPengunjung = (reverse: boolean) => {
+    const sort = (a: TListMateri, b: TListMateri) => {
+      const pengunjungA = a.data.pengunjung;
+      const pengunjungB = b.data.pengunjung;
+      return reverse ? pengunjungA - pengunjungB : pengunjungB - pengunjungA;
+    }
+    handleFilteringMateri(sort);
   }
   const filterByKesulitan = (kesulitan: string) => {
     setMateri(prev => {
-      const filteredItem = prev.filter((materi: TListMateri) => {
-        return materi.data.tingkatan === kesulitan;
-      })
-      const otherItem = prev.filter((materi: TListMateri) => {
-        return materi.data.tingkatan !== kesulitan;
-      })
+      const filteredItem = prev.filter((materi: TListMateri) => materi.data.tingkatan === kesulitan.toLowerCase());
+      const otherItem = prev.filter((materi: TListMateri) => materi.data.tingkatan !== kesulitan.toLowerCase());
       return filteredItem.concat(otherItem);
-    })
-  }
-  const filterByPengunjung = (reverse: boolean) => {
-    setMateri(
-      prev => [...prev].sort((a: TListMateri, b: TListMateri) => {
-        const pengunjungA = a.data.pengunjung;
-        const pengunjungB = b.data.pengunjung;
-
-        return reverse ? pengunjungA - pengunjungB : pengunjungB - pengunjungA;
-      })
-    )
-  }
-  const filterByAlatMusik = (e: any) => {
-    console.log(e);
-
-    // setMateri(prev => {
-    //   const filteredItem = prev.filter((materi: TListMateri) => {
-    //     return materi.alatMusik === alatMusik;
-    //   })
-    //   const otherItem = prev.filter((materi: TListMateri) => {
-    //     return materi.alatMusik !== alatMusik;
-    //   })
-    //   return filteredItem.concat(otherItem);
-    // })
-  }
+    });
+  };
 
 
-
-
-
-  const filterButtonClass = "w-fit px-3 py-1 rounded-md text-white cursor-pointer opacity-90 mt-1 shadow-sm truncate"
-  const radioButtonClass = "focus:ring-0 focus:border-none focus:ring-offset-0 me-2"
-
+  // handle radio button filter
   const handleRadioButton = (key: string) => {
+    if (key === "date_newest") {
+      filterByDate(false);
+    } else if (key === "date_oldest") {
+      filterByDate(true);
+    } else if (key === "rating_highest") {
+      filterByRating(false);
+    } else if (key === "rating_lowest") {
+      filterByRating(true);
+    } else if (key === "pengunjung_most") {
+      filterByPengunjung(false);
+    } else if (key === "pengunjung_least") {
+      filterByPengunjung(true);
+    }
     setFilterBy(prev => {
       return {
         ...prev,
@@ -138,10 +149,92 @@ const ListMateri = () => {
         pengunjung_least: false,
         [key]: true
       }
-    })
+    });
   }
 
-  const filter = (
+
+  // Components
+  const filterByOption = [
+    {
+      title: 'Tanggal Upload', data: [
+        { key: 'date_newest', text: 'Terbaru' }, { key: 'date_oldest', text: 'Terlama' }
+      ]
+    },
+    {
+      title: 'Rating', data: [
+        { key: 'rating_highest', text: 'Tertinggi' }, { key: 'rating_lowest', text: 'Terendah' }
+      ]
+    },
+    {
+      title: 'Pengunjung', data: [
+        { key: 'pengunjung_most', text: 'Terbanyak' }, { key: 'pengunjung_least', text: 'Tersedikit' }
+      ]
+    },
+  ]
+  const filter_alatMusik = (
+    <div>
+      <div>
+        Alat Musik
+      </div>
+      <div>
+        <Listbox value={listAlatMusik} onChange={() => setListAlatMusik}>
+          <Listbox.Button className="w-full py-1 text-start px-3 border border-gray-600 rounded-md cursor-pointer flex justify-between shadow-sm">
+            <div>
+              {filterBy.alatMusik.charAt(0).toUpperCase() + filterBy.alatMusik.slice(1)}
+            </div>
+            <ChevronDownIcon className="w-4 h-4 mt-auto mb-auto" />
+          </Listbox.Button>
+          <Transition
+            enter="transition-transform origin-top duration-300"
+            enterFrom="scale-y-0"
+            enterTo="scale-y-100"
+            leave="transition-transform origin-top duration-300"
+            leaveFrom="scale-y-100"
+            leaveTo="scale-y-0">
+            <Listbox.Options className="border border-gray-400 rounded-b-md mt-2 cursor-pointer shadow-lg absolute bg-white w-full opacity-90">
+              {listAlatMusik.map((alatMusik, index) => (
+                <Listbox.Option key={index} value={alatMusik.id}
+                  onClick={() => filterByAlatMusik(alatMusik.id)}
+                  className={`px-3 py-1 hover:bg-gray-100 ${index !== listAlatMusik.length - 1 && "border-b border-gray-400"} ${filterBy.alatMusik === alatMusik.id && "bg-gray-200"}`}>
+                  {alatMusik.id.charAt(0).toUpperCase() + alatMusik.id.slice(1) + (alatMusik.totalMateri !== -1 ? ` (${alatMusik.totalMateri})` : '')}
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
+          </Transition>
+        </Listbox>
+      </div>
+    </div>
+  )
+  const filter_data = (
+    <div>
+      {filterByOption.map((items, index) => (
+        <div className="mt-3">
+          <div>
+            {items.title}
+          </div>
+          {items.data.map((item, index) => (
+            <div className="" onClick={() => handleRadioButton(item.key)}>
+              <input className="focus:ring-0 focus:border-none focus:ring-offset-0 me-2" type="radio" checked={!!filterBy[item.key as keyof TFilterBy]} onChange={() => handleRadioButton(item.key)} />
+              <label className="text-gray-800">{item.text}</label>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+  const filter_kesulitan = (
+    <div>
+      <div>
+        Kesulitan
+      </div>
+      {[['Pemula', 'green'], ['Menengah', 'orange'], ['Sulit', 'red']].map((item, index) => (
+        <div className={`w-fit px-3 py-1 rounded-md text-white cursor-pointer opacity-90 mt-1 shadow-sm truncate bg-${item[1]}-400 hover:bg-${item[1]}-600`} onClick={() => filterByKesulitan(item[0])}>
+          {item[0]}
+        </div>
+      ))}
+    </div>
+  )
+  const filter_menu = (
     <div className="">
       <div className="flex">
         <FunnelIcon className="w-4 h-4 mt-auto mb-auto me-1" />
@@ -149,102 +242,29 @@ const ListMateri = () => {
           Filter
         </div>
       </div>
-
       <div className="border border-gray-400 rounded-md px-5 pe-8 py-2 pb-4 shadow-md mt-1">
 
         <div>
-          <div>
-            Alat Musik
-          </div>
-          <div>
-            <Listbox value={listAlatMusik.key}>
-              <Listbox.Button className="w-full py-1 text-start px-3 border border-gray-600 rounded-md cursor-pointer flex justify-between shadow-sm">
-                <div>
-                  Semua
-                </div>
-                <ChevronDownIcon className="w-4 h-4 mt-auto mb-auto" />
-              </Listbox.Button>
-              <Transition
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <Listbox.Options className="border border-gray-400 rounded-b-md mt-2 cursor-pointer shadow-sm">
-                  {listAlatMusik.map((alatMusik, index) => (
-                    <div key={index}
-                      // onClick={() => filterByAlatMusik(alatMusik.id)}
-                      className={`px-3 py-1 hover:bg-gray-100 ${index !== listAlatMusik.length - 1 && "border-b border-gray-400"} ${filterBy.alatMusik === alatMusik.data.id && "bg-gray-200"}`}>
-                      {alatMusik.data.id}
-                    </div>
-                  ))}
-                </Listbox.Options>
-              </Transition>
-            </Listbox>
+          {filter_alatMusik}
+        </div>
 
-
-          </div>
+        <div>
+          {filter_data}
         </div>
 
         <div className="mt-2">
-          <div>
-            Tanggal Upload
-          </div>
-          <div className="" onClick={() => handleRadioButton('date_newest')}>
-            <input className={radioButtonClass} type="radio" checked={filterBy.date_newest} />
-            <label className="text-gray-800">Terbaru</label>
-          </div>
-          <div onClick={() => handleRadioButton('date_oldest')}>
-            <input className={radioButtonClass} type="radio" checked={filterBy.date_oldest} />
-            <label className="text-gray-800">Terlama</label>
-          </div>
-        </div>
-
-        <div className="mt-2">
-          <div>
-            Rating
-          </div>
-          <div className="" onClick={() => handleRadioButton('rating_highest')}>
-            <input className={radioButtonClass} type="radio" checked={filterBy.rating_highest} />
-            <label className="text-gray-800">Tertinggi</label>
-          </div>
-          <div onClick={() => handleRadioButton('rating_lowest')}>
-            <input className={radioButtonClass} type="radio" checked={filterBy.rating_lowest} />
-            <label className="text-gray-800">Terendah</label>
-          </div>
-        </div>
-
-        <div className="mt-2">
-          <div>
-            Pengunjung
-          </div>
-          <div className="" onClick={() => handleRadioButton('pengunjung_most')}>
-            <input className={radioButtonClass} type="radio" checked={filterBy.pengunjung_most} />
-            <label className="text-gray-800">Terbanyak</label>
-          </div>
-          <div onClick={() => handleRadioButton('pengunjung_least')}>
-            <input className={radioButtonClass} type="radio" checked={filterBy.pengunjung_least} />
-            <label className="text-gray-800">Tersedikit</label>
-          </div>
-        </div>
-
-        <div className="mt-2">
-          <div>
-            Kesulitan
-          </div>
-          <div className={`${filterButtonClass} bg-green-400 hover:bg-green-600`} onClick={() => filterByKesulitan("pemula")}>
-            Pemula
-          </div>
-          <div className={`${filterButtonClass} bg-orange-400 hover:bg-orange-600`} onClick={() => filterByKesulitan("menengah")}>
-            Menengah
-          </div>
-          <div className={`${filterButtonClass} bg-red-400 hover:bg-red-600`} onClick={() => filterByKesulitan("sulit")}>
-            Sulit
-          </div>
+          {filter_kesulitan}
         </div>
 
       </div>
+    </div >
+  )
+  const button_buat_materi = (
+    <div className="group relative py-2 overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer">
+      <div className="absolute inset-0 w-3 bg-green-400 transition-all duration-500 ease-out group-hover:w-full"></div>
+      <span className="relative text-gray-800 group-hover:text-white transition-colors duration-300">Buat Materi</span>
     </div>
   )
-
 
   return (
     <div className="w-full max-w-7xl transform ms-auto me-auto mt-20">
@@ -252,7 +272,7 @@ const ListMateri = () => {
         <div className="text-center text-2xl font-semibold text-gray-700">
           Materi
         </div>
-        <div className="flex ms-20 mt-5">
+        <div className="flex mt-5 justify-end pe-20">
 
           <div className="w-4/6 p-4">
             {materi.map((materi, index) => (
@@ -264,11 +284,9 @@ const ListMateri = () => {
           </div>
 
           <div className="p-4">
-            <div className="px-3 py-1.5 mb-3 rounded-md text-white text-lg text-center bg-green-400 hover:bg-green-500 shadow-md cursor-pointer">
-              Buat Materi
-            </div>
-            <div>
-              {filter}
+            {button_buat_materi}
+            <div className="mt-2">
+              {filter_menu}
             </div>
           </div>
 

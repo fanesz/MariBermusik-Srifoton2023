@@ -32,23 +32,23 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
         ) : (<></>)}
       </div>
       <div className="font-extrabold">·</div>
-      <div className="mt-auto mb-auto text-sm  text-gray-700">
+      <div className="mt-auto mb-auto md:text-sm text-xs text-gray-700">
         {convertCreatedAt(materi.data.createdAt)}
       </div>
     </div>
   )
   const title_desc = (
-    <div>
-      <div className="text-xl font-medium">
+    <div className="h-full">
+      <div className="text-xl font-medium h-2/6 truncate">
         {materi.data.nama}
       </div>
-      <div className="text-gray-800">
+      <div className="text-gray-800 h-4/6 overflow-scroll md:text-base text-sm">
         {materi.data.deskripsi}
       </div>
     </div>
   )
   const footer = (
-    <div className="flex gap-3">
+    <div className="flex gap-2.5">
       <div className="flex gap-1">
         {materi.data.pengunjung}
         <EyeIcon className="h-3.5 w-3.5 mt-auto mb-auto" />
@@ -63,7 +63,7 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
   )
   const go_button = (
     <div className="flex h-full justify-end">
-      <div className="bg-green-400 flex w-12 rounded-e-md justify-end hover:w-1/2 hover:transition-all ease-in-out duration-300 cursor-pointer" onClick={() => navigate(`/materi/${materi.alatMusik}/${materi.materiID}`)}>
+      <div className="bg-green-400 flex w-12 rounded-e-md justify-end md:hover:w-1/2 hover:transition-all ease-in-out duration-300 cursor-pointer" onClick={() => navigate(`/materi/${materi.alatMusik}/${materi.materiID}`)}>
         <ArrowRightIcon className="h-6 w-6 mt-auto mb-auto me-1 fill-white" />
       </div>
     </div>
@@ -75,7 +75,7 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
         {image}
       </div>
 
-      <div className="px-6 w-3/5">
+      <div className="ps-6 w-3/5">
         <div className="h-1/5 pt-2">
           {tingkatan}
         </div>
