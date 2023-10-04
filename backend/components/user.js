@@ -54,7 +54,8 @@ export const createUser = async (req, res) => {
       username: userInput.username,
       terimaEmail: userInput.terimaEmail,
       img: "",
-      akses: "user"
+      akses: "user",
+      createdAt: new Date(),
     });
     res.json({ status: true })
   } catch (error) {
