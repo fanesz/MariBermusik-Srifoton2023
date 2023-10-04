@@ -4,6 +4,9 @@ import { getUserByLoginID, updateUser, userIsLogin } from '../../api/services';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import LoaderAnimation from '../../assets/LoaderAnimation';
+import { Alert } from '@material-tailwind/react';
+import Input from '../../components/_shared/Input';
+import TransitionIn from '../../components/_shared/TransitionIn';
 
 type TUser = {
   email: string,
@@ -86,7 +89,7 @@ const Setting = () => {
   }
   const handleTerimaEmail = () => {
     setUser(prev => ({ ...prev, terimaEmail: !prev.terimaEmail }));
-    if(oldData.username !== user.username) return setHasChanged(true);
+    if (oldData.username !== user.username) return setHasChanged(true);
     setHasChanged(oldData.terimaEmail !== !user.terimaEmail ? true : false);
   }
 
@@ -108,57 +111,47 @@ const Setting = () => {
   }
 
   return (
-    <div className='w-full max-w-lg transform ms-auto me-auto mt-20'>
-      <div className='rounded-md p-5 border border-gray-400 shadow-md'>
+    <TransitionIn type='fade' from='bottom' duration={1000}>
+      <div className='w-full max-w-lg transform ms-auto me-auto mt-20'>
+        <div className='rounded-md p-5 border border-gray-400 shadow-md'>
 
-        <div className="text-center text-xl font-semibold text-gray-700">
-          Setting
-        </div>
+          <div className="text-center text-xl font-semibold text-gray-700">
+            Setting
+          </div>
 
-        <div className='mt-5'>
-          <EnvelopeIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-          <input type='email' spellCheck={false}
-            className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10 text-gray-700 bg-gray-300'
-            placeholder='Email'
-            value={user.email} disabled />
-        </div>
+          <div className='mt-5'>
+            <Input type='email' label='Email' icon={<EnvelopeIcon />} value={user.email} disabled={true} />
+          </div>
+          <div className='mt-4 mb-2'>
+            <Input type='text' label='Username' icon={<UserCircleIcon />}
+              value={user.username} onChange={handleSetUsername} onKeyDown={handleUpdateSetting} />
+          </div>
 
-        <div className='mt-4 mb-2'>
-          <UserCircleIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-          <input type='text' spellCheck={false}
-            className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-            placeholder='Username'
-            value={user.username} onChange={handleSetUsername} />
-        </div>
+          {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
+          {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
 
-        <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
-          {errmsg}
-        </div>
-        <div className={`text-sm text-green-500 ${successmsg.length > 0 ? 'block' : 'hidden'}`}>
-          {successmsg}
-        </div>
+          <div className='mt-4 flex cursor-pointer'>
+            <input type='checkbox'
+              className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
+              checked={user.terimaEmail} onChange={handleTerimaEmail} />
+            <label
+              className='ms-2 text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
+              onClick={handleTerimaEmail}>
+              Saya ingin terima informasi terbaru terkait MariBermusik melalui Email.
+            </label>
+          </div>
 
-        <div className='mt-4 flex cursor-pointer'>
-          <input type='checkbox'
-            className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
-            checked={user.terimaEmail} onChange={handleTerimaEmail} />
-          <label
-            className='ms-2 text-gray-700 text-sm hover:text-gray-800 cursor-pointer'
-            onClick={handleTerimaEmail}>
-            Saya ingin terima informasi terbaru terkait MariBermusik melalui Email.
-          </label>
-        </div>
+          <div className='mt-5'>
+            <button
+              className={`w-full p-2 rounded-lg text-white font-medium focus:outline-none h-10 ${hasChanged ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-500 hover:bg-gray-600'}`}
+              onClick={handleUpdateSetting} disabled={!hasChanged}>
+              {loader.updateSetting ? <LoaderAnimation className='w-2 h-2' /> : "Update Setting"}
+            </button>
+          </div>
 
-        <div className='mt-5'>
-          <button
-            className={`w-full p-2 rounded-lg text-white font-medium focus:outline-none h-10 ${hasChanged ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-500 hover:bg-gray-600'}`}
-            onClick={handleUpdateSetting} disabled={!hasChanged}>
-            {loader.updateSetting ? <LoaderAnimation className='w-2 h-2' /> : "Update Setting"}
-          </button>
         </div>
-
       </div>
-    </div>
+    </TransitionIn>
   )
 }
 export default Setting

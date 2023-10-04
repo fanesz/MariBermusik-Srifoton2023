@@ -3,8 +3,12 @@ import Footer from "../../components/_shared/Footer"
 import TopSection from "../../components/Home/TopSection";
 import MainSection from "../../components/Home/MainSection";
 import CategoryPreview from "../../components/Home/CategoryPreview";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+
+
+
 
   return (
     <>
@@ -17,6 +21,7 @@ const Home = () => {
         <div>
           <MainSection />
         </div>
+
         <div className="mt-16 xl:w-[50vw] ms-auto me-auto">
           <CategoryPreview />
         </div>

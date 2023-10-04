@@ -5,6 +5,9 @@ import { TListMateri } from "../../types/Materi";
 import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
+import Input from "../../components/_shared/Input";
+import { Button } from "@material-tailwind/react";
+import TransitionIn from "../../components/_shared/TransitionIn";
 
 type TCurrentValue = {
   id: string,
@@ -41,32 +44,25 @@ const ListMateri = () => {
   const [cariMateri, setCariMateri] = useState('');
 
 
-  // mendapatkan semua data materi
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getMateriByAlatMusik();
-      if (res.status) {
-        const result = res.data.reduce((ac: TListMateri[], cv: TCurrentValue) => {
-          return ac.concat(cv.value);
-        }, []);
-        setMateri(result);
-      }
+  // mendapatkan semua data materi dan list alat musik
+  const fetchMateri = async () => {
+    const res = await getMateriByAlatMusik();
+    if (res.status) {
+      const result = res.data.reduce((ac: TListMateri[], cv: TCurrentValue) => {
+        return ac.concat(cv.value);
+      }, []);
+      setMateri(result);
     }
-    fetchData();
-  }, []);
-
-
-  // mendapatkan semua data alat musik dan total materi
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getAlatMusikList();
-      if (res.status) {
-        setListAlatMusik([{ id: 'semua', totalMateri: -1 }, ...res.data]);
-      }
+  }
+  const fetchListAlatMusik = async () => {
+    const res = await getAlatMusikList();
+    if (res.status) {
+      setListAlatMusik([{ id: 'semua', totalMateri: -1 }, ...res.data]);
     }
-    fetchData();
-    console.log(materi);
-
+  }
+  useEffect(() => {
+    fetchMateri();
+    fetchListAlatMusik();
   }, [])
 
 
@@ -368,27 +364,42 @@ const ListMateri = () => {
           </div>
 
           <div className="md:w-4/6 px-4">
-            <div className="border border-gray-400 shadow rounded-md relative">
-              <MagnifyingGlassIcon className="absolute top-1/2 transform -translate-y-1/2 w-6 h-6 ms-3 fill-gray-700" />
-              <input className="w-full ps-10 py-1.5 text-gray-800 focus:border-none focus:outline-none rounded-md" placeholder="Cari Materi" spellCheck={false}
-                value={cariMateri} onChange={handleSetCariMateri} />
+            <div className="shadow-md">
+              <TransitionIn
+                type='fade'
+                duration={1500}>
+                <Input type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
+                  value={cariMateri} onChange={handleSetCariMateri} />
+              </TransitionIn>
             </div>
-            <div className="mt-4">
-              {materi.map((materi, index) => (
-                <MateriPreview key={index}
-                  className='mb-5'
-                  materi={materi}
-                />
-              ))}
+            <div className="mt-5">
+              <TransitionIn
+                type='fade'
+                from='bottom'
+                duration={1500}>
+                {materi.map((materi, index) => (
+                  <MateriPreview key={index}
+                    className='mb-5'
+                    materi={materi}
+                  />
+                ))}
+              </TransitionIn>
+
             </div>
           </div>
 
           {/* desktop view */}
-          <div className="p-4 md:block hidden">
-            {button_buat_materi}
-            <div className="mt-2">
-              {filter_menu}
-            </div>
+          <div className="px-4 md:block hidden">
+            <TransitionIn
+              type='fade'
+              from='right'
+              duration={1500}>
+              {button_buat_materi}
+              <div className="mt-2">
+                {filter_menu}
+              </div>
+            </TransitionIn>
+
           </div>
 
         </div>

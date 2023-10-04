@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import LoaderAnimation from "../../assets/LoaderAnimation";
 import { resetPassword, validatorVerificationCode } from "../../api/services";
+import { Alert } from "@material-tailwind/react";
+import Input from "../../components/_shared/Input";
 
 const ResetPassword = () => {
 
@@ -95,27 +97,18 @@ const ResetPassword = () => {
   const Form_Reset_Password = (
     <div className={`${isVerified ? 'block' : 'hidden'}`}>
       <div className='mt-6 mb-2'>
-        <KeyIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='password' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Password'
-          value={password} onChange={handleSetPassword} />
+        <Input type='password' label='Password' icon={<KeyIcon />}
+          value={password} onChange={handleSetPassword} onKeyDown={handleResetPassword} />
       </div>
 
       <div className='mt-4 mb-2'>
-        <KeyIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='password' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Konfirmasi Password'
-          value={konfirmasiPassword} onChange={handleSetKonfirmasiPassword} />
+        <Input type='password' label='Konfirmasi Password' icon={<KeyIcon />}
+          value={konfirmasiPassword} onChange={handleSetKonfirmasiPassword} onKeyDown={handleResetPassword} />
       </div>
 
-      <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {errmsg}
-      </div>
-      <div className={`text-sm text-green-500 ${successmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {successmsg}
-      </div>
+      {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
+      {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+      
       <div className='mt-4'>
         <button
           className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'

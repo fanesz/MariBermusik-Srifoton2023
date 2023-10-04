@@ -4,6 +4,8 @@ import { Dispatch, Fragment, useState } from 'react';
 import { createUser, sendVerificationCode, setLogin } from '../../api/services';
 import LoaderAnimation from '../../assets/LoaderAnimation';
 import { removeLocalStorage, setLocalStorage } from '../../utils/LocalStorage';
+import { Alert } from '@material-tailwind/react';
+import Input from './Input';
 const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIsLogin: Dispatch<boolean> }) => {
 
   const { isOpen, setModal, setIsLogin } = props;
@@ -135,35 +137,20 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
     }
   }
 
-  const handleKeyboardEvent = (e: any, action: Function) => {
-    if (e.key === 'Enter') {
-      action();
-    }
-  }
 
   // Components
   const Tab_SignIn = (
     <Tab.Panel className="focus:outline-none">
       <div className=''>
-        <EnvelopeIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='email' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Email'
-          value={email} onChange={handleSetEmail} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignIn)} />
+        <Input type='email' label='Email' icon={<EnvelopeIcon />}
+          value={email} onChange={handleSetEmail} onKeyDown={handleSignIn} />
       </div>
       <div className='mt-4 mb-2'>
-        <KeyIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='password' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Password'
-          value={password} onChange={handleSetPassword} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignIn)} />
+        <Input type='password' label='Password' icon={<KeyIcon />}
+          value={password} onChange={handleSetPassword} onKeyDown={handleSignIn} />
       </div>
-      <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {errmsg}
-      </div>
-      <div className={`text-sm text-green-500 ${successmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {successmsg}
-      </div>
+      {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
+      {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
       <div className='mt-4'>
         <button
           className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'
@@ -192,33 +179,20 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
   )
   const Tab_SignUp = (
     <Tab.Panel className="focus:outline-none">
-      <div className=''>
-        <EnvelopeIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='email' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Email'
-          value={email} onChange={handleSetEmail} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignUp)} />
+      <div>
+        <Input type='email' label='Email' icon={<EnvelopeIcon />}
+          value={email} onChange={handleSetEmail} onKeyDown={handleSignUp} />
       </div>
       <div className='mt-4'>
-        <UserCircleIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='text' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Username'
-          value={username} onChange={handleSetUsername} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignUp)} />
+        <Input type='text' label='Username' icon={<UserCircleIcon />}
+          value={username} onChange={handleSetUsername} onKeyDown={handleSignUp} />
       </div>
       <div className='mt-4 mb-2'>
-        <KeyIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='password' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Password'
-          value={password} onChange={handleSetPassword} onKeyDown={(e: any) => handleKeyboardEvent(e, handleSignUp)} />
+        <Input type='password' label='Password' icon={<KeyIcon />}
+          value={password} onChange={handleSetPassword} onKeyDown={handleSignUp} />
       </div>
-      <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {errmsg}
-      </div>
-      <div className={`text-sm text-green-500 ${successmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {successmsg}
-      </div>
+      {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
+      {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
       <div className='mt-4 flex cursor-pointer'>
         <input type='checkbox'
           className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
@@ -260,11 +234,8 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
   const lupa_password_modal = (
     <div>
       <div className='mt-4'>
-        <EnvelopeIcon className='h-5 absolute mt-3 ms-3 opacity-50' />
-        <input type='email' spellCheck={false}
-          className='w-full border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 ps-10'
-          placeholder='Email'
-          value={email} onChange={handleSetEmail} onKeyDown={(e: any) => handleKeyboardEvent(e, handleLupaPassword)} />
+        <Input type='email' label='Email' icon={<EnvelopeIcon />}
+          value={email} onChange={handleSetEmail} onKeyDown={handleSignUp} />
       </div>
       <div
         className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer mt-1 text-right me-1 mb-2'
@@ -324,7 +295,7 @@ const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIs
                 </Dialog.Title>
 
                 <div className="rounded-md mt-2 bg-white bg-opacity-70 p-5 ">
-                  <div className="">
+                  <div>
                     {lupaPassword ? lupa_password_modal : Login_Logout_Tab}
                   </div>
                 </div>

@@ -1,5 +1,7 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { getAlatMusikImg } from "../../utils/AlatMusikList";
+import TransitionIn from "../_shared/TransitionIn";
+import { useState } from "react";
 
 const carouselItems = [
   {
@@ -28,38 +30,46 @@ const carouselItems = [
   },
 ];
 
-const CategoryPreview = () => {
-  return (
-    <div className="flex justify-center items-center flex-col">
-      <h1 className="text-3xl font-bold mb-4">Category List</h1>
-      <p className="text-lg font-normal mb-8">Here is the list of services category we have, look it up!</p>
 
-      <Carousel className="rounded-lg">
-        {carouselItems.map((item, index) => (
-          <div className="relative" key={index}>
-            <img src={item.imageSrc} alt={item.altText} className="object-cover w-full rounded-md h-96" />
-            <div className="absolute inset-0 grid w-full h-full place-items-center bg-black/75">
-              <div className="w-3/4 text-center md:w-2/4">
-                <Typography variant="h1" color="white" className="mb-2 text-sm md:text-base lg:text-lg">
-                  {item.title}
-                </Typography>
-                <Typography variant="lead" color="white" className="mb-4 text-xs md:text-sm opacity-80">
-                  {item.description}
-                </Typography>
-                <div className="flex justify-center gap-2">
-                  <Button size="sm" color="white">
-                    {item.buttonText}
-                  </Button>
-                  <Button size="sm" color="white" variant="text">
-                    {item.buttonVariant}
-                  </Button>
+const CategoryPreview = () => {
+
+  return (
+    <TransitionIn
+      onScreen={300}
+      type="fade"
+      from="bottom">
+      <div className="flex justify-center items-center flex-col">
+        <h1 className="text-3xl font-bold mb-4">Category List</h1>
+        <p className="text-lg font-normal mb-8">Here is the list of services category we have, look it up!</p>
+
+        <Carousel className="rounded-lg">
+          {carouselItems.map((item, index) => (
+            <div className="relative" key={index}>
+              <img src={item.imageSrc} alt={item.altText} className="object-cover w-full rounded-md h-96" />
+              <div className="absolute inset-0 grid w-full h-full place-items-center bg-black/75">
+                <div className="w-3/4 text-center md:w-2/4">
+                  <Typography variant="h1" color="white" className="mb-2 text-sm md:text-base lg:text-lg">
+                    {item.title}
+                  </Typography>
+                  <Typography variant="lead" color="white" className="mb-4 text-xs md:text-sm opacity-80">
+                    {item.description}
+                  </Typography>
+                  <div className="flex justify-center gap-2">
+                    <Button size="sm" color="white">
+                      {item.buttonText}
+                    </Button>
+                    <Button size="sm" color="white" variant="text">
+                      {item.buttonVariant}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </Carousel>
-    </div>
+          ))}
+        </Carousel>
+      </div>
+    </TransitionIn>
+
   );
 };
 
