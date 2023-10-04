@@ -25,7 +25,7 @@ const Profile = () => {
     const fetchParamUserData = async (id: string) => {
       const res = await getUUIDByUsername(id);
       if (res.status) {
-        getMateri(res.data);
+        getMateri(res.data.id);
       }
     }
     if (!id) {

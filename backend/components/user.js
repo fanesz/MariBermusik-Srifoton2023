@@ -26,11 +26,11 @@ export const getUserByLoginID = async (req, res) => {
 }
 
 
-export const getUUIDByUsername = async (req, res) => {
+export const getUserByUsername = async (req, res) => {
   try { // params: { username }
     const user = (await db_user.all()).find(u => u.value.username === req.query.username);
     if (user?.id) {
-      return res.json({ status: true, data: user.id });
+      return res.json({ status: true, data: user });
     }
     res.json({ status: false });
   } catch (error) {
