@@ -1,8 +1,8 @@
 import { Input as MaterialInput } from "@material-tailwind/react"
 import { Dispatch, SetStateAction } from "react"
 
-const Input = (props: { type: string, label: string, icon: any, value: string, onChange?: Dispatch<SetStateAction<any>>, onKeyDown?: any, disabled?: boolean }) => {
-  const { type, label, icon, value, onChange, onKeyDown, disabled } = props
+const Input = (props: { className?:string, type: string, label: string, icon: any, value: string, onChange?: Dispatch<SetStateAction<any>>, onKeyDown?: any, disabled?: boolean }) => {
+  const { className, type, label, icon, value, onChange, onKeyDown, disabled } = props
 
   const handleKeyboardEvent = (e: any, action: Function) => {
     if (e.key === 'Enter') {
@@ -12,7 +12,7 @@ const Input = (props: { type: string, label: string, icon: any, value: string, o
   
   return (
     <MaterialInput
-      className='focus:outline-none focus:ring-0'
+      className={`focus:outline-none focus:ring-0 ${className}`}
       type={type}
       spellCheck={false}
       label={label}

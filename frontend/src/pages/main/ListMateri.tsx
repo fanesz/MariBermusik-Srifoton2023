@@ -364,19 +364,14 @@ const ListMateri = () => {
           </div>
 
           <div className="md:w-4/6 px-4">
-            <div className="shadow-md">
-              <TransitionIn
-                type='fade'
-                duration={1500}>
-                <Input type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
+            <div className="">
+              <TransitionIn duration={1500}>
+                <Input className='shadow-md' type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
                   value={cariMateri} onChange={handleSetCariMateri} />
               </TransitionIn>
             </div>
             <div className="mt-5">
-              <TransitionIn
-                type='fade'
-                from='bottom'
-                duration={1500}>
+              <TransitionIn from='bottom' duration={1500}>
                 {materi.map((materi, index) => (
                   <MateriPreview key={index}
                     className='mb-5'
@@ -390,10 +385,7 @@ const ListMateri = () => {
 
           {/* desktop view */}
           <div className="px-4 md:block hidden">
-            <TransitionIn
-              type='fade'
-              from='right'
-              duration={1500}>
+            <TransitionIn from='right' duration={1500}>
               {button_buat_materi}
               <div className="mt-2">
                 {filter_menu}

@@ -5,6 +5,7 @@ import LoaderAnimation from "../../assets/LoaderAnimation";
 import { resetPassword, validatorVerificationCode } from "../../api/services";
 import { Alert } from "@material-tailwind/react";
 import Input from "../../components/_shared/Input";
+import TransitionIn from "../../components/_shared/TransitionIn";
 
 const ResetPassword = () => {
 
@@ -108,7 +109,7 @@ const ResetPassword = () => {
 
       {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
       {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
-      
+
       <div className='mt-4'>
         <button
           className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'
@@ -120,29 +121,32 @@ const ResetPassword = () => {
   )
 
   return (
-    <div className="w-full max-w-lg transform ms-auto me-auto mt-20">
-      <div className="rounded-md p-5 border border-gray-400 shadow-md">
+    <TransitionIn from='bottom' duration={1000}>
+      <div className="w-full max-w-lg transform ms-auto me-auto mt-20">
+        <div className="rounded-md p-5 border border-gray-400 shadow-md">
 
-        <div className="text-center text-xl font-semibold text-gray-700">
-          Reset Password
-        </div>
+          <div className="text-center text-xl font-semibold text-gray-700">
+            Reset Password
+          </div>
 
-        <div className={`${!loader.validasiKode ? 'block' : 'hidden'}`}>
-          {Form_Reset_Password}
+          <div className={`${!loader.validasiKode ? 'block' : 'hidden'}`}>
+            {Form_Reset_Password}
 
-          <div className={`${isVerified ? 'hidden' : 'block'}`}>
-            <div className="text-center mt-5 text-red-500 text-lg font-semibold">
-              Verification Code INVALID, please resubmit.
+            <div className={`${isVerified ? 'hidden' : 'block'}`}>
+              <div className="text-center mt-5 text-red-500 text-lg font-semibold">
+                Verification Code INVALID, please resubmit.
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={`${!loader.validasiKode ? 'hidden' : 'block'} mt-5`}>
-          <LoaderAnimation className='w-2 h-2' color='bg-black' />
-        </div>
+          <div className={`${!loader.validasiKode ? 'hidden' : 'block'} mt-5`}>
+            <LoaderAnimation className='w-2 h-2' color='bg-black' />
+          </div>
 
+        </div>
       </div>
-    </div>
+    </TransitionIn>
+
   )
 }
 export default ResetPassword

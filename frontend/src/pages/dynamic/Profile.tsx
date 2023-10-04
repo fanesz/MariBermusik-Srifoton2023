@@ -44,7 +44,7 @@ const Profile = () => {
 
 
   return (
-    <TransitionIn type='fade' from='bottom' duration={1000}>
+    <TransitionIn from='bottom' duration={1000}>
       <div className='w-full max-w-5xl transform ms-auto me-auto mt-20'>
         <div className='rounded-md p-5 border border-gray-400 shadow-md'>
 
