@@ -107,7 +107,7 @@ const Materi = () => {
   )
   const materi_section = materi?.data && (
     <div>
-      <TransitionIn from="bottom" duration={1000}>
+      <TransitionIn from="bottom">
         <div className="mt-3 pb-3 border-b border-gray-300">
           <div className="text-2xl mb-2 font-medium text-gray-800">
             Deskripsi

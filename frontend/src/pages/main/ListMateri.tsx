@@ -335,7 +335,7 @@ const ListMateri = () => {
   )
 
   return (
-    <div className="w-full max-w-7xl transform ms-auto me-auto mt-20">
+    <div className="w-full max-w-7xl transform ms-auto me-auto md:mt-20 mt-10">
       <div>
         <div className="text-center text-2xl font-semibold text-gray-700">
           Materi
@@ -346,25 +346,28 @@ const ListMateri = () => {
           <CreateMateriModal isOpen={createMateriModal} setModal={setCreateMateriModal} />
 
           {/* phone view */}
-          <div className="p-4 md:hidden flex gap-5 px-5">
-            <div className="w-4/5">
-              {button_buat_materi}
-            </div>
-            <div className="w-1/5">
-              <div
-                className="flex sm:ps-5 gap-2 h-full rounded-md bg-gray-300 cursor-pointer"
-                onClick={() => setFilterModal(true)}>
-                <FunnelIcon className="w-5 h-5 my-auto sm:mx-0 mx-auto fill-gray-700" />
-                <div className="mt-auto mb-auto sm:block hidden text-gray-700">
-                  Filter
+
+          <TransitionIn>
+            <div className="p-4 md:hidden flex gap-5 px-5">
+              <div className="w-4/5">
+                {button_buat_materi}
+              </div>
+              <div className="w-1/5">
+                <div
+                  className="flex sm:ps-5 gap-2 h-full rounded-md bg-gray-300 cursor-pointer"
+                  onClick={() => setFilterModal(true)}>
+                  <FunnelIcon className="w-5 h-5 my-auto sm:mx-0 mx-auto fill-gray-700" />
+                  <div className="mt-auto mb-auto sm:block hidden text-gray-700">
+                    Filter
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </TransitionIn>
 
           <div className="md:w-4/6 px-4">
-            <div className="">
-              <TransitionIn duration={1500}>
+            <div>
+              <TransitionIn>
                 <Input className='shadow-md' type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
                   value={cariMateri} onChange={handleSetCariMateri} />
               </TransitionIn>
@@ -385,7 +388,7 @@ const ListMateri = () => {
 
           {/* desktop view */}
           <div className="px-4 md:block hidden">
-            <TransitionIn from='right' duration={1500}>
+            <TransitionIn from='right'>
               {button_buat_materi}
               <div className="mt-2">
                 {filter_menu}
@@ -396,7 +399,7 @@ const ListMateri = () => {
 
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

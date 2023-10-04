@@ -79,8 +79,8 @@ const Profile = () => {
   )
 
   return (
-    <TransitionIn from='bottom' duration={1000}>
-      <div className='w-full max-w-5xl transform ms-auto me-auto mt-20 px-5'>
+    <TransitionIn from='bottom'>
+      <div className='w-full max-w-5xl transform ms-auto me-auto md:mt-20 mt-10 px-5'>
         <div className='rounded-md p-5 border border-gray-400 shadow-md'>
 
           {listMateri.length !== 0 ? (
