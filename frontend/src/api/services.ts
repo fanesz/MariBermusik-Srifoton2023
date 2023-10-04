@@ -13,7 +13,7 @@ const param = (paramArr: string[][]) => {
   let params = "";
   for (let i = 0; i < paramArr.length; i++) {
     if (paramArr[i][1] === '') continue;
-    params += `?${paramArr[i][0]}=${paramArr[i][1]}`
+    params += `${i===0?'?':'&'}${paramArr[i][0]}=${paramArr[i][1]}`
   }
   return params;
 }
