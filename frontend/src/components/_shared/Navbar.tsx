@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
 import { getLocalStorage, removeLocalStorage } from "../../utils/LocalStorage";
 import { getUserByLoginID, setLogout, userIsLogin } from "../../api/services";
+import { TUser } from "../../types/Types";
+import axios from "axios";
+import { isImgurLinkValid } from "../../utils/utils";
 
 type TMenu = {
   nama: string,
@@ -22,7 +25,7 @@ const Navbar = () => {
     { nama: "About", link: "/about" }
   ]
 
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState<TUser>({} as TUser);
   const [isLogin, setIsLogin] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const navigate = useNavigate();
@@ -38,13 +41,19 @@ const Navbar = () => {
   }, []);
 
 
+
   // mendapatkan username dari user yang login
   useEffect(() => {
     const fetchData = async () => {
       const res = await getUserByLoginID();
-      
       if (res.status) {
-        setUsername(res.data.user.username);
+        setUser({
+          email: res.data.user.email,
+          password: res.data.user.password,
+          username: res.data.user.username,
+          terimaEmail: res.data.user.terimaEmail,
+          img: isImgurLinkValid(res.data.user.img) ? res.data.user.img : profile
+        });
       }
     }
     fetchData();
@@ -117,7 +126,7 @@ const Navbar = () => {
             <div className={`${isLogin ? 'block' : 'hidden'} border-t border-white border-opacity-50`}>
               <Menu.Item>
                 <Link to={"/profile"} className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 cursor-pointer text-center">
-                  {username}
+                  {user.username}
                 </Link>
               </Menu.Item>
               <Menu.Item>
@@ -158,7 +167,7 @@ const Navbar = () => {
       <div className={`${isLogin ? 'flex' : 'hidden'}`}>
         <Menu as="div" className="relative z-10">
           <Menu.Button as="button" className="">
-            <img className="2xl:h-[4.5vh] md:h-12 hover:scale-105 transition-all" id="profile" src={profile} />
+            <img className="2xl:h-[4.5vh] md:h-12 hover:scale-105 transition-all  rounded-full" src={user.img} />
           </Menu.Button>
           <Transition
             enter="transition-transform origin-top duration-400"
@@ -172,7 +181,7 @@ const Navbar = () => {
               <Menu.Items className="">
                 <Menu.Item>
                   <Link to={"/profile"} className="block px-4 py-3 rounded-md truncate drop-shadow-sm hover:bg-white hover:bg-opacity-50 duration-200 cursor-pointer">
-                    {username}
+                    {user.username}
                   </Link>
                 </Menu.Item>
                 <Menu.Item>

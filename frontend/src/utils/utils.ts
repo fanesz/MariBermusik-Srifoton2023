@@ -19,3 +19,6 @@ export function convertCreatedAt(date: string | {} | any): string {
   return "just now";
 }
 
+export function isImgurLinkValid(imgurUrl: string) {
+  return imgurUrl.match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i) ? true : false;
+}

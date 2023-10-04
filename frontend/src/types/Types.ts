@@ -17,4 +17,11 @@ export type TListMateri = {
     }[]
   }
 }
+export type TUser = {
+  email: string,
+  password: string,
+  username: string,
+  terimaEmail: boolean,
+  img: string
+}
 

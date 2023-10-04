@@ -12,6 +12,7 @@ type TUser = {
   email: string,
   username: string,
   terimaEmail: boolean,
+  img: string
 }
 const Setting = () => {
 
@@ -22,12 +23,13 @@ const Setting = () => {
     email: '',
     username: '',
     terimaEmail: false,
+    img: ''
   });
   const [loader, setLoader] = useState({
     updateSetting: false
   });
   const [hasChanged, setHasChanged] = useState(false);
-  const [oldData, setOldData] = useState({ username: '', terimaEmail: false });
+  const [oldData, setOldData] = useState({ username: '', terimaEmail: false, img: '' });
 
 
   // pengecekan apakah user sudah login
@@ -48,9 +50,14 @@ const Setting = () => {
         setUser({
           email: res.data.user.email,
           username: res.data.user.username,
-          terimaEmail: res.data.user.terimaEmail
+          terimaEmail: res.data.user.terimaEmail,
+          img: res.data.user.img
         });
-        setOldData({ username: res.data.user.username, terimaEmail: res.data.user.terimaEmail });
+        setOldData({
+          username: res.data.user.username,
+          terimaEmail: res.data.user.terimaEmail,
+          img: res.data.user.img
+        });
       } else {
         navigate('/');
       }
@@ -82,26 +89,41 @@ const Setting = () => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9_]+$/.test(input) || input.length === 0) {
       setUser(prev => ({ ...prev, username: input }));
-      if (input === oldData.username && oldData.terimaEmail === user.terimaEmail) setHasChanged(false);
+    } else {
+      handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
+    }
+  }
+  const handleSetFotoProfil = (e: any) => {
+    setHasChanged(true);
+    const input = e.target.value;
+    if (/^[http|https://\S]+$/.test(input) || input.length === 0) {
+      setUser(prev => ({ ...prev, img: input }));
     } else {
       handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
     }
   }
   const handleTerimaEmail = () => {
-    setUser(prev => ({ ...prev, terimaEmail: !prev.terimaEmail }));
-    if (oldData.username !== user.username) return setHasChanged(true);
-    setHasChanged(oldData.terimaEmail !== !user.terimaEmail ? true : false);
+    setUser(prev => ({
+      ...prev, terimaEmail: !prev.terimaEmail
+    }));
   }
+  useEffect(() => {
+    setHasChanged(
+      oldData.username === user.username &&
+        oldData.img === user.img &&
+        oldData.terimaEmail === user.terimaEmail ? false : true
+    )
+  }, [user]);
 
 
   // handler update setting
   const handleUpdateSetting = async () => {
     setHasChanged(false);
     setLoader(prev => ({ ...prev, updateSetting: true }));
-    const res = await updateUser(user.email, user.username, user.terimaEmail);
+    const res = await updateUser(user.email, user.username, user.terimaEmail, user.img);
     setLoader(prev => ({ ...prev, updateSetting: false }));
     if (res.status) {
-      setOldData({ username: user.username, terimaEmail: user.terimaEmail });
+      setOldData({ username: user.username, terimaEmail: user.terimaEmail, img: user.img });
       handleSetSuccessmsg("Berhasil update setting")
     } else if (res.message) {
       handleSetErrmsg(res.message)
@@ -122,9 +144,13 @@ const Setting = () => {
           <div className='mt-5'>
             <Input type='email' label='Email' icon={<EnvelopeIcon />} value={user.email} disabled={true} />
           </div>
-          <div className='mt-4 mb-2'>
+          <div className='mt-4'>
             <Input type='text' label='Username' icon={<UserCircleIcon />}
               value={user.username} onChange={handleSetUsername} onKeyDown={handleUpdateSetting} />
+          </div>
+          <div className='mt-4 mb-2'>
+            <Input type='text' label='Foto Profil' icon={<UserCircleIcon />}
+              value={user.img} onChange={handleSetFotoProfil} onKeyDown={handleUpdateSetting} />
           </div>
 
           {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}

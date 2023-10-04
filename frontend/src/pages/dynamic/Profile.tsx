@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getMateriByID, getUUIDByUsername, getUserByLoginID } from '../../api/services';
 import { useNavigate, useParams } from 'react-router-dom';
 import MateriPreview from '../../components/Materi/MateriPreview';
-import { TListMateri } from '../../types/Materi';
+import { TListMateri } from '../../types/Types';
 import TransitionIn from '../../components/_shared/TransitionIn';
 
 

@@ -105,8 +105,25 @@ const post2 = {
   ]
 }
 
-const user1 = { "email": "fanes23.pratama@gmail.com", "password": "admin123", "username": "Admin1", "terimaEmail": true, "akses": "admin" };
-const user2 = { "email": "pratama14.f@gmail.com", "password": "admins123", "username": "Admin2", "terimaEmail": false, "akses": "admin" };
+const user1 = {
+  "email": "fanes23.pratama@gmail.com",
+  "password": "admin123",
+  "username": "Admin1",
+  "terimaEmail": true,
+  "img": "https://i.imgur.com/OXMLZLo.png",
+  "akses": "admin",
+  "createdAt": "2023-10-01T11:28:33.724Z"
+};
+const user2 = {
+  "email": "pratama14.f@gmail.com",
+  "password": "admins123",
+  "username": "Admin2",
+  "terimaEmail": false,
+  "img": "https://i.imgur.com/5XlFTpa.png",
+  "akses": "admin",
+  "createdAt": "2021-10-01T11:28:33.724Z"
+};
+
 const loginID = "u2PXk66tiR6Uq4nxmyZe8cbQEyxiFusQFr8iSTjVVbqFeDpdjgZCkCPM4eK1HVR4v283DULSxacBUouv";
 const loggedUser = { "id": UUID, "email": "fanes23.pratama@gmail.com" };
 

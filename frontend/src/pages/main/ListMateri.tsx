@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react"
 import { getAlatMusikList, getMateriByAlatMusik } from "../../api/services";
 import MateriPreview from "../../components/Materi/MateriPreview";
-import { TListMateri } from "../../types/Materi";
+import { TListMateri } from "../../types/Types";
 import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";

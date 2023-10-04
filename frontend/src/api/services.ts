@@ -62,13 +62,14 @@ export const createUser = async (email: string, password: string, username: stri
   }
 }
 
-export const updateUser = async (email: string, username: string, terimaEmail: boolean) => {
+export const updateUser = async (email: string, username: string, terimaEmail: boolean, img: string) => {
   try {
 
     const res = await api.patch(ENDPOINT.user, {
       email: email,
       username: username,
-      terimaEmail: terimaEmail
+      terimaEmail: terimaEmail,
+      img: img
     });
     return res.data;
   } catch (err) {
