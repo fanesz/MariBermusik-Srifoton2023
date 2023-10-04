@@ -1,9 +1,8 @@
 import { Transition as HuiTransition } from "@headlessui/react"
 import { useEffect, useState } from "react";
 
-const TransitionIn = (props: { children: any, from?: string, length?: string, onScreen?: number, delay?: number }) => {
+const TransitionIn = (props: { children: any, from?: string, onScreen?: number, delay?: number }) => {
   const { children, from, delay } = props;
-  const { length = '28' } = props;
   const { onScreen = 0 } = props;
 
   const [isShowing, setIsShowing] = useState(false)
@@ -26,18 +25,17 @@ const TransitionIn = (props: { children: any, from?: string, length?: string, on
   }, []);
 
   const direction =
-    from === 'bottom' ? 'translate-y' :
-      from === 'top' ? '-translate-y' :
-        from === 'left' ? '-translate-x' :
-          from === 'right' ? 'translate-x' : '';
+    from === 'bottom' ? 'translate-y-28' :
+      from === 'top' ? '-translate-y-28' :
+        from === 'left' ? '-translate-x-28' :
+          from === 'right' ? 'translate-x-28' : '';
 
-  const classDirection = direction + '-' + length;
 
   return (
     <HuiTransition
       show={onScreen === 0 ? isShowing : isShowingOnScroll}
       enter={`transition-all duration-1000`}
-      enterFrom={`opacity-0 ${classDirection}`}
+      enterFrom={`opacity-0 ${direction}`}
       enterTo="opacity-100"
     >
       {children}
