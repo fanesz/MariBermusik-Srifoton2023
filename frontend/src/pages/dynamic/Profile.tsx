@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getMateriByID, getUUIDByUsername, getUserByLoginID } from '../../api/services';
+import { getMateriByID, getUserByParams } from '../../api/services';
 import { useNavigate, useParams } from 'react-router-dom';
 import MateriPreview from '../../components/Materi/MateriPreview';
 import { TListMateri } from '../../types/Types';
@@ -21,7 +21,7 @@ const Profile = () => {
   // mendapatkan data berdasarkan loginID / parameter
   useEffect(() => {
     const fetchLoggedUserData = async () => {
-      const res = await getUserByLoginID();
+      const res = await getUserByParams(true);
       if (res.status) {
         getMateri(res.data.UUID);
         setUser({
@@ -35,7 +35,7 @@ const Profile = () => {
       }
     }
     const fetchParamUserData = async (id: string) => {
-      const res = await getUUIDByUsername(id);
+      const res = await getUserByParams(null, id);
       if (res.status) {
         getMateri(res.data.id);
         setUser({
@@ -99,8 +99,8 @@ const Profile = () => {
                     Materi
                   </div>
                   {listMateri?.map((materi, index) => (
-                    <TransitionIn from='bottom' delay={index*200}>
-                      <MateriPreview key={index}
+                    <TransitionIn key={index} from='bottom' delay={index*200}>
+                      <MateriPreview
                         className='mb-5'
                         materi={materi}
                       />

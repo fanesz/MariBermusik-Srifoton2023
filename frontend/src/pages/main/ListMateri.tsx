@@ -6,7 +6,6 @@ import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@he
 import { Dialog, Listbox, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import Input from "../../components/_shared/Input";
-import { Button } from "@material-tailwind/react";
 import TransitionIn from "../../components/_shared/TransitionIn";
 
 type TCurrentValue = {
@@ -372,8 +371,8 @@ const ListMateri = () => {
             </div>
             <div className="mt-5">
               {materi.map((materi, index) => (
-                <TransitionIn from='bottom' delay={index * 200}>
-                  <MateriPreview key={index}
+                <TransitionIn key={index} from='bottom' delay={index * 200}>
+                  <MateriPreview
                     className='mb-5'
                     materi={materi}
                   />

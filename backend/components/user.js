@@ -14,22 +14,20 @@ export const getUser = async (req, res) => {
   }
 }
 
-export const getUserByLoginID = async (req, res) => {
-  try { // params: { loginID }
-    const loggedUser = await db_loggedUser.get(req.query.loginID);
-    const user = await db_user.get(loggedUser.id);
-    res.json({ status: true, data: { UUID: loggedUser.id, user: user } });
-  } catch (error) {
-    console.log(error);
-    res.json({ status: false });
-  }
-}
-
-
-export const getUserByUsername = async (req, res) => {
-  try { // params: { username }
-    const user = (await db_user.all()).find(u => u.value.username === req.query.username);
-    if (user?.id) {
+export const getUserByParam = async (req, res) => {
+  try { // params: { loginID / username / UUID }
+    const params = req.query;
+    if (params.loginID) {
+      const loggedUser = await db_loggedUser.get(params.loginID);
+      const user = await db_user.get(loggedUser.id);
+      return res.json({ status: true, data: { UUID: loggedUser.id, user: user } });
+    } else if (params.username) {
+      const user = (await db_user.all()).find(u => u.value.username === params.username);
+      if (user?.id) {
+        return res.json({ status: true, data: user });
+      }
+    } else if (params.UUID) {
+      const user = await db_user.get(params.UUID);
       return res.json({ status: true, data: user });
     }
     res.json({ status: false });

@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
 import { getLocalStorage, removeLocalStorage } from "../../utils/LocalStorage";
-import { getUserByLoginID, setLogout, userIsLogin } from "../../api/services";
+import { getUserByParams, setLogout, userIsLogin } from "../../api/services";
 import { TUser } from "../../types/Types";
 import axios from "axios";
 import { isImgurLinkValid } from "../../utils/utils";
@@ -45,7 +45,7 @@ const Navbar = () => {
   // mendapatkan username dari user yang login
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getUserByLoginID();
+      const res = await getUserByParams(true);
       if (res.status) {
         setUser({
           email: res.data.user.email,

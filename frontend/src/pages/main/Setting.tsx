@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getLocalStorage } from '../../utils/LocalStorage';
-import { getUserByLoginID, updateUser, userIsLogin } from '../../api/services';
+import { getUserByParams, updateUser, userIsLogin } from '../../api/services';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import LoaderAnimation from '../../assets/LoaderAnimation';
@@ -45,7 +45,7 @@ const Setting = () => {
   // mendapatkan username dari user yang login
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getUserByLoginID();
+      const res = await getUserByParams(true);
       if (res.status) {
         setUser({
           email: res.data.user.email,

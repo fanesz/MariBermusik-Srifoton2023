@@ -13,7 +13,7 @@ const param = (paramArr: string[][]) => {
   let params = "";
   for (let i = 0; i < paramArr.length; i++) {
     if (paramArr[i][1] === '') continue;
-    params += `${i===0?'?':'&'}${paramArr[i][0]}=${paramArr[i][1]}`
+    params += `${i === 0 ? '?' : '&'}${paramArr[i][0]}=${paramArr[i][1]}`
   }
   return params;
 }
@@ -28,20 +28,19 @@ export const getUser = async () => {
   }
 }
 
-export const getUserByLoginID = async () => {
+export const getUserByParams = async (loginID?: boolean | null, username?: string | null, UUID?: string | null) => {
   try {
-    const loginID = getLocalStorage("loginID") || '';
-    if (loginID.length < 1) return false;
-    const res = await api.get(ENDPOINT.user + "/id" + param([['loginID', loginID]]));
-    return res.data;
-  } catch (err) {
-    return false;
-  }
-}
-
-export const getUUIDByUsername = async (username: string) => {
-  try {
-    const res = await api.get(ENDPOINT.user + "/username" + param([['username', username]]));
+    let params = '';
+    if (loginID) {
+      const loginID = getLocalStorage("loginID") || '';
+      if (loginID.length < 1) return false;
+      params = param([['loginID', loginID]]);
+    } else if (username) {
+      params = param([['username', username]]);
+    } else if (UUID) {
+      params = param([['UUID', UUID]]);
+    }
+    const res = await api.get(ENDPOINT.user + "/id" + params);
     return res.data;
   } catch (err) {
     return false;
@@ -91,7 +90,7 @@ export const getMateriByAlatMusik = async (alatMusik?: string, materiID?: string
 
 export const getAlatMusikList = async () => {
   try {
-    const res = await api.get(ENDPOINT.materi+"/alatmusik");
+    const res = await api.get(ENDPOINT.materi + "/alatmusik");
     return res.data;
   } catch (err) {
     return false;
