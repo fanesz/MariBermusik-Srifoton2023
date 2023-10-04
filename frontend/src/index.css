@@ -54,3 +54,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+a.MateriURL {
+  color: blue;
+  text-decoration: underline;
+}

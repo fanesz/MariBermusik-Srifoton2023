@@ -22,3 +22,7 @@ export function convertCreatedAt(date: string | {} | any): string {
 export function isImgurLinkValid(imgurUrl: string) {
   return imgurUrl.match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i) ? true : false;
 }
+
+export function ratingAverage(arr: number[]) {
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}

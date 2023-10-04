@@ -1,7 +1,7 @@
 import { ArrowRightIcon, EyeIcon, StarIcon } from "@heroicons/react/24/solid";
 import { TListMateri } from "../../types/Types";
 import { getAlatMusikImg } from "../../utils/AlatMusikList";
-import { convertCreatedAt } from "../../utils/utils";
+import { convertCreatedAt, ratingAverage } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 
 const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
@@ -14,22 +14,14 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
       src={getAlatMusikImg(materi.alatMusik)}
     />
   )
-  const tingkatan = (
+  const section_top = (
     <div className="flex gap-2">
       <div>
-        {materi.data.tingkatan === 'pemula' ? (
-          <div className="text-sm bg-green-300 w-fit px-2 pt-0.5 rounded-md text-white">
-            Pemula
+        {materi.data.tingkatan && (
+          <div className={`text-sm ${{ pemula: 'bg-green-300', menengah: 'bg-orange-300', sulit: 'bg-red-300', }[materi.data.tingkatan]} w-fit px-2 pt-0.5 rounded-md text-white`}>
+            {{ pemula: 'Pemula', menengah: 'Menengah', sulit: 'Sulit', }[materi.data.tingkatan]}
           </div>
-        ) : materi.data.tingkatan === 'menengah' ? (
-          <div className="text-sm bg-orange-300 w-fit px-2 pt-0.5 rounded-md text-white">
-            Menengah
-          </div>
-        ) : materi.data.tingkatan === 'sulit' ? (
-          <div className="text-sm bg-red-300 w-fit px-2 pt-0.5 rounded-md text-white">
-            Sulit
-          </div>
-        ) : (<></>)}
+        )}
       </div>
       <div className="font-extrabold">·</div>
       <div className="mt-auto mb-auto md:text-sm text-xs text-gray-700">
@@ -55,7 +47,7 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
       </div>
       <div className="font-extrabold">·</div>
       <div className="flex gap-0.5">
-        {materi.data.rating.reduce((a, b) => a + b, 0) / materi.data.rating.length}
+        {ratingAverage(materi.data.rating)}
         <StarIcon className="h-3.5 w-3.5 mt-auto mb-auto fill-yellow-900" />
         <span className="text-xs mt-auto mb-auto text-gray-500">({materi.data.rating.length})</span>
       </div>
@@ -77,7 +69,7 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
 
       <div className="ps-6 w-3/5">
         <div className="h-1/5 pt-2">
-          {tingkatan}
+          {section_top}
         </div>
 
         <div className="h-3/5">

@@ -36,10 +36,10 @@ const Navbar = () => {
     const fetchData = async () => {
       const res = await userIsLogin();
       if (res.status) setIsLogin(true);
+
     }
     fetchData();
   }, []);
-
 
 
   // mendapatkan username dari user yang login
@@ -56,7 +56,7 @@ const Navbar = () => {
         });
       }
     }
-    fetchData();
+    if (isLogin) fetchData();
   }, [isLogin]);
 
 

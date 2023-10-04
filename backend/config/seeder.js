@@ -11,6 +11,7 @@ const UUID = "88ba3d39-2af4-4526-8ab2-97d8b470d061";
 const UUID2 = "59d1756f-5259-4527-bc72-640db97372b5";
 
 const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+const lorem2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
 
 const dataMateri = (nama, desc, tingkatan, date) => {
   return {
@@ -22,22 +23,20 @@ const dataMateri = (nama, desc, tingkatan, date) => {
     "createdAt": date,
     "daftarMateri": [
       {
-        "id": 0,
         "judul": "Sejarah",
         "materi": lorem,
-        "link": [
-          "https://youtube.com/",
-          "https://youtube.com/"
-        ]
+
       },
       {
-        "id": 1,
         "judul": "Pencipta",
-        "materi": lorem,
-        "link": [
-          "https://youtube.com/",
-          "https://youtube.com/"
-        ]
+        "materi": 
+        `<img>https://i.imgur.com/TqPdNrR.jpeg</img>
+        ${lorem2}
+        [wikipedia](https://en.wikipedia.org/wiki/Albert_Einstein)
+        <b>This is bold</b>
+        <li>This is list</li>
+        <li>This is list</li>
+        <video>https://www.youtube.com/watch?v=yi2KjoZBYsU</video>`,
       }
     ]
   }
