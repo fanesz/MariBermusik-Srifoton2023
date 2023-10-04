@@ -205,11 +205,11 @@ const ListMateri = () => {
             leave="transition-transform origin-top duration-300"
             leaveFrom="scale-y-100"
             leaveTo="scale-y-0">
-            <Listbox.Options className="border border-gray-400 rounded-b-md mt-2 cursor-pointer shadow-lg absolute bg-white w-full opacity-90">
+            <Listbox.Options className="border border-gray-400 rounded-b-md mt-2 cursor-pointer shadow-lg absolute bg-white w-full">
               {listAlatMusik.map((alatMusik, index) => (
                 <Listbox.Option key={index} value={alatMusik.id}
                   onClick={() => filterByAlatMusik(alatMusik.id)}
-                  className={`px-3 py-1 hover:bg-gray-100 ${index !== listAlatMusik.length - 1 && "border-b border-gray-400"} ${filterBy.alatMusik === alatMusik.id && "bg-gray-200"}`}>
+                  className={`px-3 py-1 text-gray-800 hover:bg-gray-100 ${index !== listAlatMusik.length - 1 && "border-b border-gray-400"} ${filterBy.alatMusik === alatMusik.id && "bg-gray-200"}`}>
                   {alatMusik.id.charAt(0).toUpperCase() + alatMusik.id.slice(1) + (alatMusik.totalMateri !== -1 ? ` (${alatMusik.totalMateri})` : '')}
                 </Listbox.Option>
               ))}
@@ -371,14 +371,15 @@ const ListMateri = () => {
               </TransitionIn>
             </div>
             <div className="mt-5">
-              <TransitionIn from='bottom' duration={1500}>
-                {materi.map((materi, index) => (
+              {materi.map((materi, index) => (
+                <TransitionIn from='bottom' delay={index * 200}>
                   <MateriPreview key={index}
                     className='mb-5'
                     materi={materi}
                   />
-                ))}
-              </TransitionIn>
+                </TransitionIn>
+
+              ))}
 
             </div>
           </div>

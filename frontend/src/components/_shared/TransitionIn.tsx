@@ -1,15 +1,17 @@
 import { Transition as HuiTransition } from "@headlessui/react"
 import { useEffect, useState } from "react";
 
-const TransitionIn = (props: { children: any, from?: string, duration?: number, length?: string, onScreen?: number }) => {
-  const { children, from } = props;
-  const { length = '28' } = props
-  const { duration = 1500 } = props
-  const { onScreen = 0 } = props
+const TransitionIn = (props: { children: any, from?: string, duration?: number, length?: string, onScreen?: number, delay?: number }) => {
+  const { children, from, delay } = props;
+  const { length = '28' } = props;
+  const { duration = 1500 } = props;
+  const { onScreen = 0 } = props;
 
   const [isShowing, setIsShowing] = useState(false)
   useEffect(() => {
-    onScreen === 0 && setIsShowing(true);
+    onScreen === 0 && setTimeout(() => {
+      setIsShowing(true);
+    }, delay || 0);
   }, []);
   const [isShowingOnScroll, setIsShowingOnScroll] = useState(false);
   useEffect(() => {

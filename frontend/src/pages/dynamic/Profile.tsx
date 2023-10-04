@@ -4,13 +4,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import MateriPreview from '../../components/Materi/MateriPreview';
 import { TListMateri } from '../../types/Types';
 import TransitionIn from '../../components/_shared/TransitionIn';
+import { convertCreatedAt } from '../../utils/utils';
 
 
 const Profile = () => {
-
   const navigate = useNavigate();
   const { id } = useParams();
   const [listMateri, setListMateri] = useState<TListMateri[]>([]);
+  const [user, setUser] = useState({
+    username: '',
+    email: '',
+    img: '',
+    createdAt: ''
+  });
 
   // mendapatkan data berdasarkan loginID / parameter
   useEffect(() => {
@@ -18,6 +24,12 @@ const Profile = () => {
       const res = await getUserByLoginID();
       if (res.status) {
         getMateri(res.data.UUID);
+        setUser({
+          username: res.data.user.username,
+          email: res.data.user.email,
+          img: res.data.user.img,
+          createdAt: res.data.user.createdAt
+        });
       } else {
         navigate('/');
       }
@@ -26,6 +38,12 @@ const Profile = () => {
       const res = await getUUIDByUsername(id);
       if (res.status) {
         getMateri(res.data.id);
+        setUser({
+          username: res.data.value.username,
+          email: res.data.value.email,
+          img: res.data.value.img,
+          createdAt: res.data.value.createdAt
+        });
       }
     }
     if (!id) {
@@ -42,6 +60,23 @@ const Profile = () => {
     }
   }
 
+  const profileCard = (
+    <div className='p-4'>
+      <div className='flex'>
+        <div className=''>
+          <img src={user.img} className='h-36 w-36 object-cover rounded-full border' />
+        </div>
+        <div className='my-auto ms-8'>
+          <div className='text-xl text-gray-800 font-semibold'>
+            {user.username}
+          </div>
+          <div>
+            Member Since: {convertCreatedAt(user.createdAt)}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <TransitionIn from='bottom' duration={1000}>
@@ -55,20 +90,23 @@ const Profile = () => {
               </div>
 
               <div className='mt-5'>
-                <div className='border border-gray-400 rounded-md p-4 shadow-sm'>
-                </div>
+                {profileCard}
               </div>
 
               <div className='mt-5'>
-                <div className='text-lg text-gray-800'>
-                  Materiku
+                <div className='px-5 py-3 border border-gray-300 rounded-md'>
+                  <div className='text-xl mb-2.5 font-medium text-gray-800'>
+                    Materi
+                  </div>
+                  {listMateri?.map((materi, index) => (
+                    <TransitionIn from='bottom' delay={index*200}>
+                      <MateriPreview key={index}
+                        className='mb-5'
+                        materi={materi}
+                      />
+                    </TransitionIn>
+                  ))}
                 </div>
-                {listMateri?.map((materi, index) => (
-                  <MateriPreview key={index}
-                    className='mt-5'
-                    materi={materi}
-                  />
-                ))}
               </div>
             </div>
           ) : (
