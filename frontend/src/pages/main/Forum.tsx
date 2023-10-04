@@ -7,18 +7,23 @@ import { DocumentIcon } from "@heroicons/react/24/outline";
 
 const Forum = () => {
   const [post,setPost]=useState<any[]>([])
+  const [selectedPost,setSelectedPost]=useState<any[]>([])
   const [user,setUser]=useState<any[]>([])
   const [showComments,setShowComments]=useState(false)
   const [comments,setComments]=useState("")
+  const [search,setSearch]=useState("")
   const [commentsLength,setCommentsLength]=useState(0)
   const [sendButton,setSendButton]=useState(false)
 
-  const fetchData = async () => {
+  const fetchPost = async () => {
     const res = await getPost();
-    if(res.status) setPost(res.data);
+    if(res.status) {
+      setPost(res.data)
+      setSelectedPost(res.data)
+    }
   }
 
-  const fetchData2 = async () => {
+  const fetchUser = async () => {
     const res = await getUser();
     if (res.status) setUser(res.data);
   }
@@ -30,18 +35,19 @@ const Forum = () => {
     event.target.value!==""?setSendButton(true):setSendButton(false)
   }
 
-  function searchForum(){
-    const value = (document.getElementById("search") as HTMLInputElement).value
-    value?setPost(post.filter((filter)=>filter.value.title.includes(value))):setPost(post)
-    console.log(value)
+  const searchForum = event => {
+    setSearch(event.target.value)
+    event.target.value?setSelectedPost(post.filter((filter)=>filter.value.title.includes(event.target.value))):setSelectedPost(post)
   }
 
   useEffect(() => {
-    fetchData();
-    fetchData2();
+    fetchPost();
+    fetchUser();
   },[]);
-  console.log(post);
-  console.log(user);
+  // console.log(post);
+  // console.log(user);
+  // console.log(search)
+  // console.log(selectedPost)
 
   return (
     <div className="px-16 pt-10">
@@ -55,11 +61,11 @@ const Forum = () => {
         <div className="flex">
 
           <div className="w-full">
-            <input className="w-full rounded p-2.5 shadow-lg bg-slate-100 text-black border border-gray-300" placeholder="Judul diskusi" id="search" spellCheck={false} />
+            <input className="w-full rounded p-2.5 shadow-lg bg-slate-100 text-black border border-gray-300" placeholder="Judul diskusi" value={search} onChange={searchForum} spellCheck={false} />
           </div>
 
           <div className="ms-3">
-            <button className="h-full px-3 w-full bg-blue-800 text-white rounded transition duration-300 hover:bg-blue-950 shadow-lg" onClick={()=>searchForum()}>Search</button>
+            <button className="h-full px-3 w-full bg-blue-800 text-white rounded transition duration-300 hover:bg-blue-950 shadow-lg">Search</button>
           </div>
 
           <div>
@@ -68,7 +74,7 @@ const Forum = () => {
         </div>
 
         <div className="mt-6 flex flex-col gap-10">
-          {post?.map((post, index) => (
+          {selectedPost?.map((post, index) => (
             <div key={index} className="border border-gray-600 rounded-lg shadow-xl p-5">
               <span className="text-blue-600">{user?.filter((filter)=>filter.id==post?.value.owner)[0].value.username}&nbsp;</span>
               <span>{new Date(post.value.createdAt).toLocaleDateString()}</span>
@@ -77,7 +83,7 @@ const Forum = () => {
               <button className="mt-3 ms-5 rounded-lg shadow-lg bg-blue-300 p-2 hover:bg-blue-400" onClick={()=>setShowComments(!showComments)}>Comments</button>
               {showComments&&
               <div className="mt-3 ms-5 relative">
-                <textarea maxLength={400} className="w-full resize-none border-2 rounded-lg p-5" name="comments" id="comments" rows={4} value={comments} placeholder="Join the discussion ..." onChange={showSendButton}></textarea>
+                <textarea maxLength={400} className="w-full resize-none border-2 rounded-lg p-5" rows={4} value={comments} placeholder="Join the discussion ..." onChange={showSendButton} spellCheck={false}></textarea>
                 <button><PlayIcon className={`right-4 bottom-4 absolute w-6 ${sendButton ? "text-blue-600 hover:text-blue-900":" text-blue-200"}`} /></button>
                 <div className="absolute left-4 bottom-4 flex items-center">
                   <span><DocumentIcon className="w-6 "/></span>
@@ -85,7 +91,7 @@ const Forum = () => {
                 </div>
               </div>
               }
-              {post.value.comments.length>0 && 
+              {post?.value.comments.length>0 && 
               <div className="mt-3 ms-5 flex flex-col gap-3">
               {post?.value.comments.map((comments,index)=>(
                 <div key={index} className="border border-gray-600 rounded-lg shadow-xl p-5">
