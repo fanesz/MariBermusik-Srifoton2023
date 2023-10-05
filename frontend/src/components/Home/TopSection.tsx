@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import character from "../../assets/character.png";
 import TransitionIn from "../_shared/TransitionIn";
 

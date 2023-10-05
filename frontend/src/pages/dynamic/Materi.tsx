@@ -132,6 +132,7 @@ const Materi = () => {
 
   return (
     <div className="w-full max-w-7xl transform ms-auto me-auto mt-20 lg:px-12 px-5">
+      
       <div>
         {title_section}
       </div>

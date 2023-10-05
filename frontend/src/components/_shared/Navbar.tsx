@@ -5,10 +5,9 @@ import { Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
-import { getLocalStorage, removeLocalStorage } from "../../utils/LocalStorage";
+import { removeLocalStorage } from "../../utils/LocalStorage";
 import { getUserByParams, setLogout, userIsLogin } from "../../api/services";
 import { TUser } from "../../types/Types";
-import axios from "axios";
 import { isImgurLinkValid } from "../../utils/utils";
 
 type TMenu = {

@@ -121,7 +121,7 @@ const ResetPassword = () => {
   )
 
   return (
-    <TransitionIn from='bottom' duration={1000}>
+    <TransitionIn from='bottom'>
       <div className="w-full max-w-lg transform ms-auto me-auto mt-20">
         <div className="rounded-md p-5 border border-gray-400 shadow-md">
 

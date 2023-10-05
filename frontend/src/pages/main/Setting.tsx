@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { getLocalStorage } from '../../utils/LocalStorage';
 import { getUserByParams, updateUser, userIsLogin } from '../../api/services';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, UserCircleIcon } from '@heroicons/react/24/solid';
@@ -133,7 +132,7 @@ const Setting = () => {
   }
 
   return (
-    <TransitionIn from='bottom' duration={1000}>
+    <TransitionIn from='bottom'>
       <div className='w-full max-w-lg transform ms-auto me-auto mt-20'>
         <div className='rounded-md p-5 border border-gray-400 shadow-md'>
 

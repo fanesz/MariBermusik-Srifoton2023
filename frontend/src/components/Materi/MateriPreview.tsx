@@ -55,7 +55,11 @@ const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
   )
   const go_button = (
     <div className="flex h-full justify-end">
-      <div className="bg-green-400 flex w-12 rounded-e-md justify-end md:hover:w-1/2 hover:transition-all ease-in-out duration-300 cursor-pointer" onClick={() => navigate(`/materi/${materi.alatMusik}/${materi.materiID}`)}>
+      <div
+        className="bg-green-400 flex w-12 rounded-e-md justify-end md:hover:w-1/2 hover:transition-all ease-in-out duration-300 cursor-pointer"
+        onClick={() => { navigate(`/materi/${materi.alatMusik}/${materi.materiID}`); window.scrollTo(0, 0); }}>
+
+
         <ArrowRightIcon className="h-6 w-6 mt-auto mb-auto me-1 fill-white" />
       </div>
     </div>
