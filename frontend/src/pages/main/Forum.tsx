@@ -9,8 +9,8 @@ const Forum = () => {
   const [post,setPost]=useState<any[]>([])
   const [selectedPost,setSelectedPost]=useState<any[]>([])
   const [user,setUser]=useState<any[]>([])
-  const [showComments,setShowComments]=useState(false)
   const [comments,setComments]=useState("")
+  const [popUpComment,setPopUpComment]=useState(-1)
   const [search,setSearch]=useState("")
   const [commentsLength,setCommentsLength]=useState(0)
   const [sendButton,setSendButton]=useState(false)
@@ -80,8 +80,8 @@ const Forum = () => {
               <span>{new Date(post.value.createdAt).toLocaleDateString()}</span>
               <div className="text-2xl">{post.value.title}</div>
               <div className="mt-3">{post.value.description}</div>
-              <button className="mt-3 ms-5 rounded-lg shadow-lg bg-blue-300 p-2 hover:bg-blue-400" onClick={()=>setShowComments(!showComments)}>Comments</button>
-              {showComments&&
+              <button className="mt-3 ms-5 rounded-lg shadow-lg bg-blue-300 p-2 hover:bg-blue-400" onClick={()=>setPopUpComment(index)}>Comments</button>
+              {index==popUpComment&&
               <div className="mt-3 ms-5 relative">
                 <textarea maxLength={400} className="w-full resize-none border-2 rounded-lg p-5" rows={4} value={comments} placeholder="Join the discussion ..." onChange={showSendButton} spellCheck={false}></textarea>
                 <button><PlayIcon className={`right-4 bottom-4 absolute w-6 ${sendButton ? "text-blue-600 hover:text-blue-900":" text-blue-200"}`} /></button>
