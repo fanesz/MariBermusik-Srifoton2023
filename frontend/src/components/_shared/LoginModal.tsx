@@ -6,7 +6,13 @@ import LoaderAnimation from '../../assets/LoaderAnimation';
 import { removeLocalStorage, setLocalStorage } from '../../utils/LocalStorage';
 import { Alert } from '@material-tailwind/react';
 import Input from './Input';
-const LoginModal = (props: { isOpen: boolean, setModal: Dispatch<boolean>, setIsLogin: Dispatch<boolean> }) => {
+
+interface IProps {
+  isOpen: boolean,
+  setModal: Dispatch<boolean>,
+  setIsLogin: Dispatch<boolean>
+}
+const LoginModal = (props: IProps) => {
 
   const { isOpen, setModal, setIsLogin } = props;
 

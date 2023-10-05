@@ -4,7 +4,11 @@ import { getAlatMusikImg } from "../../utils/AlatMusikList";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 
-const MateriPreview = (props: { className?: string, materi: TListMateri }) => {
+interface IProps {
+  className?: string,
+  materi: TListMateri
+}
+const MateriPreview = (props: IProps) => {
   const { className, materi } = props;
   const navigate = useNavigate();
 

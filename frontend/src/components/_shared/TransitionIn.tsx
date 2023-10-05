@@ -1,7 +1,13 @@
 import { Transition as HuiTransition } from "@headlessui/react"
 import { useEffect, useState } from "react";
 
-const TransitionIn = (props: { children: any, from?: string, onScreen?: number, delay?: number }) => {
+interface IProps {
+  children: any,
+  from?: string,
+  onScreen?: number,
+  delay?: number
+}
+const TransitionIn = (props: IProps) => {
   const { children, from, delay } = props;
   const { onScreen = 0 } = props;
 

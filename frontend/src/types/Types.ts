@@ -9,13 +9,14 @@ export type TListMateri = {
     rating: [string, number][],
     pengunjung: number,
     createdAt: Date,
-    daftarMateri: {
-      id: number,
-      judul: string,
-      materi: string,
-      link: string[]
-    }[]
+    daftarMateri: TDaftarMateri[]
   }
+}
+export type TDaftarMateri = {
+  id: number,
+  judul: string,
+  materi: string,
+  link: string[]
 }
 export type TUser = {
   email: string,
