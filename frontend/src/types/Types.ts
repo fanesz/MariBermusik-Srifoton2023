@@ -16,7 +16,6 @@ export type TDaftarMateri = {
   id: number,
   judul: string,
   materi: string,
-  link: string[]
 }
 export type TUser = {
   email: string,
