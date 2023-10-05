@@ -102,8 +102,17 @@ const ListMateri = () => {
   }
   const filterByRating = (reverse: boolean) => {
     const sort = (a: TListMateri, b: TListMateri) => {
-      const ratingA = a.data.rating.reduce((ac: number, cv: number) => ac + cv, 0) / a.data.rating.length
-      const ratingB = b.data.rating.reduce((ac: number, cv: number) => ac + cv, 0) / b.data.rating.length
+      console.log(a.data.rating);
+      let ratingA = 0;
+      let ratingB = 0;
+      for (const item of a.data.rating) {
+        ratingA += item[1];
+      }
+      for (const item of b.data.rating) {
+        ratingB += item[1];
+      }
+      ratingA = ratingA / a.data.rating.length
+      ratingB = ratingB / b.data.rating.length
       return reverse ? ratingA - ratingB : ratingB - ratingA;
     }
     handleFilteringMateri(sort);
