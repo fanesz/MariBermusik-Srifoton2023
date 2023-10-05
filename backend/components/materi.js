@@ -40,7 +40,7 @@ export const getAlatMusikList = async (req, res) => {
 }
 
 export const getMateriByID = async (req, res) => {
-  try { // query: { id }
+  try { // params: { id }
     const ID = req.query.id;
     const materi = await db_materi.all();
     const filteredMateri = materi.map(m => m.value.filter(m => m.owner == ID)).flat();
@@ -124,5 +124,44 @@ export const deleteMateriByID = async (req, res) => {
   }
 }
 
+export const getRatingList = async (req, res) => {
+  try { // params: { alatMusik, materiID }
+    const params = req.query;
+    const materi = await db_materi.get(params.alatMusik);
+    const filteredMateri = materi.filter(m => m.materiID == params.materiID);
+    res.json({ status: true, data: filteredMateri[0].data.rating });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
 
+export const updateRating = async (req, res) => {
+  try { // params: { alatMusik, materiID, UUID, rating }
+    const params = req.query;
+    const materi = await db_materi.get(params.alatMusik);
+    const filteredMateri = materi.filter(m => m.materiID == params.materiID);
+    if (!filteredMateri) return res.json({ status: false });
+    let found = false;
+    materi.map(async (item, index) => {
+      if (item.materiID == params.materiID) {
+        const materi = await db_materi.get(params.alatMusik);
+        const existingIndex = materi[index].data.rating.findIndex(item => item[0] === params.UUID);
+        if (existingIndex !== -1) {
+          materi[index].data.rating[existingIndex][1] = parseInt(params.rating);
+        } else {
+          materi[index].data.rating.push([params.UUID, parseInt(params.rating)]);
+        }
+        await db_materi.set(`${params.alatMusik}`, materi);
+        res.json({ status: true });
+        found = true;
+      }
+    })
+    if (found) res.json({ status: false });
+
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
 

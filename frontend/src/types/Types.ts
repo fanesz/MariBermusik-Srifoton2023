@@ -6,7 +6,7 @@ export type TListMateri = {
     nama: string,
     deskripsi: string,
     tingkatan: string,
-    rating: number[],
+    rating: [string, number][],
     pengunjung: number,
     createdAt: Date,
     daftarMateri: {

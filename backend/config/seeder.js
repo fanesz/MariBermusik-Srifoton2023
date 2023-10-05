@@ -9,6 +9,10 @@ const db_forgetPass = db.table("forgetPass");
 
 const UUID = "88ba3d39-2af4-4526-8ab2-97d8b470d061";
 const UUID2 = "59d1756f-5259-4527-bc72-640db97372b5";
+const UUID3 = "e6adfbb7-36ac-4418-90f5-f022a5d436c5";
+const UUID4 = "3a17b9b5-e6f1-4e58-8464-ce80b2b0d821";
+const UUID5 = "aa1a2295-fdcf-47d3-acd9-fd187288ebd7";
+const UUID6 = "862b6cb7-7579-493d-a9b6-dd92ed4ee0cc";
 
 const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const lorem2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
@@ -18,7 +22,7 @@ const dataMateri = (nama, desc, tingkatan, date) => {
     "nama": nama,
     "deskripsi": desc,
     "tingkatan": tingkatan,
-    "rating": [Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5), Math.floor(Math.random() * 5)],
+    "rating": [[UUID3, Math.floor(Math.random() * 5 +1)], [UUID4, Math.floor(Math.random() * 5 +1)], [UUID5, Math.floor(Math.random() * 5 +1)], [UUID6, Math.floor(Math.random() * 5 +1)]],
     "pengunjung": Math.floor(Math.random() * 100),
     "createdAt": date,
     "daftarMateri": [
@@ -122,6 +126,42 @@ const user2 = {
   "akses": "admin",
   "createdAt": "2021-10-01T11:28:33.724Z"
 };
+const user3 = {
+  "email": "user3@gmail.com",
+  "password": "user3",
+  "username": "user3",
+  "terimaEmail": false,
+  "img": "",
+  "akses": "user",
+  "createdAt": "2022-10-01T11:28:33.724Z"
+};
+const user4 = {
+  "email": "user4@gmail.com",
+  "password": "user4",
+  "username": "user4",
+  "terimaEmail": false,
+  "img": "",
+  "akses": "user",
+  "createdAt": "2022-04-15T11:28:33.724Z"
+};
+const user5 = {
+  "email": "user5@gmail.com",
+  "password": "user5",
+  "username": "user5",
+  "terimaEmail": false,
+  "img": "",
+  "akses": "user",
+  "createdAt": "2020-12-21T11:28:33.724Z"
+};
+const user6 = {
+  "email": "user6@gmail.com",
+  "password": "user6",
+  "username": "user6",
+  "terimaEmail": false,
+  "img": "",
+  "akses": "user",
+  "createdAt": "2023-01-02T11:28:33.724Z"
+};
 
 const loginID = "u2PXk66tiR6Uq4nxmyZe8cbQEyxiFusQFr8iSTjVVbqFeDpdjgZCkCPM4eK1HVR4v283DULSxacBUouv";
 const loggedUser = { "id": UUID, "email": "fanes23.pratama@gmail.com" };
@@ -147,6 +187,10 @@ const seedDatabase = async () => {
     console.log("[SEEDER] Seeding database...");
     await db_user.set(UUID, user1);
     await db_user.set(UUID2, user2);
+    await db_user.set(UUID3, user3);
+    await db_user.set(UUID4, user4);
+    await db_user.set(UUID5, user5);
+    await db_user.set(UUID6, user6);
     await db_materi.set("gitar", materi("gitar", UUID));
     await db_materi.set("biola", materi("biola", UUID));
     await db_materi.set("piano", materi("piano", UUID));

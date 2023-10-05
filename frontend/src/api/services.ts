@@ -146,6 +146,24 @@ export const deleteMateriByID = async (alatMusik: string, materiID: string) => {
   }
 }
 
+export const updateRating = async (alatMusik: string, materiID: string, UUID: string, rating: string) => {
+  try {
+    const res = await api.patch(ENDPOINT.materi + '/rating' + param([['alatMusik', alatMusik], ['materiID', materiID], ['UUID', UUID], ['rating', rating]]));
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
+
+export const getRatingList = async (alatMusik: string, materiID: string) => {
+  try {
+    const res = await api.get(ENDPOINT.materi + '/rating' + param([['alatMusik', alatMusik], ['materiID', materiID]]));
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
+
 // === LOGIN ===
 
 export const getLoginUser = async () => {

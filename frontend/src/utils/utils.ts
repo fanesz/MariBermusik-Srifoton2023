@@ -23,6 +23,6 @@ export function isImgurLinkValid(imgurUrl: string) {
   return imgurUrl.match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i) ? true : false;
 }
 
-export function ratingAverage(arr: number[]) {
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
+export function ratingAverage(arr: [string, number][]) {
+  return arr.reduce((a, b) => a + b[1], 0) / arr.length;
 }
