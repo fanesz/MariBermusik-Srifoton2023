@@ -1,9 +1,9 @@
-import { Dialog, Listbox, Transition } from "@headlessui/react";
-import { ChevronDownIcon, DocumentMinusIcon, DocumentTextIcon, MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Dialog, Transition } from "@headlessui/react";
+import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment, useEffect, useState } from "react";
 import Input from "../_shared/Input";
-import { TDaftarMateri } from "../../types/Types";
-import { createMateri } from "../../api/services";
+import { TDaftarMateri, TListMateri, TTingkatan } from "../../types/Types";
+import { createMateri, editMateriByID } from "../../api/services";
 import { Alert, Option, Select, Textarea } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import LoaderAnimation from "../../assets/LoaderAnimation";
@@ -11,9 +11,10 @@ import { getLocalStorage, removeLocalStorage, setLocalStorage } from "../../util
 
 interface IProps {
   isOpen: boolean,
-  setModal: Dispatch<boolean>
+  setModal: Dispatch<boolean>,
+  prevMateri?: TListMateri
 }
-type TTingkatan = 'Tingkatan' | 'Pemula' | 'Menengah' | 'Sulit';
+
 type TMateri = {
   nama: string,
   deskripsi: string,
@@ -23,6 +24,7 @@ type TMateri = {
 
 const CreateMateriModal = (props: IProps) => {
   const { isOpen, setModal } = props;
+  const { prevMateri = {} as TListMateri } = props
 
   const DEFAULT_VALUE = { id: 0, judul: '', materi: '', }
 
@@ -34,12 +36,27 @@ const CreateMateriModal = (props: IProps) => {
     nama: '',
     deskripsi: '',
     alatMusik: '',
-    tingkatan: 'Tingkatan',
+    tingkatan: 'Pemula',
   });
+
+
+  // fitur untuk set materi bila user memanggil untuk melakukan update materi
+  useEffect(() => {
+    if (Object.keys(prevMateri).length !== 0) {
+      setMateri({
+        nama: prevMateri.data.nama,
+        deskripsi: prevMateri.data.deskripsi,
+        alatMusik: prevMateri.alatMusik,
+        tingkatan: prevMateri.data.tingkatan,
+      });
+      setDaftarMateri(prevMateri.data.daftarMateri);
+    }
+  }, [prevMateri]);
 
 
   // fitur untuk draft materi bila user refresh page
   useEffect(() => {
+    if (prevMateri) return;
     const materi = getLocalStorage('createMateri');
     const objectMateri = materi ? JSON.parse(materi) : null;
     if (objectMateri) {
@@ -48,10 +65,10 @@ const CreateMateriModal = (props: IProps) => {
     }
   }, []);
   useEffect(() => {
+    if (prevMateri) return;
     if (materi.nama === '' &&
       materi.deskripsi === '' &&
       materi.alatMusik === '' &&
-      materi.tingkatan === 'Tingkatan' &&
       daftarMateri.some(item => item.judul === '' && item.materi === '')) return;
     const stringMateri = JSON.stringify({ materi: materi, daftarMateri: daftarMateri })
     setLocalStorage('createMateri', stringMateri);
@@ -103,7 +120,6 @@ const CreateMateriModal = (props: IProps) => {
     if (materi.nama === '' ||
       materi.deskripsi === '' ||
       materi.alatMusik === '' ||
-      materi.tingkatan === 'Tingkatan' ||
       daftarMateri.some(item => item.judul === '' || item.materi === '')) {
       return false;
     }
@@ -122,6 +138,22 @@ const CreateMateriModal = (props: IProps) => {
       removeLocalStorage('createMateri');
       navigate(`/materi/${materi.alatMusik}/${res.materiID}`);
       setModal(false);
+    } else {
+      handleSetErrmsg("Something went wrong, please login / try again later");
+    }
+  }
+  const handleUpdateMateri = async () => {
+    setIsLoading(true);
+    const res = await editMateriByID(prevMateri.alatMusik.toLowerCase(), prevMateri.materiID, {
+      nama: materi.nama,
+      deskripsi: materi.deskripsi,
+      tingkatan: materi.tingkatan.toLocaleLowerCase(),
+      daftarMateri: daftarMateri
+    });
+    setIsLoading(false);
+    if (res.status) {
+      // setModal(false);
+      window.location.reload();
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
     }
@@ -190,7 +222,7 @@ const CreateMateriModal = (props: IProps) => {
         </button>
         <button
           className={`rounded-md w-32 text-white px-3 cursor-pointer md:text-base text-sm ${validasiSimpanMateri() ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400'}`}
-          onClick={handleSimpanMateri} disabled={!validasiSimpanMateri()}>
+          onClick={Object.keys(prevMateri).length === 0 ? handleSimpanMateri : handleUpdateMateri} disabled={!validasiSimpanMateri()}>
           {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Simpan Materi'}
         </button>
         <div className="my-auto">

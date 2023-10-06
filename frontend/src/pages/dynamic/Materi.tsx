@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getMateriByAlatMusik, getUserByParams } from "../../api/services";
+import { deleteMateriByID, getLoginUser, getMateriByAlatMusik, getUserByParams, userIsLogin } from "../../api/services";
 import { useEffect, useState } from "react";
 import { TListMateri, TUser } from "../../types/Types";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
-import { EyeIcon, StarIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, PencilIcon, StarIcon, TrashIcon } from "@heroicons/react/24/solid";
 import TransitionIn from "../../components/_shared/TransitionIn";
 import profile from "../../assets/profile.png";
+import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 
 const Materi = () => {
 
@@ -13,15 +14,25 @@ const Materi = () => {
   const { alatmusik, id } = useParams();
   const [materi, setMateri] = useState<TListMateri>({} as TListMateri);
   const [materiOwner, setMateriOwner] = useState<TUser>({} as TUser);
+  const [createMateriModal, setCreateMateriModal] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
 
+  // fetch data materi dan owner
   const fetchMateriAndOwner = async () => {
-    const res = await getMateriByAlatMusik(alatmusik, id);
-    if (res.status) {
-      setMateri(res.data);
-      const res2 = await getUserByParams(null, null, res.data.owner);
-      if (res2.status) {
-        setMateriOwner(res2.data);
+    const resMateri = await getMateriByAlatMusik(alatmusik, id);
+    if (resMateri.status) {
+      setMateri(resMateri.data);
+      const resOwner = await getUserByParams(null, null, resMateri.data.owner);
+      if (resOwner.status) setMateriOwner(resOwner.data);
+      const isLogin = await userIsLogin();
+      if (isLogin.status) {
+        const UUID = await getLoginUser();
+        if (UUID.status) {
+          const currentUserUUID = UUID.data[0].value.id;
+          if (currentUserUUID === resMateri.data.owner) setIsOwner(true);
+        }
       }
+
     }
   }
   useEffect(() => {
@@ -29,6 +40,7 @@ const Materi = () => {
   }, []);
 
 
+  // handler untuk konversi string ke html
   const handleMateriHTMLInject = (materi: string) => {
     const materiPerLine = materi.split('\n');
     const URLRegex = /\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/;
@@ -58,6 +70,18 @@ const Materi = () => {
   }
 
 
+  // handler delete dan edit materi
+  const handleDeleteMateri = async () => {
+    const res = await deleteMateriByID(alatmusik || '', id || '');
+    if (res.status) {
+      navigate(`/materi`);
+    }
+  }
+  const handleEditMateri = () => {
+    setCreateMateriModal(true);
+  }
+
+
   // Components
   const title_section = materi?.data && (
     <div className="text-center flex justify-center gap-3">
@@ -66,8 +90,9 @@ const Materi = () => {
       </div>
       <div className="my-auto">
         {materi?.data?.tingkatan && (
-          <div className={`text-sm ${{ pemula: 'bg-green-300', menengah: 'bg-orange-300', sulit: 'bg-red-300', }[materi.data.tingkatan]} w-fit px-2 pt-0.5 rounded-md text-white`}>
-            {{ pemula: 'Pemula', menengah: 'Menengah', sulit: 'Sulit', }[materi.data.tingkatan]}
+          <div
+            className={`text-sm ${{ Pemula: 'bg-green-300', Menengah: 'bg-orange-300', Sulit: 'bg-red-300' }[materi.data.tingkatan]} w-fit px-2 pt-0.5 rounded-md text-white`}>
+            {materi.data.tingkatan}
           </div>
         )}
       </div>
@@ -125,6 +150,22 @@ const Materi = () => {
     </TransitionIn>
 
   )
+  const edit_delete_section = materi?.data && (
+    <TransitionIn from="left">
+      <div className="flex gap-3">
+        <div
+          className="p-2 bg-yellow-700 hover:bg-yellow-800 cursor-pointer rounded-md"
+          onClick={handleEditMateri}>
+          <PencilIcon className="w-5 h-5 my-auto fill-white" />
+        </div>
+        <div
+          className="p-2 bg-red-400 hover:bg-red-600 cursor-pointer rounded-md"
+          onClick={handleDeleteMateri}>
+          <TrashIcon className="w-5 h-5 my-auto fill-white" />
+        </div>
+      </div>
+    </TransitionIn>
+  )
   const materi_section = materi?.data && (
     <div>
       <TransitionIn from="bottom">
@@ -152,12 +193,15 @@ const Materi = () => {
 
   return (
     <div className="w-full max-w-7xl transform ms-auto me-auto md:mt-20 mt-10 lg:px-12 px-5">
-
+      <CreateMateriModal isOpen={createMateriModal} setModal={setCreateMateriModal} prevMateri={materi} />
       <div>
         {title_section}
       </div>
-      <div className="pb-3 border-b border-gray-300 flex justify-end">
-        <div>
+      <div className={`pb-3 border-b border-gray-300 flex ${isOwner ? 'justify-between' : 'justify-end'}`}>
+        <div className={`mt-auto ${isOwner ? 'block' : 'hidden'}`}>
+          {edit_delete_section}
+        </div>
+        <div className="">
           {owner_section}
         </div>
       </div>
