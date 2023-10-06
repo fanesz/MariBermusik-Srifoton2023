@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getPost, getPostByOwner, getUser } from "../../api/services";
 import { Link } from 'react-router-dom';
 import { PlayIcon } from "@heroicons/react/24/solid";
@@ -14,6 +14,7 @@ const Forum = () => {
   const [search,setSearch]=useState("")
   const [commentsLength,setCommentsLength]=useState(0)
   const [sendButton,setSendButton]=useState(false)
+  const textAreaRef = useRef(null);
 
   const fetchPost = async () => {
     const res = await getPost();
@@ -32,6 +33,8 @@ const Forum = () => {
   const showSendButton = event => {
     setComments(event.target.value)
     setCommentsLength(event.target.value.length)
+    textAreaRef.current.style.height = "auto";
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
     event.target.value!==""?setSendButton(true):setSendButton(false)
   }
 
@@ -44,6 +47,7 @@ const Forum = () => {
     fetchPost();
     fetchUser();
   },[]);
+  
   // console.log(post);
   // console.log(user);
   // console.log(search)
@@ -68,7 +72,7 @@ const Forum = () => {
         <div className="mt-6 flex flex-col gap-10">
           {selectedPost?.map((post, index) => (
             <div key={index} className="border border-gray-600 rounded-lg shadow-xl p-5">
-              <span className="text-blue-600">{user?.filter((filter)=>filter.id==post?.value.owner)[0].value.username}&nbsp;</span>
+              <span className="text-blue-600">{user?.filter((filter)=>filter.id==post.value.owner)[0].value.username}&nbsp;</span>
               <span>{new Date(post.value.createdAt).toLocaleDateString()}</span>
               <div className="text-2xl">{post.value.title}</div>
               <div className="mt-3">{post.value.description}</div>
@@ -76,13 +80,16 @@ const Forum = () => {
               {/* input comment */}
               {index==inputComment&&
               <div className="mt-3 ms-5 relative">
-                <textarea maxLength={400} className="w-full resize-none border-2 rounded-lg p-5" rows={4} value={comments} placeholder="Join the discussion ..." onChange={showSendButton} spellCheck={false}></textarea>
-                <button><PlayIcon className={`right-4 bottom-4 absolute w-6 ${sendButton ? "text-blue-600 hover:text-blue-900":" text-blue-200"}`} /></button>
-                {/* comment length check */}
-                <div className="absolute left-4 bottom-4 flex items-center">
-                  <span><DocumentIcon className="w-6 "/></span>
-                  <span>{commentsLength}/400</span>
+                <textarea maxLength={400} rows={3} ref={textAreaRef} className="w-full h-max border-2 rounded-lg px-5 pt-5 pb-12 resize-none" value={comments} placeholder="Join the discussion ..." onChange={showSendButton} spellCheck={false}></textarea>
+                <div className="right-4 bottom-3 absolute flex justify-between gap-4">
+                  {/* comment length check */}
+                  <div className={`${commentsLength==400?"bg-gray-500":commentsLength>266?"bg-red-500":commentsLength>133?"bg-orange-500":"bg-yellow-500"} rounded-xl p-2 flex items-center`}>
+                    <span><DocumentIcon className="w-6 "/></span>
+                    <span>{commentsLength}/400</span>
+                  </div>
+                  <button><PlayIcon className={`w-6 ${sendButton ? "text-blue-600 hover:text-blue-900":" text-blue-200"}`} /></button>
                 </div>
+                
               </div>
               }
               {/* list comment reply */}
