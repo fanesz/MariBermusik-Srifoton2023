@@ -1,18 +1,17 @@
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import { ChevronDownIcon, DocumentMinusIcon, DocumentTextIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, DocumentMinusIcon, DocumentTextIcon, MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment, useEffect, useState } from "react";
 import Input from "../_shared/Input";
 import { TDaftarMateri } from "../../types/Types";
-import { getAlatMusikList } from "../../api/services";
-import { Option, Select, Textarea } from "@material-tailwind/react";
+import { createMateri } from "../../api/services";
+import { Alert, Option, Select, Textarea } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+import LoaderAnimation from "../../assets/LoaderAnimation";
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from "../../utils/LocalStorage";
 
 interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>
-}
-type TListAlatMusik = {
-  id: string,
-  totalMateri: number
 }
 type TTingkatan = 'Tingkatan' | 'Pemula' | 'Menengah' | 'Sulit';
 type TMateri = {
@@ -21,34 +20,55 @@ type TMateri = {
   alatMusik: string,
   tingkatan: TTingkatan
 }
+
 const CreateMateriModal = (props: IProps) => {
   const { isOpen, setModal } = props;
-  const DEFAULT_VALUE = {
-    id: 0,
-    judul: '',
-    materi: '',
-  }
 
+  const DEFAULT_VALUE = { id: 0, judul: '', materi: '', }
+
+  const [daftarMateri, setDaftarMateri] = useState<TDaftarMateri[]>([DEFAULT_VALUE]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errmsg, setErrmsg] = useState('');
+  const navigate = useNavigate();
   const [materi, setMateri] = useState<TMateri>({
     nama: '',
     deskripsi: '',
     alatMusik: '',
     tingkatan: 'Tingkatan',
-  })
+  });
 
-  const [daftarMateri, setDaftarMateri] = useState<TDaftarMateri[]>([DEFAULT_VALUE]);
 
-  const [listAlatMusik, setListAlatMusik] = useState<TListAlatMusik[]>([]);
-  const fetchListAlatMusik = async () => {
-    const res = await getAlatMusikList();
-    if (res.status) {
-      setListAlatMusik([{ id: 'semua', totalMateri: -1 }, ...res.data]);
-    }
-  }
+  // fitur untuk draft materi bila user refresh page
   useEffect(() => {
-    fetchListAlatMusik();
-  }, [])
+    const materi = getLocalStorage('createMateri');
+    const objectMateri = materi ? JSON.parse(materi) : null;
+    if (objectMateri) {
+      setMateri(objectMateri.materi);
+      setDaftarMateri(objectMateri.daftarMateri);
+    }
+  }, []);
+  useEffect(() => {
+    if (materi.nama === '' &&
+      materi.deskripsi === '' &&
+      materi.alatMusik === '' &&
+      materi.tingkatan === 'Tingkatan' &&
+      daftarMateri.some(item => item.judul === '' && item.materi === '')) return;
+    const stringMateri = JSON.stringify({ materi: materi, daftarMateri: daftarMateri })
+    setLocalStorage('createMateri', stringMateri);
+  }, [materi, daftarMateri]);
 
+
+  // handler untuk menampilkan pesan error/success
+  const handleSetErrmsg = (msg: string) => {
+    if (errmsg.length > 0) return;
+    setErrmsg(msg);
+    setTimeout(() => {
+      setErrmsg("");
+    }, 3000);
+  };
+
+
+  // handler untuk set materi dan daftar materi
   const handleSetMateri = (key: string, value: string) => {
     setMateri(prev => ({ ...prev, [key]: value }))
   }
@@ -58,22 +78,70 @@ const CreateMateriModal = (props: IProps) => {
       (newDaftarMateri[id] as TDaftarMateri | any)[key as keyof TDaftarMateri] = value;
       return newDaftarMateri;
     })
+  };
+
+
+  // handler untuk tambah, kurang sub materi
+  const handleAddSubMateri = () => {
+    setDaftarMateri(prev => {
+      const newSubMateriID = prev.length > 0 ? prev[prev.length - 1].id + 1 : 1;
+      const newSubMateri = { ...DEFAULT_VALUE, id: newSubMateriID };
+      return [...prev, newSubMateri];
+    });
+  };
+  const handleDeleteSubMateri = () => {
+    setDaftarMateri(prev => {
+      const newDaftarMateri = [...prev];
+      newDaftarMateri.pop();
+      return newDaftarMateri;
+    });
+  };
+
+
+  // handler untuk validasi dan simpan materi
+  const validasiSimpanMateri = () => {
+    if (materi.nama === '' ||
+      materi.deskripsi === '' ||
+      materi.alatMusik === '' ||
+      materi.tingkatan === 'Tingkatan' ||
+      daftarMateri.some(item => item.judul === '' || item.materi === '')) {
+      return false;
+    }
+    return true;
+  };
+  const handleSimpanMateri = async () => {
+    setIsLoading(true);
+    const res = await createMateri(materi.alatMusik.toLowerCase(), {
+      nama: materi.nama,
+      deskripsi: materi.deskripsi,
+      tingkatan: materi.tingkatan.toLocaleLowerCase(),
+      daftarMateri: daftarMateri
+    });
+    setIsLoading(false);
+    if (res.status) {
+      removeLocalStorage('createMateri');
+      navigate(`/materi/${materi.alatMusik}/${res.materiID}`);
+      setModal(false);
+    } else {
+      handleSetErrmsg("Something went wrong, please login / try again later");
+    }
   }
 
 
+  // Components
   const main_section = (
     <div>
-      <div className="flex gap-10">
+      <div className="lg:flex gap-10">
         <div className="w-full max-w-sm">
           <Input variant='standard' label='Judul materi'
             value={materi.nama} onChange={(e: any) => handleSetMateri('nama', e.target.value)} />
         </div>
-        <div className="">
+        <div className="lg:mt-0 mt-3">
           <Input variant='standard' label='Alat musik'
             value={materi.alatMusik} onChange={(e: any) => handleSetMateri('alatMusik', e.target.value)} />
         </div>
-        <div>
-          <Select label="Tingkatan">
+        <div className="lg:mt-0 mt-3">
+          <Select label='Tingkatan'>
             {['Pemula', 'Menengah', 'Sulit'].map((tingkatan, index) => (
               <Option key={index} value={tingkatan}
                 onClick={() => handleSetMateri('tingkatan', tingkatan)}>
@@ -83,7 +151,6 @@ const CreateMateriModal = (props: IProps) => {
           </Select>
         </div>
       </div>
-
       <div className="mt-5">
         <Textarea label="Deskripsi" value={materi.deskripsi} spellCheck={false}
           className="focus:ring-0"
@@ -91,7 +158,6 @@ const CreateMateriModal = (props: IProps) => {
       </div>
     </div >
   )
-
   const daftarMateri_section = (
     <div>
       {daftarMateri.map((item, index) => (
@@ -109,30 +175,34 @@ const CreateMateriModal = (props: IProps) => {
       ))}
     </div>
   )
-
-  const handleAddSubMateri = () => {
-    setDaftarMateri(prev => {
-      const newSubMateriID = prev[prev.length-1].id+1;
-      const newSubMateri = DEFAULT_VALUE;
-      newSubMateri.id = newSubMateriID;
-      console.log(newSubMateri);
-      
-      console.log(newSubMateri);
-      
-      return [...prev, newSubMateri]
-    })
-  }
-
   const button_section = (
     <div>
-      <div
-        className="rounded-md bg-blue-500 w-fit p-2 cursor-pointer"
-        onClick={handleAddSubMateri}>
-        <PlusIcon className="w-4 h-4 fill-white" />
+      <div className="flex gap-3">
+        <button
+          className="rounded-md w-fit p-2.5 bg-blue-500 hover:bg-blue-600 cursor-pointer"
+          onClick={handleAddSubMateri}>
+          <PlusIcon className="w-4 h-4 my-auto fill-white" />
+        </button>
+        <button
+          className={`rounded-md w-fit p-2.5 cursor-pointer ${daftarMateri.length <= 1 ? 'bg-gray-400' : 'bg-red-500 hover:bg-red-600'}`}
+          onClick={handleDeleteSubMateri} disabled={daftarMateri.length <= 1}>
+          <MinusIcon className="w-4 h-4 my-auto fill-white" />
+        </button>
+        <button
+          className={`rounded-md w-32 text-white px-3 cursor-pointer md:text-base text-sm ${validasiSimpanMateri() ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-400'}`}
+          onClick={handleSimpanMateri} disabled={!validasiSimpanMateri()}>
+          {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Simpan Materi'}
+        </button>
+        <div className="my-auto">
+          {errmsg.length > 0 &&
+            <Alert className='w-full p-0 bg-transparent text-red-400'>
+              {errmsg}
+            </Alert>
+          }
+        </div>
       </div>
     </div>
   )
-
 
   return (
     <Transition
@@ -162,7 +232,7 @@ const CreateMateriModal = (props: IProps) => {
                 <Dialog.Title className="text-lg text-center font-semibold text-gray-600">
                   <div className="flex justify-between">
                     <div className='w-full'>
-                      Create Materi
+                      Buat Materi
                     </div>
                     <div className='mt-auto mb-auto'>
                       <XMarkIcon className="h-5 cursor-pointer hover:bg-gray-300 rounded" onClick={() => setModal(false)} />

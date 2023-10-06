@@ -1,13 +1,14 @@
 import { Fragment, useEffect, useState } from "react"
-import { getAlatMusikList, getMateriByAlatMusik } from "../../api/services";
+import { getAlatMusikList, getMateriByAlatMusik, userIsLogin } from "../../api/services";
 import MateriPreview from "../../components/Materi/MateriPreview";
 import { TListMateri } from "../../types/Types";
-import { ChevronDownIcon, FunnelIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, FunnelIcon, InformationCircleIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dialog, Listbox, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import Input from "../../components/_shared/Input";
 import TransitionIn from "../../components/_shared/TransitionIn";
 import { Option, Select } from "@material-tailwind/react";
+import InfoCreateMateriModal from "../../components/Materi/InfoCreateMateriModal";
 
 type TCurrentValue = {
   id: string,
@@ -30,6 +31,11 @@ type TFilterBy = {
 const ListMateri = () => {
   const [materi, setMateri] = useState<TListMateri[]>([]);
   const [listAlatMusik, setListAlatMusik] = useState<TListAlatMusik[]>([]);
+  const [filterModal, setFilterModal] = useState(false);
+  const [createMateriModal, setCreateMateriModal] = useState(false);
+  const [infoCreateMateriModal, setInfoCreateMateriModal] = useState(false);
+  const [cariMateri, setCariMateri] = useState('');
+  const [isLogin, setIsLogin] = useState(false);
   const [filterBy, setFilterBy] = useState<TFilterBy>({
     date_newest: false,
     date_oldest: false,
@@ -39,10 +45,16 @@ const ListMateri = () => {
     pengunjung_least: false,
     alatMusik: "semua",
   })
-  const [filterModal, setFilterModal] = useState(false);
-  const [createMateriModal, setCreateMateriModal] = useState(false);
-  const [cariMateri, setCariMateri] = useState('');
 
+  // pengecekan apakah user sudah login
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await userIsLogin();
+      if (res.status) setIsLogin(true);
+
+    }
+    fetchData();
+  }, []);
 
   // mendapatkan semua data materi dan list alat musik
   const fetchMateri = async () => {
@@ -269,8 +281,15 @@ const ListMateri = () => {
       className="group relative py-2 overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer"
       onClick={() => setCreateMateriModal(true)}>
       <div className="absolute inset-0 md:w-3 bg-green-400 transition-all duration-500 ease-out group-hover:w-full"></div>
-      <span className="relative md:text-gray-800 text-white group-hover:text-white transition-colors duration-300">Buat Materi</span>
+      <span className="relative md:text-gray-800 text-white group-hover:text-white transition-colors duration-300">
+        Buat Materi
+      </span>
     </div>
+  )
+  const button_informasi_buat_materi = (
+    <InformationCircleIcon
+      className="h-6 w-6 cursor-help fill-gray-600"
+      onClick={() => setInfoCreateMateriModal(true)} />
   )
   const modal_filter = (
     <Transition
@@ -332,17 +351,22 @@ const ListMateri = () => {
 
           {modal_filter}
           <CreateMateriModal isOpen={createMateriModal} setModal={setCreateMateriModal} />
+          <InfoCreateMateriModal isOpen={infoCreateMateriModal} setModal={setInfoCreateMateriModal} />
 
           {/* phone view */}
-
           <TransitionIn>
-            <div className="p-4 md:hidden flex gap-5 px-5">
-              <div className="w-4/5">
-                {button_buat_materi}
+            <div className="p-4 md:hidden flex gap-5 px-5 justify-end">
+              <div className={`w-4/5 ${isLogin ? 'flex' : 'hidden'}`}>
+                <div className="w-full">
+                  {button_buat_materi}
+                </div>
+                <div className="mb-auto">
+                  {button_informasi_buat_materi}
+                </div>
               </div>
               <div className="w-1/5">
                 <div
-                  className="flex sm:ps-5 gap-2 h-full rounded-md bg-gray-300 cursor-pointer"
+                  className="flex sm:ps-5 gap-2 h-full py-2 rounded-md bg-gray-300 cursor-pointer"
                   onClick={() => setFilterModal(true)}>
                   <FunnelIcon className="w-5 h-5 my-auto sm:mx-0 mx-auto fill-gray-700" />
                   <div className="mt-auto mb-auto sm:block hidden text-gray-700">
@@ -377,7 +401,14 @@ const ListMateri = () => {
           {/* desktop view */}
           <div className="px-4 md:block hidden">
             <TransitionIn from='right'>
-              {button_buat_materi}
+              <div className={`${isLogin ? 'flex' : 'hidden'}`}>
+                <div className="w-full">
+                  {button_buat_materi}
+                </div>
+                <div className="mb-auto">
+                  {button_informasi_buat_materi}
+                </div>
+              </div>
               <div className="mt-2">
                 {filter_menu}
               </div>
