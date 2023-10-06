@@ -69,7 +69,10 @@ const ListMateri = () => {
   const fetchListAlatMusik = async () => {
     const res = await getAlatMusikList();
     if (res.status) {
-      setListAlatMusik([{ id: 'semua', totalMateri: -1 }, ...res.data]);
+      setListAlatMusik([
+        { id: 'semua', totalMateri: -1 },
+        ...res.data.filter((item: TListAlatMusik) => item.totalMateri >= 1)]);
+
     }
   }
   useEffect(() => {
