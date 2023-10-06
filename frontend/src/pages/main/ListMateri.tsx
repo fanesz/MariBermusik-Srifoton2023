@@ -7,6 +7,7 @@ import { Dialog, Listbox, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import Input from "../../components/_shared/Input";
 import TransitionIn from "../../components/_shared/TransitionIn";
+import { Option, Select } from "@material-tailwind/react";
 
 type TCurrentValue = {
   id: string,
@@ -195,36 +196,14 @@ const ListMateri = () => {
   ]
   const filter_alatMusik = (
     <div>
-      <div>
-        Alat Musik
-      </div>
-      <div>
-        <Listbox value={listAlatMusik} onChange={() => setListAlatMusik}>
-          <Listbox.Button className="w-full py-1 text-start px-3 border border-gray-600 rounded-md cursor-pointer flex justify-between shadow-sm">
-            <div>
-              {filterBy.alatMusik.charAt(0).toUpperCase() + filterBy.alatMusik.slice(1)}
-            </div>
-            <ChevronDownIcon className="w-4 h-4 mt-auto mb-auto" />
-          </Listbox.Button>
-          <Transition
-            enter="transition-transform origin-top duration-300"
-            enterFrom="scale-y-0"
-            enterTo="scale-y-100"
-            leave="transition-transform origin-top duration-300"
-            leaveFrom="scale-y-100"
-            leaveTo="scale-y-0">
-            <Listbox.Options className="border border-gray-400 rounded-b-md mt-2 cursor-pointer shadow-lg absolute bg-white w-full">
-              {listAlatMusik.map((alatMusik, index) => (
-                <Listbox.Option key={index} value={alatMusik.id}
-                  onClick={() => filterByAlatMusik(alatMusik.id)}
-                  className={`px-3 py-1 text-gray-800 hover:bg-gray-100 ${index !== listAlatMusik.length - 1 && "border-b border-gray-400"} ${filterBy.alatMusik === alatMusik.id && "bg-gray-200"}`}>
-                  {alatMusik.id.charAt(0).toUpperCase() + alatMusik.id.slice(1) + (alatMusik.totalMateri !== -1 ? ` (${alatMusik.totalMateri})` : '')}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </Transition>
-        </Listbox>
-      </div>
+      <Select label="Alat Musik" menuProps={{ className: 'p-0 py-1' }}>
+        {listAlatMusik.map((alatMusik, index) => (
+          <Option key={index} value={alatMusik.id}
+            onClick={() => filterByAlatMusik(alatMusik.id)}>
+            {alatMusik.id.charAt(0).toUpperCase() + alatMusik.id.slice(1) + (alatMusik.totalMateri !== -1 ? ` (${alatMusik.totalMateri})` : '')}
+          </Option>
+        ))}
+      </Select>
     </div>
   )
   const filter_data = (
@@ -268,9 +247,9 @@ const ListMateri = () => {
           Filter
         </div>
       </div>
-      <div className="border border-gray-400 w-full rounded-md px-5 pe-8 py-2 pb-4 shadow-md mt-1">
+      <div className="border border-gray-400 w-full rounded-md px-3 ps-5 py-2 pb-4 shadow-md mt-1">
 
-        <div>
+        <div className="mt-2">
           {filter_alatMusik}
         </div>
 

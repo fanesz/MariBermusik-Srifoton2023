@@ -1,9 +1,10 @@
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import { ChevronDownIcon, DocumentMinusIcon, DocumentTextIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, DocumentMinusIcon, DocumentTextIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment, useEffect, useState } from "react";
 import Input from "../_shared/Input";
 import { TDaftarMateri } from "../../types/Types";
 import { getAlatMusikList } from "../../api/services";
+import { Option, Select, Textarea } from "@material-tailwind/react";
 
 interface IProps {
   isOpen: boolean,
@@ -72,67 +73,62 @@ const CreateMateriModal = (props: IProps) => {
             value={materi.alatMusik} onChange={(e: any) => handleSetMateri('alatMusik', e.target.value)} />
         </div>
         <div>
-          <div className="z-20">
-            <Listbox as='div' className='relative z-20' value={listAlatMusik} onChange={() => setListAlatMusik}>
-              <Listbox.Button className="w-full py-1 text-start px-3 border border-gray-600 rounded-md cursor-pointer flex justify-between shadow-sm">
-                <div>
-                  {materi.tingkatan}
-                </div>
-                <ChevronDownIcon className="w-4 h-4 mt-auto mb-auto" />
-              </Listbox.Button>
-              <Transition
-                enter="transition-transform origin-top duration-300"
-                enterFrom="scale-y-0"
-                enterTo="scale-y-100"
-                leave="transition-transform origin-top duration-300"
-                leaveFrom="scale-y-100"
-                leaveTo="scale-y-0">
-                <Listbox.Options className="border border-gray-400 rounded-b-md mt-2 cursor-pointer shadow-lg absolute bg-white w-fit z-20">
-                  {['Pemula', 'Menengah', 'Sulit'].map((tingkatan, index) => (
-                    <Listbox.Option key={index} value={tingkatan}
-                      onClick={() => handleSetMateri('tingkatan', tingkatan)}
-                      className={`px-3 py-1 z-20 text-gray-800 hover:bg-gray-100 ${index !== 2 && "border-b border-gray-400"} ${materi.alatMusik === tingkatan && "bg-gray-200"}`}>
-                      {tingkatan}
-                    </Listbox.Option>
-                  ))}
-                </Listbox.Options>
-              </Transition>
-            </Listbox>
-          </div>
+          <Select label="Tingkatan">
+            {['Pemula', 'Menengah', 'Sulit'].map((tingkatan, index) => (
+              <Option key={index} value={tingkatan}
+                onClick={() => handleSetMateri('tingkatan', tingkatan)}>
+                {tingkatan}
+              </Option>
+            ))}
+          </Select>
         </div>
       </div>
-      <div className="mt-3">
-        <Input variant='standard' className="h-10" label='Deskripsi'
-          value={materi.deskripsi} onChange={(e: any) => handleSetMateri('deskripsi', e.target.value)} />
+
+      <div className="mt-5">
+        <Textarea label="Deskripsi" value={materi.deskripsi} spellCheck={false}
+          className="focus:ring-0"
+          onChange={(e: any) => handleSetMateri('deskripsi', e.target.value)} />
       </div>
     </div >
   )
 
   const daftarMateri_section = (
     <div>
-      <div>
-        {daftarMateri.map((item, index) => (
-          <div className="border-b border-gray-400 mt-5 pb-2" key={index}>
-
-            <div className="w-full max-w-xs">
-              <Input variant='standard' className="border-none" label={`Sub materi-${index + 1}`}
-                value={item.judul} onChange={(e: any) => handleSetDaftarMateri('judul', e.target.value, index)} />
-            </div>
-            <div className="">
-              <textarea
-                className="w-full rounded bg-none px-3 py-1"
-                value={item.materi} onChange={(e: any) => handleSetDaftarMateri('materi', e.target.value, index)} />
-            </div>
+      {daftarMateri.map((item, index) => (
+        <div className="border-b border-gray-400 border-opacity-40 mt-2 pb-2" key={index}>
+          <div className="w-full max-w-xs">
+            <Input variant='standard' className="border-none" label={`Sub materi-${index + 1}`}
+              value={item.judul} onChange={(e: any) => handleSetDaftarMateri('judul', e.target.value, index)} />
           </div>
-        ))}
-      </div>
+          <div className="mt-1">
+            <Textarea label="Materi" value={item.materi} spellCheck={false}
+              className="focus:ring-0" resize={true}
+              onChange={(e: any) => handleSetDaftarMateri('materi', e.target.value, index)} />
+          </div>
+        </div>
+      ))}
     </div>
   )
 
+  const handleAddSubMateri = () => {
+    setDaftarMateri(prev => {
+      const newSubMateriID = prev[prev.length-1].id+1;
+      const newSubMateri = DEFAULT_VALUE;
+      newSubMateri.id = newSubMateriID;
+      console.log(newSubMateri);
+      
+      console.log(newSubMateri);
+      
+      return [...prev, newSubMateri]
+    })
+  }
+
   const button_section = (
     <div>
-      <div>
-        
+      <div
+        className="rounded-md bg-blue-500 w-fit p-2 cursor-pointer"
+        onClick={handleAddSubMateri}>
+        <PlusIcon className="w-4 h-4 fill-white" />
       </div>
     </div>
   )
@@ -175,13 +171,13 @@ const CreateMateriModal = (props: IProps) => {
                 </Dialog.Title>
 
                 <div className="rounded-md mt-2 bg-white bg-opacity-70 p-5 ">
-                  <div className="mb-10">
+                  <div className="">
                     {main_section}
                   </div>
-                  <div>
+                  <div className="">
                     {daftarMateri_section}
                   </div>
-                  <div>
+                  <div className="mt-3">
                     {button_section}
                   </div>
                 </div>
