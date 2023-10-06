@@ -1,4 +1,5 @@
 import api from ".";
+import { TMateriToPost } from "../types/Types";
 import { getLocalStorage } from "../utils/LocalStorage";
 
 const ENDPOINT = {
@@ -106,7 +107,7 @@ export const getMateriByID = async (id: string) => {
   }
 }
 
-export const createMateri = async (alatMusik: string, materi: any) => {
+export const createMateri = async (alatMusik: string, materi: TMateriToPost) => {
   try {
     const loginID = getLocalStorage("loginID") || '';
     if (loginID.length < 1) return false;
@@ -121,7 +122,7 @@ export const createMateri = async (alatMusik: string, materi: any) => {
   }
 }
 
-export const editMateriByID = async (alatMusik: string, materiID: string, materi: any) => {
+export const editMateriByID = async (alatMusik: string, materiID: number, materi: TMateriToPost) => {
   try {
     const loginID = getLocalStorage("loginID") || '';
     if (loginID.length < 1) return false;

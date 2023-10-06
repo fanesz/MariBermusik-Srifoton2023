@@ -87,7 +87,7 @@ export const editMateriByID = async (req, res) => {
     const materi = await db_materi.get(req.body.alatMusik);
     const materiToUpdate = materi.find(m => m.materiID == req.body.materiID);
     const newMateri = materi.filter(m => m.materiID != req.body.materiID);
-    const userInput = JSON.parse(req.body.materi);
+    const userInput = req.body.materi;
     const updatedMateri = {
       "materiID": materiToUpdate.materiID,
       "alatMusik": materiToUpdate.alatMusik,

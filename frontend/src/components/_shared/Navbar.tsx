@@ -97,7 +97,7 @@ const Navbar = () => {
           leaveFrom="scale-y-100 opacity-100"
           leaveTo="scale-y-0 opacity-100"
         >
-          <Menu.Items className="absolute shadow-lg bg-navbar_color bg-opacity-60 backdrop-blur-md -right-4 w-[20rem] border border-white border-opacity-30 rounded-md py-2">
+          <Menu.Items className="absolute shadow-lg bg-navbar_color -right-4 w-[20rem] border border-white border-opacity-30 rounded-md py-2">
             <div>
               {navbarMenu.map((item, index) => (
                 <Menu.Item key={index}>

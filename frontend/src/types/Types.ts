@@ -1,3 +1,4 @@
+export type TTingkatan = 'Pemula' | 'Menengah' | 'Sulit';
 export type TListMateri = {
   materiID: number,
   alatMusik: string,
@@ -5,12 +6,18 @@ export type TListMateri = {
   data: {
     nama: string,
     deskripsi: string,
-    tingkatan: string,
+    tingkatan: TTingkatan,
     rating: [string, number][],
     pengunjung: number,
     createdAt: Date,
     daftarMateri: TDaftarMateri[]
   }
+}
+export type TMateriToPost = {
+  nama: string,
+  deskripsi: string,
+  tingkatan: string,
+  daftarMateri: TDaftarMateri[]
 }
 export type TDaftarMateri = {
   id: number,
