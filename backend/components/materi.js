@@ -55,7 +55,7 @@ export const createMateri = async (req, res) => {
   try { // body: { loginID, alatMusik, materi }
     const user = await db_loggedUser.get(req.body.loginID);
     const prevMateri = await db_materi.get(req.body.alatMusik) || [];
-    const userInput = JSON.parse(req.body.materi);
+    const userInput = req.body.materi;
     const newMateri = [
       ...prevMateri,
       {

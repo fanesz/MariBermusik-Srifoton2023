@@ -5,6 +5,7 @@ import { TListMateri, TUser } from "../../types/Types";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
 import { EyeIcon, StarIcon } from "@heroicons/react/24/solid";
 import TransitionIn from "../../components/_shared/TransitionIn";
+import profile from "../../assets/profile.png";
 
 const Materi = () => {
 
@@ -82,7 +83,7 @@ const Materi = () => {
           </div>
           <div className="font-extrabold">·</div>
           <div className="flex gap-0.5">
-            {ratingAverage(materi.data.rating)}
+            {ratingAverage(materi.data.rating) | 0}
             <StarIcon className="h-3.5 w-3.5 mt-auto mb-auto fill-yellow-900" />
             <span className="text-xs mt-auto mb-auto text-gray-500">({materi.data.rating.length})</span>
           </div>
@@ -95,7 +96,7 @@ const Materi = () => {
           className="flex gap-3 border border-gray-400 w-fit px-3 py-1 rounded-xl shadow-md hover:-translate-y-1 transition-transform duration-200 cursor-pointer"
           onClick={() => navigate(`/profile/${materiOwner.username}`)}>
           <div>
-            <img src={materiOwner?.img} className="w-10 h-10 rounded-full object-cover" />
+            <img src={materiOwner?.img || profile} className="w-10 h-10 rounded-full object-cover" />
           </div>
           <div className="my-auto">
             {materiOwner?.username}

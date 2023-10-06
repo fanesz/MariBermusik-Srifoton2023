@@ -5,7 +5,7 @@ import MateriPreview from '../../components/Materi/MateriPreview';
 import { TListMateri } from '../../types/Types';
 import TransitionIn from '../../components/_shared/TransitionIn';
 import { convertCreatedAt } from '../../utils/utils';
-
+import profile from '../../assets/profile.png';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const Profile = () => {
     <div className='p-4'>
       <div className='flex'>
         <div className=''>
-          <img src={user.img} className='h-36 w-36 object-cover rounded-full border' />
+          <img src={user.img || profile} className='h-36 w-36 object-cover rounded-full border' />
         </div>
         <div className='my-auto ms-8'>
           <div className='text-xl text-gray-800 font-semibold'>
@@ -99,7 +99,7 @@ const Profile = () => {
                     Materi
                   </div>
                   {listMateri?.map((materi, index) => (
-                    <TransitionIn key={index} from='bottom' delay={index*200}>
+                    <TransitionIn key={index} from='bottom' delay={index * 200}>
                       <MateriPreview
                         className='mb-5'
                         materi={materi}
