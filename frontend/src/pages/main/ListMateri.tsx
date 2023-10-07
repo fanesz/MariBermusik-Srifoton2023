@@ -85,7 +85,7 @@ const ListMateri = () => {
 
 
   // algoritma filtering
-  const handleFilteringMateri = (filterer: TFilterBy) => {
+  const handleFilteringMateri = (filterer: any, newestFilter: any, filterCondition: boolean) => {
     const filterByDate = (a: TListMateri, b: TListMateri, reverse: boolean) => {
       const dateA = new Date(a.data.createdAt).getTime();
       const dateB = new Date(b.data.createdAt).getTime();
@@ -109,6 +109,16 @@ const ListMateri = () => {
       const pengunjungB = b.data.pengunjung;
       return reverse ? pengunjungA - pengunjungB : pengunjungB - pengunjungA;
     }
+
+    const listFilterer: any = {
+      date_newest: (a: TListMateri, b: TListMateri) => filterByDate(a, b, false),
+      date_oldest: (a: TListMateri, b: TListMateri) => filterByDate(a, b, true),
+      rating_highest: (a: TListMateri, b: TListMateri) => filterByRating(a, b, false),
+      rating_lowest: (a: TListMateri, b: TListMateri) => filterByRating(a, b, true),
+      pengunjung_most: (a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, false),
+      pengunjung_least: (a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, true)
+    }
+
     setFilteredMateri(
       prev => {
         let materiToSet = (prev.length === 0 ? materi : prev);
@@ -130,6 +140,9 @@ const ListMateri = () => {
         if (filterer.pengunjung_least) {
           materiToSet = materiToSet.sort((a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, true))
         }
+        if (filterCondition && newestFilter) {
+          materiToSet = filterer[newestFilter] && materiToSet.sort(listFilterer[newestFilter]);
+        }
         return materiToSet
       }
     )
@@ -141,14 +154,15 @@ const ListMateri = () => {
     if (alatMusik !== 'semua' && kesulitan.length !== 0) {
       const materiByAlatMusik = materi.filter(filterByKesulitan);
       newMateri = materiByAlatMusik.filter(filterByAlatMusik);
-    } if (alatMusik === 'semua' && kesulitan.length !== 0) {
-      newMateri = materi.filter(filterByKesulitan);
     } if (alatMusik !== 'semua' && kesulitan.length === 0) {
       newMateri = materi.filter(filterByAlatMusik)
-    } else {
+    } if (alatMusik === 'semua' && kesulitan.length !== 0) {
+      newMateri = materi.filter(filterByKesulitan);
+    } else if (alatMusik === 'semua' && kesulitan.length === 0) {
       newMateri = [];
     }
     setFilteredMateri(newMateri);
+    handleFilteringMateri(filterBy, null, false);
   };
   const handleFilterAlatMusik = (alatMusik: string) => {
     setFilterBy(prev => {
@@ -181,8 +195,6 @@ const ListMateri = () => {
 
   // handle radio button filter
   const handleCheckBox = (key: string) => {
-    console.log(key);
-
     if (key === "date_newest") {
       setFilterBy(prev => {
         const newFilterBy = {
@@ -190,7 +202,7 @@ const ListMateri = () => {
           date_newest: !prev.date_newest,
           date_oldest: false,
         }
-        handleFilteringMateri(newFilterBy);
+        handleFilteringMateri(newFilterBy, 'date_newest', !prev.date_newest);
         return newFilterBy;
       });
     } else if (key === "date_oldest") {
@@ -200,7 +212,7 @@ const ListMateri = () => {
           date_newest: false,
           date_oldest: !prev.date_oldest,
         }
-        handleFilteringMateri(newFilterBy);
+        handleFilteringMateri(newFilterBy, 'date_oldest', !prev.date_oldest);
         return newFilterBy;
       });
     } else if (key === "rating_highest") {
@@ -210,7 +222,7 @@ const ListMateri = () => {
           rating_highest: !prev.rating_highest,
           rating_lowest: false,
         }
-        handleFilteringMateri(newFilterBy);
+        handleFilteringMateri(newFilterBy, 'rating_highest', !prev.rating_highest);
         return newFilterBy;
       });
     } else if (key === "rating_lowest") {
@@ -220,7 +232,7 @@ const ListMateri = () => {
           rating_highest: false,
           rating_lowest: !prev.rating_lowest,
         }
-        handleFilteringMateri(newFilterBy);
+        handleFilteringMateri(newFilterBy, 'rating_lowest', !prev.rating_lowest);
         return newFilterBy;
       });
     } else if (key === "pengunjung_most") {
@@ -230,7 +242,7 @@ const ListMateri = () => {
           pengunjung_most: !prev.pengunjung_most,
           pengunjung_least: false,
         }
-        handleFilteringMateri(newFilterBy);
+        handleFilteringMateri(newFilterBy, 'pengunjung_most', !prev.pengunjung_most);
         return newFilterBy;
       });
     } else if (key === "pengunjung_least") {
@@ -240,7 +252,7 @@ const ListMateri = () => {
           pengunjung_most: false,
           pengunjung_least: !prev.pengunjung_least,
         }
-        handleFilteringMateri(newFilterBy);
+        handleFilteringMateri(newFilterBy, 'pengunjung_least', !prev.pengunjung_least,);
         return newFilterBy;
       });
     }
