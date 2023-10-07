@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteMateriByID, getLoginUser, getMateriByAlatMusik, getUserByParams, userIsLogin } from "../../api/services";
+import { deleteMateriByID, getMateriByAlatMusik, getRatingList, getUserByParams, updateRating, userIsLogin } from "../../api/services";
 import { useEffect, useState } from "react";
 import { TListMateri, TUser } from "../../types/Types";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
@@ -7,6 +7,7 @@ import { EyeIcon, PencilIcon, StarIcon, TrashIcon } from "@heroicons/react/24/so
 import TransitionIn from "../../components/_shared/TransitionIn";
 import profile from "../../assets/profile.png";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
+import { Alert, Rating } from "@material-tailwind/react";
 
 const Materi = () => {
 
@@ -16,27 +17,68 @@ const Materi = () => {
   const [materiOwner, setMateriOwner] = useState<TUser>({} as TUser);
   const [createMateriModal, setCreateMateriModal] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
+  const [rating, setRating] = useState(-1);
+  const [currentUser, setCurrentUser] = useState('');
+  const [successmsg, setSuccessmsg] = useState('');
+  const [errmsg, setErrmsg] = useState('');
 
-  // fetch data materi dan owner
-  const fetchMateriAndOwner = async () => {
+  // handler untuk menampilkan pesan error/success
+  const handleSetErrmsg = (msg: string) => {
+    if (errmsg.length > 0) return;
+    setErrmsg(msg);
+    setTimeout(() => {
+      setErrmsg("");
+    }, 3000);
+  }
+  const handleSetSuccessmsg = (msg: string) => {
+    if (successmsg.length > 0) return;
+    setSuccessmsg(msg);
+    setTimeout(() => {
+      setSuccessmsg("");
+    }, 3000);
+  }
+
+  // fetch data materi,  owner, dan rating
+  const fetchMateriOwnerAndRating = async () => {
+
+    // fetch materi berdasarkan param
     const resMateri = await getMateriByAlatMusik(alatmusik, id);
     if (resMateri.status) {
       setMateri(resMateri.data);
+
+      // fetch data owner dari UUID
       const resOwner = await getUserByParams(null, null, resMateri.data.owner);
       if (resOwner.status) setMateriOwner(resOwner.data);
+
+      // check apakah user sudah login
       const isLogin = await userIsLogin();
       if (isLogin.status) {
-        const UUID = await getLoginUser();
+
+        // mendapatkan UUID user bila login
+        const UUID = await getUserByParams(true);
         if (UUID.status) {
-          const currentUserUUID = UUID.data[0].value.id;
-          if (currentUserUUID === resMateri.data.owner) setIsOwner(true);
+          const currentUserUUID = UUID.data.UUID;
+          setCurrentUser(currentUserUUID);
+          if (currentUserUUID === resMateri.data.owner) {
+            setIsOwner(true);
+          } else {
+            // mendapatkan list rating
+            const resRatingList = await getRatingList(alatmusik || '', id || '');
+            if (resRatingList.status) {
+              const currentUserRating = resRatingList.data.filter((m: [string, number][]) => m[0] == currentUserUUID);
+              if (currentUserRating.length !== 0) {
+                setRating(currentUserRating[0][1]);
+              } else {
+                setRating(0);
+              }
+            }
+          }
         }
       }
-
     }
   }
   useEffect(() => {
-    fetchMateriAndOwner();
+    fetchMateriOwnerAndRating();
   }, []);
 
 
@@ -80,6 +122,15 @@ const Materi = () => {
   const handleEditMateri = () => {
     setCreateMateriModal(true);
   }
+  const handleUpdateRating = async (input: number) => {
+    setRating(input);
+    const res = await updateRating(alatmusik || '', id || '', currentUser, input.toString());
+    if (res.status) {
+      handleSetSuccessmsg('Rating saved!');
+    } else {
+      handleSetErrmsg('Failed saving rating!')
+    }
+  }
 
 
   // Components
@@ -122,7 +173,7 @@ const Materi = () => {
             <div className="font-extrabold">·</div>
 
             <div className="flex gap-0.5">
-              {ratingAverage(materi.data.rating) | 0}
+              {ratingAverage(materi.data.rating)}
               <StarIcon className="h-3.5 w-3.5 mt-auto mb-auto fill-yellow-900" />
               <span className="text-xs mt-auto mb-auto text-gray-500">({materi.data.rating.length})</span>
             </div>
@@ -151,7 +202,7 @@ const Materi = () => {
 
   )
   const edit_delete_section = materi?.data && (
-    <TransitionIn from="left">
+    <TransitionIn delay={100} from="left">
       <div className="flex gap-3">
         <div
           className="p-2 bg-yellow-700 hover:bg-yellow-800 cursor-pointer rounded-md"
@@ -169,7 +220,7 @@ const Materi = () => {
   const materi_section = materi?.data && (
     <div>
       <TransitionIn from="bottom">
-        <div className="mt-3 pb-3 border-b border-gray-300">
+        <div className="mt-3 py-3 border-y border-gray-300">
           <div className="text-2xl mb-2 font-medium text-gray-800">
             Deskripsi
           </div>
@@ -190,6 +241,20 @@ const Materi = () => {
       ))}
     </div>
   )
+  const rating_section = rating !== -1 && (
+    <TransitionIn from="bottom">
+      <div className="flex justify-center">
+        {successmsg.length === 0 ? (
+          <Rating value={rating} onChange={handleUpdateRating} />
+        ) : (
+            <div className="ms-7">
+              {errmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
+              {successmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+          </div>
+        )}
+      </div>
+    </TransitionIn>
+  )
 
   return (
     <div className="w-full max-w-7xl transform ms-auto me-auto md:mt-20 mt-10 lg:px-12 px-5">
@@ -197,7 +262,7 @@ const Materi = () => {
       <div>
         {title_section}
       </div>
-      <div className={`pb-3 border-b border-gray-300 flex ${isOwner ? 'justify-between' : 'justify-end'}`}>
+      <div className={`pb-3 flex ${isOwner ? 'justify-between' : 'justify-end'}`}>
         <div className={`mt-auto ${isOwner ? 'block' : 'hidden'}`}>
           {edit_delete_section}
         </div>
@@ -207,6 +272,9 @@ const Materi = () => {
       </div>
       <div>
         {materi_section}
+      </div>
+      <div className="mt-4">
+        {rating_section}
       </div>
     </div>
   )
