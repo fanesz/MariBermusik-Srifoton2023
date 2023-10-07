@@ -22,8 +22,8 @@ const MateriPreview = (props: IProps) => {
     <div className="flex gap-2">
       <div>
         {materi.data.tingkatan && (
-          <div className={`text-sm ${{ pemula: 'bg-green-300', menengah: 'bg-orange-300', sulit: 'bg-red-300', }[materi.data.tingkatan]} w-fit px-2 pt-0.5 rounded-md text-white`}>
-            {{ pemula: 'Pemula', menengah: 'Menengah', sulit: 'Sulit', }[materi.data.tingkatan]}
+          <div className={`text-sm ${{ Pemula: 'bg-green-300', Menengah: 'bg-orange-300', Sulit: 'bg-red-300', }[materi.data.tingkatan]} w-fit px-2 pt-0.5 rounded-md text-white`}>
+            {{ Pemula: 'Pemula', Menengah: 'Menengah', Sulit: 'Sulit', }[materi.data.tingkatan]}
           </div>
         )}
       </div>

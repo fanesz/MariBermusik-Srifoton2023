@@ -83,7 +83,7 @@ const Profile = () => {
       <div className='w-full max-w-5xl transform ms-auto me-auto md:mt-20 mt-10 px-5'>
         <div className='rounded-md p-5 border border-gray-400 shadow-md'>
 
-          {listMateri.length !== 0 ? (
+          {user?.email !== '' ? (
             <div>
               <div className="text-center text-2xl font-semibold text-gray-700">
                 Profile
@@ -92,22 +92,25 @@ const Profile = () => {
               <div className='mt-5'>
                 {profileCard}
               </div>
+              {listMateri.length !== 0 && (
 
-              <div className='mt-5'>
-                <div className='px-5 py-3 border border-gray-300 rounded-md'>
-                  <div className='text-xl mb-2.5 font-medium text-gray-800'>
-                    Materi
+                <div className='mt-5'>
+                  <div className='px-5 py-3 border border-gray-300 rounded-md'>
+                    <div className='text-xl mb-2.5 font-medium text-gray-800'>
+                      Materi
+                    </div>
+                    {listMateri?.map((materi, index) => (
+                      <TransitionIn key={index} from='bottom' delay={index * 200}>
+                        <MateriPreview
+                          className='mb-5'
+                          materi={materi}
+                        />
+                      </TransitionIn>
+                    ))}
                   </div>
-                  {listMateri?.map((materi, index) => (
-                    <TransitionIn key={index} from='bottom' delay={index * 200}>
-                      <MateriPreview
-                        className='mb-5'
-                        materi={materi}
-                      />
-                    </TransitionIn>
-                  ))}
                 </div>
-              </div>
+              )}
+
             </div>
           ) : (
             <div>

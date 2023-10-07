@@ -166,7 +166,7 @@ const Navbar = () => {
       <div className={`${isLogin ? 'flex' : 'hidden'}`}>
         <Menu as="div" className="relative z-10">
           <Menu.Button as="button" className="">
-            <img className="2xl:h-[4.5vh] md:h-12 hover:scale-105 transition-all  rounded-full" src={user.img} />
+            <img className="2xl:h-[4.5vh] 2xl:w-[4.5vh] md:h-12 md:w-12 hover:scale-105 transition-all  rounded-full" src={user.img} />
           </Menu.Button>
           <Transition
             enter="transition-transform origin-top duration-400"
