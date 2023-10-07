@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./pages/main/Home"
 import Forum from "./pages/main/Forum"
-import PostForum from "./pages/main/PostForum"
 import Navbar from "./components/_shared/Navbar"
 import Footer from "./components/_shared/Footer"
 import ResetPassword from "./pages/other/ResetPassword"
@@ -27,7 +26,6 @@ function App() {
           <Route path='/materi/:alatmusik/:id' element={<Materi />} />
 
           <Route path='/forum' element={<Forum />} />
-          <Route path='/postForum' element={<PostForum />} />
 
           <Route path='/resetpassword/:id' element={<ResetPassword />} />
 

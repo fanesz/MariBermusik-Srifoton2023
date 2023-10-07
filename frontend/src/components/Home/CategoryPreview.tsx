@@ -1,7 +1,6 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
 import { getAlatMusikImg } from "../../utils/AlatMusikList";
 import TransitionIn from "../_shared/TransitionIn";
-import { useState } from "react";
 
 const carouselItems = [
   {

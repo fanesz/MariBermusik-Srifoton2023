@@ -5,7 +5,6 @@ import materiRoute from "./routes/materiRoute.js";
 import loginRoute from "./routes/loginRoute.js";
 import forgetPassRoute from "./routes/forgetPassRoute.js";
 import forumRoute from "./routes/forumRoute.js";
-import { validateToken } from "./config/validation.js";
 
 const app = express();
 

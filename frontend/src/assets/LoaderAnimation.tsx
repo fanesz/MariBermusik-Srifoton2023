@@ -1,4 +1,3 @@
-
 export default function LoaderAnimation(props: { className?: string, color?: string }) {
   const { className, color } = props;
   return (
