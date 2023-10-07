@@ -142,7 +142,7 @@ const Materi = () => {
       <div className="my-auto">
         {materi?.data?.tingkatan && (
           <div
-            className={`text-sm ${{ Pemula: 'bg-green-300', Menengah: 'bg-orange-300', Sulit: 'bg-red-300' }[materi.data.tingkatan]} w-fit px-2 pt-0.5 rounded-md text-white`}>
+            className={`text-sm ${{ pemula: 'bg-green-300', menengah: 'bg-orange-300', sulit: 'bg-red-300' }[materi.data.tingkatan.toLocaleLowerCase()]} w-fit px-2 py-0.5 rounded-md text-white`}>
             {materi.data.tingkatan}
           </div>
         )}
