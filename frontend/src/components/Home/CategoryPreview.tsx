@@ -29,11 +29,9 @@ const carouselItems = [
   },
 ];
 
-
 const CategoryPreview = () => {
-
   return (
-    <TransitionIn onScreen={300} from="bottom">
+    <TransitionIn from="bottom">
       <div className="flex justify-center items-center flex-col">
         <h1 className="text-3xl font-bold mb-4">Category List</h1>
         <p className="text-lg font-normal mb-8">Here is the list of services category we have, look it up!</p>
@@ -65,7 +63,6 @@ const CategoryPreview = () => {
         </Carousel>
       </div>
     </TransitionIn>
-
   );
 };
 
