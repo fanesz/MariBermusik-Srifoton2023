@@ -8,6 +8,7 @@ import TransitionIn from "../../components/_shared/TransitionIn";
 import profile from "../../assets/profile.png";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import { Alert, Rating } from "@material-tailwind/react";
+import DeleteAlert from "../../components/Materi/DeleteAlert";
 
 const Materi = () => {
 
@@ -21,6 +22,7 @@ const Materi = () => {
   const [currentUser, setCurrentUser] = useState('');
   const [successmsg, setSuccessmsg] = useState('');
   const [errmsg, setErrmsg] = useState('');
+  const [deleteAlertModal, setDeleteAlertModal] = useState(false);
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
@@ -114,10 +116,11 @@ const Materi = () => {
 
   // handler delete dan edit materi
   const handleDeleteMateri = async () => {
-    const res = await deleteMateriByID(alatmusik || '', id || '');
-    if (res.status) {
-      navigate(`/materi`);
-    }
+    setDeleteAlertModal(true);
+    // const res = await deleteMateriByID(alatmusik || '', id || '');
+    // if (res.status) {
+    //   navigate(`/materi`);
+    // }
   }
   const handleEditMateri = () => {
     setCreateMateriModal(true);
@@ -259,6 +262,7 @@ const Materi = () => {
   return (
     <div className="w-full max-w-7xl transform ms-auto me-auto md:mt-20 mt-10 lg:px-12 px-5">
       <CreateMateriModal isOpen={createMateriModal} setModal={setCreateMateriModal} prevMateri={materi} />
+      <DeleteAlert isOpen={deleteAlertModal} setModal={setDeleteAlertModal} judul={materi?.data?.nama} alatmusik={alatmusik} id={id} />
       <div>
         {title_section}
       </div>
