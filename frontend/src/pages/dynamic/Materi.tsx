@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteMateriByID, getMateriByAlatMusik, getRatingList, getUserByParams, updateRating, userIsLogin } from "../../api/services";
+import { addPengunjung, deleteMateriByID, getMateriByAlatMusik, getRatingList, getUserByParams, updateRating, userIsLogin } from "../../api/services";
 import { useEffect, useState } from "react";
 import { TListMateri, TUser } from "../../types/Types";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
@@ -40,7 +40,7 @@ const Materi = () => {
     }, 3000);
   }
 
-  // fetch data materi,  owner, dan rating
+  // fetch data materi, owner, dan rating
   const fetchMateriOwnerAndRating = async () => {
 
     // fetch materi berdasarkan param
@@ -81,6 +81,8 @@ const Materi = () => {
   }
   useEffect(() => {
     fetchMateriOwnerAndRating();
+    // add Pengunjung saat page di akses
+    addPengunjung(alatmusik || '', id || '');
   }, []);
 
 
@@ -117,10 +119,6 @@ const Materi = () => {
   // handler delete dan edit materi
   const handleDeleteMateri = async () => {
     setDeleteAlertModal(true);
-    // const res = await deleteMateriByID(alatmusik || '', id || '');
-    // if (res.status) {
-    //   navigate(`/materi`);
-    // }
   }
   const handleEditMateri = () => {
     setCreateMateriModal(true);
@@ -176,7 +174,7 @@ const Materi = () => {
             <div className="font-extrabold">·</div>
 
             <div className="flex gap-0.5">
-              {ratingAverage(materi.data.rating)}
+              {ratingAverage(materi.data.rating) || 0}
               <StarIcon className="h-3.5 w-3.5 mt-auto mb-auto fill-yellow-900" />
               <span className="text-xs mt-auto mb-auto text-gray-500">({materi.data.rating.length})</span>
             </div>
@@ -250,9 +248,9 @@ const Materi = () => {
         {successmsg.length === 0 ? (
           <Rating value={rating} onChange={handleUpdateRating} />
         ) : (
-            <div className="ms-7">
-              {errmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
-              {successmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+          <div className="ms-7">
+            {errmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
+            {successmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
           </div>
         )}
       </div>

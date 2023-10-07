@@ -165,6 +165,15 @@ export const getRatingList = async (alatMusik: string, materiID: string) => {
   }
 }
 
+export const addPengunjung = async (alatMusik: string, materiID: string) => {
+  try {
+    const res = await api.get(ENDPOINT.materi + '/pengunjung' + param([['alatMusik', alatMusik], ['materiID', materiID]]));
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
+
 // === LOGIN ===
 
 export const getLoginUser = async () => {
