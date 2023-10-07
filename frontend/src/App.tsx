@@ -8,6 +8,7 @@ import Setting from "./pages/main/Setting"
 import Profile from "./pages/dynamic/Profile"
 import ListMateri from "./pages/main/ListMateri"
 import Materi from "./pages/dynamic/Materi"
+import NotFound from "./components/_shared/NotFound"
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
 
           <Route path='/resetpassword/:id' element={<ResetPassword />} />
 
-          <Route path='/*' element={<div>NOT FOUND</div>} />
+          <Route path='/*' element={<NotFound />} />
 
         </Routes>
       </div>
