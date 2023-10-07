@@ -20,6 +20,8 @@ const Navbar = () => {
   const navbarMenu: TMenu[] = [
     { nama: "Home", link: "/" },
     { nama: "Materi", link: "/materi" },
+    { nama: "Forum", link: "/forum" },
+    { nama: "About", link: "/about" }
   ]
 
   const [user, setUser] = useState<TUser>({} as TUser);

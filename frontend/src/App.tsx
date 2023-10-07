@@ -8,7 +8,6 @@ import Setting from "./pages/main/Setting"
 import Profile from "./pages/dynamic/Profile"
 import ListMateri from "./pages/main/ListMateri"
 import Materi from "./pages/dynamic/Materi"
-import Error404 from "./pages/error/Error404"
 
 function App() {
   return (
@@ -30,7 +29,7 @@ function App() {
 
           <Route path='/resetpassword/:id' element={<ResetPassword />} />
 
-          <Route path='/*' element={<Error404 />} />
+          <Route path='/*' element={<div>NOT FOUND</div>} />
 
         </Routes>
       </div>
