@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { getPost, getPostByOwner, getUser } from "../../api/services";
+import { getPost, getUser } from "../../api/services";
 import { Link } from 'react-router-dom';
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { DocumentIcon } from "@heroicons/react/24/outline";
@@ -14,7 +14,7 @@ const Forum = () => {
   const [search,setSearch]=useState("")
   const [commentsLength,setCommentsLength]=useState(0)
   const [sendButton,setSendButton]=useState(false)
-  const textAreaRef = useRef(null);
+  const textAreaRef = useRef<any>();
 
   const fetchPost = async () => {
     const res = await getPost();
@@ -29,18 +29,22 @@ const Forum = () => {
     if (res.status) setUser(res.data);
   }
   
-
-  const showSendButton = event => {
-    setComments(event.target.value)
-    setCommentsLength(event.target.value.length)
-    textAreaRef.current.style.height = "auto";
-    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
-    event.target.value!==""?setSendButton(true):setSendButton(false)
+  const showSendButton = (e) => {
+    setComments(e.target.value)
+    setCommentsLength(e.target.value.length)
+    e.target.value!==""?setSendButton(true):setSendButton(false)
   }
 
-  const searchForum = event => {
-    setSearch(event.target.value)
-    event.target.value?setSelectedPost(post.filter((filter)=>filter.value.title.includes(event.target.value))):setSelectedPost(post)
+  function resetComments(index){
+    setInputComment(index)
+    setComments("")
+    setCommentsLength(0)
+    setSendButton(false)
+  }
+
+  const searchForum = e => {
+    setSearch(e.target.value)
+    e.target.value?setSelectedPost(post.filter((filter)=>filter.value.title.includes(e.target.value))):setSelectedPost(post)
   }
 
   useEffect(() => {
@@ -48,6 +52,12 @@ const Forum = () => {
     fetchUser();
   },[]);
   
+  useEffect(() => {
+    if(textAreaRef.current!=null){
+      textAreaRef.current.style.height = "auto"
+      textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+    }
+  },[comments]);
   // console.log(post);
   // console.log(user);
   // console.log(search)
@@ -70,13 +80,13 @@ const Forum = () => {
 
         {/* post */}
         <div className="mt-6 flex flex-col gap-10">
-          {selectedPost?.map((post, index) => (
+          {selectedPost.length!==0&&user.length!==0?selectedPost.map((post, index) => (
             <div key={index} className="border border-gray-600 rounded-lg shadow-xl p-5">
               <span className="text-blue-600">{user?.filter((filter)=>filter.id==post.value.owner)[0].value.username}&nbsp;</span>
               <span>{new Date(post.value.createdAt).toLocaleDateString()}</span>
               <div className="text-2xl">{post.value.title}</div>
               <div className="mt-3">{post.value.description}</div>
-              <button className="mt-3 ms-5 rounded-lg shadow-lg bg-blue-300 p-2 hover:bg-blue-400" onClick={()=>{setInputComment(index);setComments("");setCommentsLength(0);setSendButton(false)}}>Comments</button>
+              <button className="mt-3 ms-5 rounded-lg shadow-lg bg-blue-300 p-2 hover:bg-blue-400" onClick={()=>{index!=inputComment&&resetComments(index)}}>Comments</button>
               {/* input comment */}
               {index==inputComment&&
               <div className="mt-3 ms-5 relative">
@@ -87,6 +97,7 @@ const Forum = () => {
                     <span><DocumentIcon className="w-6 "/></span>
                     <span>{commentsLength}/400</span>
                   </div>
+                  {/* send button */}
                   <button><PlayIcon className={`w-6 ${sendButton ? "text-blue-600 hover:text-blue-900":" text-blue-200"}`} /></button>
                 </div>
                 
@@ -105,7 +116,7 @@ const Forum = () => {
               </div>
               }
             </div>
-          ))}
+          )):(<div>Wait</div>)}
         </div>
 
       </div>

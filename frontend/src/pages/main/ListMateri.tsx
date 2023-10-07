@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from "react"
 import { getAlatMusikList, getMateriByAlatMusik, userIsLogin } from "../../api/services";
 import MateriPreview from "../../components/Materi/MateriPreview";
-import { TListMateri, TTingkatan } from "../../types/Types";
-import { ChevronDownIcon, FunnelIcon, InformationCircleIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Dialog, Listbox, Transition } from "@headlessui/react";
+import { TListMateri } from "../../types/Types";
+import {  FunnelIcon, InformationCircleIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Dialog, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import Input from "../../components/_shared/Input";
 import TransitionIn from "../../components/_shared/TransitionIn";
