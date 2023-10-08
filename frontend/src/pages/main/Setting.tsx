@@ -6,6 +6,8 @@ import LoaderAnimation from '../../assets/LoaderAnimation';
 import { Alert } from '@material-tailwind/react';
 import Input from '../../components/_shared/Input';
 import TransitionIn from '../../components/_shared/TransitionIn';
+import { IErrSuccessMsg } from '../../types/Types';
+import ErrSuccessMsg from '../../components/_shared/ErrSuccessMsg';
 
 type TUser = {
   email: string,
@@ -16,8 +18,14 @@ type TUser = {
 const Setting = () => {
 
   const navigate = useNavigate();
-  const [errmsg, setErrmsg] = useState("");
-  const [successmsg, setSuccessmsg] = useState("");
+  const [hasChanged, setHasChanged] = useState(false);
+  const [oldData, setOldData] = useState({
+    username: '', terimaEmail: false, img: ''
+  });
+  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
+    type: "",
+    message: ""
+  });
   const [user, setUser] = useState<TUser>({
     email: '',
     username: '',
@@ -27,8 +35,6 @@ const Setting = () => {
   const [loader, setLoader] = useState({
     updateSetting: false
   });
-  const [hasChanged, setHasChanged] = useState(false);
-  const [oldData, setOldData] = useState({ username: '', terimaEmail: false, img: '' });
 
 
   // pengecekan apakah user sudah login
@@ -67,18 +73,10 @@ const Setting = () => {
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
-    if (errmsg.length > 0) return;
-    setErrmsg(msg);
-    setTimeout(() => {
-      setErrmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'error', message: msg });
   }
   const handleSetSuccessmsg = (msg: string) => {
-    if (successmsg.length > 0) return;
-    setSuccessmsg(msg);
-    setTimeout(() => {
-      setSuccessmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'success', message: msg });
   }
 
 
@@ -152,9 +150,8 @@ const Setting = () => {
               value={user.img} onChange={handleSetFotoProfil} onKeyDown={handleUpdateSetting} />
           </div>
 
-          {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
-          {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
-
+          <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
+          
           <div className='mt-4 flex cursor-pointer'>
             <input type='checkbox'
               className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'

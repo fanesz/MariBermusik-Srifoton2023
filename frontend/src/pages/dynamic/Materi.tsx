@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { addPengunjung, deleteMateriByID, getMateriByAlatMusik, getRatingList, getUserByParams, updateRating, userIsLogin } from "../../api/services";
 import { useEffect, useState } from "react";
-import { TListMateri, TUser } from "../../types/Types";
+import { IErrSuccessMsg, TListMateri, TUser } from "../../types/Types";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
 import { EyeIcon, PencilIcon, StarIcon, TrashIcon } from "@heroicons/react/24/solid";
 import TransitionIn from "../../components/_shared/TransitionIn";
@@ -9,6 +9,7 @@ import profile from "../../assets/profile.png";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import { Alert, Rating } from "@material-tailwind/react";
 import DeleteAlert from "../../components/Materi/DeleteAlert";
+import ErrSuccessMsg from "../../components/_shared/ErrSuccessMsg";
 
 const Materi = () => {
 
@@ -20,24 +21,18 @@ const Materi = () => {
   const [isOwner, setIsOwner] = useState(false);
   const [rating, setRating] = useState(-1);
   const [currentUser, setCurrentUser] = useState('');
-  const [successmsg, setSuccessmsg] = useState('');
-  const [errmsg, setErrmsg] = useState('');
   const [deleteAlertModal, setDeleteAlertModal] = useState(false);
+  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
+    type: "",
+    message: ""
+  });
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
-    if (errmsg.length > 0) return;
-    setErrmsg(msg);
-    setTimeout(() => {
-      setErrmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'error', message: msg });
   }
   const handleSetSuccessmsg = (msg: string) => {
-    if (successmsg.length > 0) return;
-    setSuccessmsg(msg);
-    setTimeout(() => {
-      setSuccessmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'success', message: msg });
   }
 
   // fetch data materi, owner, dan rating
@@ -245,12 +240,11 @@ const Materi = () => {
   const rating_section = rating !== -1 && (
     <TransitionIn from="bottom">
       <div className="flex justify-center">
-        {successmsg.length === 0 ? (
+        {errSuccessMsg.message.length === 0 ? (
           <Rating value={rating} onChange={handleUpdateRating} />
         ) : (
           <div className="ms-7">
-            {errmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
-            {successmsg.length > 0 && <Alert className='w-fit p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+            <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
           </div>
         )}
       </div>

@@ -6,17 +6,21 @@ import { resetPassword, validatorVerificationCode } from "../../api/services";
 import { Alert } from "@material-tailwind/react";
 import Input from "../../components/_shared/Input";
 import TransitionIn from "../../components/_shared/TransitionIn";
+import { IErrSuccessMsg } from "../../types/Types";
+import ErrSuccessMsg from "../../components/_shared/ErrSuccessMsg";
 
 const ResetPassword = () => {
 
   const navigate = useNavigate();
   const id = useParams();
-  const [errmsg, setErrmsg] = useState("");
-  const [successmsg, setSuccessmsg] = useState("");
   const [password, setPassword] = useState("");
   const [konfirmasiPassword, setKonfirmasiPassword] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState('');
+  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
+    type: "",
+    message: ""
+  });
   const [loader, setLoader] = useState({
     validasiKode: true,
     ubahPassword: false
@@ -42,18 +46,10 @@ const ResetPassword = () => {
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
-    if (errmsg.length > 0) return;
-    setErrmsg(msg);
-    setTimeout(() => {
-      setErrmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'error', message: msg });
   }
   const handleSetSuccessmsg = (msg: string) => {
-    if (successmsg.length > 0) return;
-    setSuccessmsg(msg);
-    setTimeout(() => {
-      setSuccessmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'success', message: msg });
   }
 
 
@@ -107,8 +103,7 @@ const ResetPassword = () => {
           value={konfirmasiPassword} onChange={handleSetKonfirmasiPassword} onKeyDown={handleResetPassword} />
       </div>
 
-      {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
-      {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+      <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
 
       <div className='mt-4'>
         <button

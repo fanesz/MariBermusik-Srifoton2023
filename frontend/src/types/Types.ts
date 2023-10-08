@@ -31,4 +31,7 @@ export type TUser = {
   terimaEmail: boolean,
   img: string
 }
-
+export type IErrSuccessMsg = {
+  type: 'error' | 'success' | '',
+  message: string
+}
