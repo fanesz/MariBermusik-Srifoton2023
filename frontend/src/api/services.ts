@@ -313,6 +313,21 @@ export const deletePost = async (postID: string) => {
     return false;
   }
 }
+export const addComment = async (ownerUUID: string, postID: string, comment: string) => {
+  try {
+    const loginID = getLocalStorage("loginID") || '';
+    if (loginID.length < 1) return false;
+    const res = await api.post(ENDPOINT.forum + "/comment", {
+      ownerUUID: ownerUUID,
+      postID: postID,
+      loginID: loginID,
+      comment: comment
+    });
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
 
 export const updateVote = async (ownerUUID: string, postID: string, voterUUID: string, voteType: string) => {
   try {

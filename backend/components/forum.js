@@ -77,9 +77,33 @@ export const deletePost = async (req, res) => {
     const user = await db_loggedUser.get(req.query.loginID);
     const postID = req.query.postID;
     const prevPost = await db_forum.get(user.id) || [];
-    const newPost = prevPost.filter(p => p.postID !== postID);
+    const newPost = prevPost.filter(p => p.postID != postID);
     await db_forum.set(user.id, newPost);
     res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+
+export const addComment = async (req, res) => {
+  try { // body: { ownerUUID, postID, loginID, comment }
+    const userInput = req.body;
+    const user = await db_loggedUser.get(userInput.loginID);
+    const userPost = await db_forum.get(userInput.ownerUUID) || [];
+    const postToEdit = userPost.find(p => p.postID == userInput.postID);
+    const postNotToEdit = userPost.filter(p => p.postID != userInput.postID);
+    const newPost = {
+      "owner": user.id,
+      "content": userInput.comment,
+      "createdAt": new Date()
+    }
+    const editedPost = {
+      ...postToEdit,
+      comments: [...postToEdit.comments, newPost]
+    };
+    await db_forum.set(userInput.ownerUUID, [...postNotToEdit, editedPost]);
+    res.json({ status: true, data: newPost });
   } catch (error) {
     console.log(error);
     res.json({ status: false });
@@ -96,10 +120,11 @@ export const updateVote = async (req, res) => {
     const postToEdit = postList.find(m => m.postID == params.postID);
     if (!postToEdit) return res.json({ status: false });
 
-    if (postToEdit[params.voteType].includes(params.voterUUID))
-      return res.json({ status: false });
-
-    postToEdit[params.voteType].push(params.voterUUID);
+    if (postToEdit[params.voteType].includes(params.voterUUID)) {
+      postToEdit[params.voteType].push(params.voterUUID);
+    } else {
+      postToEdit[params.voteType] = postToEdit[params.voteType].filter(m => m != params.voterUUID);
+    }
 
     const postNotToEdit = postList.filter(m => m.postID != params.postID);
     const newPost = [...postNotToEdit, postToEdit];

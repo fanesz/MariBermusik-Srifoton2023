@@ -7,6 +7,7 @@ import {
   editPost,
   deletePost,
   updateVote,
+  addComment,
 } from "../components/forum.js";
 
 const router = express.Router();
@@ -17,6 +18,6 @@ router.post("/", createPost);
 router.patch("/", editPost);
 router.delete("/", deletePost);
 router.patch("/vote", updateVote);
-
+router.post("/comment", addComment);
 
 export default router;
