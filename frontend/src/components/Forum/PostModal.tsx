@@ -73,14 +73,16 @@ const PostModal = (props: IProps) => {
     if (res.status) {
       setComment("");
       setParentPost(prev => {
-        const filterByOwner = prev.filter(prev => prev.owner === prevPost.owner);
-        const filterByNotOwner = prev.filter(prev => prev.owner !== prevPost.owner);
-        const postToEdit = filterByOwner.filter(prev => prev.postID === prevPost.postID);
-        const postNotToEdit = filterByOwner.filter(prev => prev.postID !== prevPost.postID);
-        const newPost = [...postNotToEdit, { ...postToEdit[0], comments: [...postToEdit[0].comments, res.data] }];
-        const newListPost = [...newPost, ...filterByNotOwner];
-        return newListPost;
-      })
+        const updatedList = prev.map(post => {
+          if (post.owner === prevPost.owner && post.postID === prevPost.postID) {
+            return { ...post, comments: [...post.comments, res.data] };
+          } else {
+            return post;
+          }
+        });
+        return updatedList;
+      });
+
     } else {
       handleSetErrmsg('Gagal menambahkan komentar, harap login!');
     }

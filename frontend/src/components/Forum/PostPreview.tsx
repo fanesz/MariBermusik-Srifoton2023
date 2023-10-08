@@ -158,7 +158,7 @@ const PostPreview = (props: IProps) => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className={`${!isFromModal && 'hidden'} flex gap-3`}>
+      <div className={`${(!isOwner || !isFromModal) && 'hidden'} flex gap-3`}>
         <div className="font-extrabold">·</div>
         <div
           className="my-auto text-xs flex gap-1 cursor-pointer text-gray-700 hover:text-gray-900"
