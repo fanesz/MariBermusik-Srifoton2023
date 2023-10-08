@@ -13,10 +13,9 @@ export const getPost = async (req, res) => {
   }
 }
 
-export const getPostByOwner = async (req, res) => {
-  try { // params: { loginID }
-    const user = await db_loggedUser.get(req.query.loginID);
-    const posts = await db_forum.get(user.id) || [];
+export const getPostByUUID = async (req, res) => {
+  try { // params: { UUID }
+    const posts = await db_forum.get(req.query.UUID) || [];
     res.json({ status: true, data: posts });
   } catch (error) {
     console.log(error);

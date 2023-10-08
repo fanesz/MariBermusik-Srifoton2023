@@ -261,11 +261,9 @@ export const getPost = async () => {
   }
 }
 
-export const getPostByOwner = async () => {
+export const getPostByUUID = async (UUID: string) => {
   try {
-    const loginID = getLocalStorage("loginID") || '';
-    if (loginID.length < 1) return false;
-    const res = await api.get(ENDPOINT.forum + param([['loginID', loginID]]));
+    const res = await api.get(ENDPOINT.forum + '/id' + param([['UUID', UUID]]));
     return res.data;
   } catch (err) {
     return false;

@@ -2,7 +2,7 @@ import express from "express";
 
 import {
   getPost,
-  getPostByOwner,
+  getPostByUUID,
   createPost,
   editPost,
   deletePost,
@@ -13,7 +13,7 @@ import {
 const router = express.Router();
 
 router.get("/", getPost);
-router.get("/", getPostByOwner);
+router.get("/id", getPostByUUID);
 router.post("/", createPost);
 router.patch("/", editPost);
 router.delete("/", deletePost);

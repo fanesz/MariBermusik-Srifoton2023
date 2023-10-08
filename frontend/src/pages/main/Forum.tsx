@@ -29,7 +29,6 @@ const Forum = () => {
     }
   }
 
-
   // fetch data semua postingan
   const fetchListPost = async () => {
     const res = await getPost();
@@ -51,7 +50,7 @@ const Forum = () => {
     fetchCurrentUser();
   }, []);
 
-  
+
   // handle cari materi
   const handleSetCariMateri = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCariMateri(e.target.value);
@@ -85,7 +84,7 @@ const Forum = () => {
         </div>
 
         <div className="md:flex mt-5 justify-center">
-          <div className="px-3">
+          <div className="px-3 w-full">
             <TransitionIn>
               <div className="flex gap-3">
                 <div className="w-full">
@@ -98,7 +97,7 @@ const Forum = () => {
               </div>
             </TransitionIn>
 
-            <div className="mt-5">
+            <div className="mt-5 w-full">
               {listPost?.map((item, index) => (
                 <TransitionIn key={index} from='bottom' delay={index * 200}>
                   <div className="mt-3">
