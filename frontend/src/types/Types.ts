@@ -31,4 +31,21 @@ export type TUser = {
   terimaEmail: boolean,
   img: string
 }
-
+export type IErrSuccessMsg = {
+  type: 'error' | 'success' | '',
+  message: string
+}
+export type TListPost = {
+  postID: number,
+  owner: string,
+  createdAt: Date,
+  title: string,
+  description: string,
+  upvotes: string[],
+  downvotes: string[],
+  comments: {
+    owner: string,
+    createdAt: Date,
+    content: string
+  }[]
+}

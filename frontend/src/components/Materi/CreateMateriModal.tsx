@@ -2,36 +2,38 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment, useEffect, useState } from "react";
 import Input from "../_shared/Input";
-import { TDaftarMateri, TListMateri, TTingkatan } from "../../types/Types";
+import { IErrSuccessMsg, TDaftarMateri, TListMateri, TTingkatan } from "../../types/Types";
 import { createMateri, editMateriByID } from "../../api/services";
-import { Alert, Option, Select, Textarea } from "@material-tailwind/react";
+import { Option, Select, Textarea } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import LoaderAnimation from "../../assets/LoaderAnimation";
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from "../../utils/LocalStorage";
+import ErrSuccessMsg from "../_shared/ErrSuccessMsg";
 
 interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
   prevMateri?: TListMateri
 }
-
 type TMateri = {
   nama: string,
   deskripsi: string,
   alatMusik: string,
   tingkatan: TTingkatan
 }
-
 const CreateMateriModal = (props: IProps) => {
   const { isOpen, setModal } = props;
   const { prevMateri = {} as TListMateri } = props
 
   const DEFAULT_VALUE = { id: 0, judul: '', materi: '', }
 
+  const navigate = useNavigate();
   const [daftarMateri, setDaftarMateri] = useState<TDaftarMateri[]>([DEFAULT_VALUE]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errmsg, setErrmsg] = useState('');
-  const navigate = useNavigate();
+  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
+    type: "",
+    message: ""
+  });
   const [materi, setMateri] = useState<TMateri>({
     nama: '',
     deskripsi: '',
@@ -77,12 +79,8 @@ const CreateMateriModal = (props: IProps) => {
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
-    if (errmsg.length > 0) return;
-    setErrmsg(msg);
-    setTimeout(() => {
-      setErrmsg("");
-    }, 3000);
-  };
+    setErrSuccessMsg({ type: 'error', message: msg });
+  }
 
 
   // handler untuk set materi dan daftar materi
@@ -226,11 +224,7 @@ const CreateMateriModal = (props: IProps) => {
           {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Simpan Materi'}
         </button>
         <div className="my-auto">
-          {errmsg.length > 0 &&
-            <Alert className='w-full p-0 bg-transparent text-red-400'>
-              {errmsg}
-            </Alert>
-          }
+          <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
         </div>
       </div>
     </div>

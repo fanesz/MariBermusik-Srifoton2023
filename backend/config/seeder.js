@@ -75,6 +75,8 @@ const post = {
   title: "post1",
   description: lorem,
   createdAt: new Date(),
+  upvotes: [UUID3, UUID4, UUID5],
+  downvotes: [UUID6],
   comments: [
     {
       owner: UUID2,
@@ -94,6 +96,8 @@ const post2 = {
   title: "post2",
   description: lorem,
   createdAt: new Date(),
+  upvotes: [UUID3],
+  downvotes: [UUID4, UUID5, UUID6],
   comments: [
     {
       owner: UUID,
@@ -195,8 +199,8 @@ const seedDatabase = async () => {
     await db_materi.set("biola", materi("biola", UUID));
     await db_materi.set("piano", materi("piano", UUID));
     await db_materi.set("gitar", materi("gitar", UUID2));
-    await db_forum.set(UUID, post);
-    await db_forum.set(UUID2, post2);
+    await db_forum.set(UUID, [post]);
+    await db_forum.set(UUID2, [post2]);
   } catch (err) {
     console.log("[SEEDER] Error while seeding database");
     console.log(err);

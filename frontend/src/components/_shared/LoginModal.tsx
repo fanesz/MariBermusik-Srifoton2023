@@ -6,6 +6,8 @@ import LoaderAnimation from '../../assets/LoaderAnimation';
 import { removeLocalStorage, setLocalStorage } from '../../utils/LocalStorage';
 import { Alert } from '@material-tailwind/react';
 import Input from './Input';
+import ErrSuccessMsg from './ErrSuccessMsg';
+import { IErrSuccessMsg } from '../../types/Types';
 
 interface IProps {
   isOpen: boolean,
@@ -21,8 +23,6 @@ const LoginModal = (props: IProps) => {
   const [password, setPassword] = useState("");
   const [rememberme, setRememberme] = useState(true);
   const [terimaEmail, setTerimaEmail] = useState(false);
-  const [errmsg, setErrmsg] = useState("");
-  const [successmsg, setSuccessmsg] = useState("");
   const [lupaPassword, setLupaPassword] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
   const [loader, setLoader] = useState({
@@ -30,21 +30,17 @@ const LoginModal = (props: IProps) => {
     signup: false,
     lupaPassword: false
   });
+  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
+    type: "",
+    message: ""
+  });
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
-    if (errmsg.length > 0) return;
-    setErrmsg(msg);
-    setTimeout(() => {
-      setErrmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'error', message: msg });
   }
   const handleSetSuccessmsg = (msg: string) => {
-    if (successmsg.length > 0) return;
-    setSuccessmsg(msg);
-    setTimeout(() => {
-      setSuccessmsg("");
-    }, 3000);
+    setErrSuccessMsg({ type: 'success', message: msg });
   }
 
 
@@ -155,8 +151,7 @@ const LoginModal = (props: IProps) => {
         <Input type='password' label='Password' icon={<KeyIcon />}
           value={password} onChange={handleSetPassword} onKeyDown={handleSignIn} />
       </div>
-      {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
-      {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+      <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
       <div className='mt-4'>
         <button
           className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'
@@ -197,8 +192,7 @@ const LoginModal = (props: IProps) => {
         <Input type='password' label='Password' icon={<KeyIcon />}
           value={password} onChange={handleSetPassword} onKeyDown={handleSignUp} />
       </div>
-      {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}
-      {successmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-green-500 text-sm'>{successmsg}</Alert>}
+      <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
       <div className='mt-4 flex cursor-pointer'>
         <input type='checkbox'
           className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
@@ -248,12 +242,7 @@ const LoginModal = (props: IProps) => {
         onClick={() => handleLupaPasswordModal(false)}>
         Sign In?
       </div>
-      <div className={`text-sm text-red-400 ${errmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {errmsg}
-      </div>
-      <div className={`text-sm text-green-500 ${successmsg.length > 0 ? 'block' : 'hidden'}`}>
-        {successmsg}
-      </div>
+      <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
       <div className='mt-4'>
         <button
           className='w-full bg-orange-500 hover:bg-orange-600 p-2 rounded-lg text-white font-medium focus:outline-none h-10'
