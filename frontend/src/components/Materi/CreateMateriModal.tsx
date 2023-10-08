@@ -4,7 +4,7 @@ import { Dispatch, Fragment, useEffect, useState } from "react";
 import Input from "../_shared/Input";
 import { IErrSuccessMsg, TDaftarMateri, TListMateri, TTingkatan } from "../../types/Types";
 import { createMateri, editMateriByID } from "../../api/services";
-import { Alert, Option, Select, Textarea } from "@material-tailwind/react";
+import { Option, Select, Textarea } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import LoaderAnimation from "../../assets/LoaderAnimation";
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from "../../utils/LocalStorage";
@@ -224,7 +224,7 @@ const CreateMateriModal = (props: IProps) => {
           {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Simpan Materi'}
         </button>
         <div className="my-auto">
-        <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
+          <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
         </div>
       </div>
     </div>

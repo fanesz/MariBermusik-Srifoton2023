@@ -1,63 +1,55 @@
-import { ArrowRightIcon, ChevronDownIcon, ChevronUpIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, ChevronUpIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
-import { TListMateri, TListPost, TUser } from "../../types/Types";
-import { getAlatMusikImg } from "../../utils/AlatMusikList";
-import { convertCreatedAt, isImgurLinkValid, ratingAverage } from "../../utils/utils";
+import { TListPost, TUser } from "../../types/Types";
+import { convertCreatedAt, isImgurLinkValid } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
-import { deleteMateriByID, deletePost, getUserByParams, userIsLogin } from "../../api/services";
+import { getUserByParams } from "../../api/services";
 import { useEffect, useState } from "react";
 import PostModal from "./PostModal";
 import CreatePostModal from "./CreatePostModal";
-import { Popover, Button, PopoverContent, PopoverHandler } from "@material-tailwind/react";
+import { Popover, PopoverContent, PopoverHandler } from "@material-tailwind/react";
 import profile from "../../assets/profile.png";
+import DeletePostAlert from "./DeletePostAlert";
 
 interface IProps {
   className?: string,
   post: TListPost,
-  clickablePost: boolean
+  clickablePost: boolean,
+  currentUser?: string
 }
 const PostPreview = (props: IProps) => {
-  const { className, post, clickablePost } = props;
+  const { className, post, clickablePost, currentUser } = props;
   const navigate = useNavigate();
 
   const [owner, setOwner] = useState<TUser>({} as TUser);
-  const [currentUser, setCurrentUser] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [postModal, setPostModal] = useState(false);
   const [editPostModal, setEditPostModal] = useState(false);
+  const [deleteAlertModal, setDeleteAlertModal] = useState(false);
 
+  // fetch data owner pemilik post
   const fetchOwner = async () => {
     const resOwner = await getUserByParams(null, null, post.owner);
     if (resOwner.status) {
       setOwner(resOwner.data);
-      const isLogin = await userIsLogin();
-      if (isLogin.status) {
-        // mendapatkan UUID user bila login
-        const UUID = await getUserByParams(true);
-        if (UUID.status) {
-          const currentUserUUID = UUID.data.UUID;
-          setCurrentUser(currentUserUUID);
-          if (currentUserUUID === post.owner) {
-            setIsOwner(true);
-          }
-        }
-      }
+      if (currentUser === post.owner) setIsOwner(true);
     }
   }
   useEffect(() => {
     fetchOwner();
   }, []);
 
+
+  // handler edit dan delete post
   const handleEditPost = () => {
     setEditPostModal(true);
   }
   const handleDeletePost = async () => {
-    const res = await deletePost(post.postID.toString());
-    if (res.status) {
-      window.location.reload();
-    }
+    setDeleteAlertModal(true);
   }
 
+
+  // Components
   const updownvote = (
     <div className="text-center mt-2">
       <ChevronUpIcon className="w-6 h-6" />
@@ -155,6 +147,7 @@ const PostPreview = (props: IProps) => {
 
       <PostModal isOpen={postModal} setModal={setPostModal} prevPost={post} />
       <CreatePostModal isOpen={editPostModal} setModal={setEditPostModal} prevPost={post} />
+      <DeletePostAlert isOpen={deleteAlertModal} setModal={setDeleteAlertModal} title={post.title} postID={post.postID.toString()} />
 
       <div className="w-fit">
         {updownvote}
@@ -174,7 +167,6 @@ const PostPreview = (props: IProps) => {
         </div>
 
       </div>
-
     </div>
   )
 }

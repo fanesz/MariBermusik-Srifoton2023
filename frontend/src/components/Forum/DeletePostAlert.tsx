@@ -1,27 +1,20 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Alert, Button } from "@material-tailwind/react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment } from "react";
-import { useNavigate } from "react-router-dom";
-import { deleteMateriByID } from "../../api/services";
+import { deletePost } from "../../api/services";
 
 interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
-  judul: string,
-  alatmusik?: string,
-  id?: string
+  title: string,
+  postID?: string
 }
-const DeleteAlert = (props: IProps) => {
-  const { isOpen, setModal, judul, alatmusik, id } = props;
-  const navigate = useNavigate();
-  const handleDeleteMateri = async () => {
-    const res = await deleteMateriByID(alatmusik || '', id || '');
+const DeletePostAlert = (props: IProps) => {
+  const { isOpen, setModal, title, postID } = props;
+  const handleDeletePost = async () => {
+    const res = await deletePost(postID || '');
     if (res.status) {
-      setModal(false);
-      navigate(`/materi`);
-    } else {
-      alert(res.message);
+      window.location.reload();
     }
   }
 
@@ -53,7 +46,7 @@ const DeleteAlert = (props: IProps) => {
                 <Dialog.Title className="text-lg text-center font-semibold text-gray-600">
                   <div className="flex justify-between">
                     <div className='w-full'>
-                      Hapus Materi
+                      Hapus Post
                     </div>
                     <div className='mt-auto mb-auto'>
                       <XMarkIcon className="h-5 cursor-pointer hover:bg-gray-300 rounded" onClick={() => setModal(false)} />
@@ -63,14 +56,13 @@ const DeleteAlert = (props: IProps) => {
 
                 <div className="rounded-md mt-2 bg-white bg-opacity-70 p-5 ">
                   <div>
-                    Apakah kamu yakin ingin menghapus materi dengan judul "{judul}"?<br />
-                    Materi yang dihapus tidak dapat dikembalikan.
+                    Apakah kamu yakin ingin menghapus materi dengan judul "{title}"?<br />
+                    Post yang dihapus tidak dapat dikembalikan.
                   </div>
                   <div className="flex gap-3 mt-3">
                     <button
                       className="px-3 py-1 rounded-md text-white bg-red-400 hover:bg-red-600"
-                      onClick={() => handleDeleteMateri()}>
-
+                      onClick={() => handleDeletePost()}>
                       Hapus
                     </button>
                     <button
@@ -90,4 +82,4 @@ const DeleteAlert = (props: IProps) => {
   );
 }
 
-export default DeleteAlert
+export default DeletePostAlert

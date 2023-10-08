@@ -1,9 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment, useEffect, useState } from "react";
-import Input from "../_shared/Input";
-import { IErrSuccessMsg, TListPost, TUser } from "../../types/Types";
-import { addComment, createPost, editPost, getUserByParams } from "../../api/services";
+import { IErrSuccessMsg, TListPost } from "../../types/Types";
+import { addComment, getUserByParams } from "../../api/services";
 import { Button, IconButton, Textarea } from "@material-tailwind/react";
 import LoaderAnimation from "../../assets/LoaderAnimation";
 import ErrSuccessMsg from "../_shared/ErrSuccessMsg";
@@ -17,34 +16,33 @@ interface IProps {
   setModal: Dispatch<boolean>,
   prevPost: TListPost
 }
-type TPost = {
-  title: string,
-  description: string
-}
 const PostModal = (props: IProps) => {
   const { isOpen, setModal } = props;
   const { prevPost = {} as TListPost } = props;
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [post, setPost] = useState<TListPost>(prevPost);
+  const [comment, setComment] = useState("");
+  const [commenter, setCommenter] = useState<[string, string, string, Date][]>([]);
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
     type: "",
     message: ""
   });
-  const [post, setPost] = useState<TListPost>(prevPost);
-  const [comment, setComment] = useState("");
-  const [commenter, setCommenter] = useState<[string, string, string, Date][]>([]);
-
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
   }
 
+
+  // handler untuk set comment dari inputan user
   const handleSetComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   }
 
+
+  // fetch data user yang mengomentari post
   const fetchCommenter = async () => {
     let tempCommenter: [string, string, string, Date][] = [];
     if (Object.keys(post).length !== 0) {
@@ -62,11 +60,12 @@ const PostModal = (props: IProps) => {
       }
     }
   }
-
   useEffect(() => {
     fetchCommenter();
   }, [post]);
 
+
+  // handler untuk posting commentar
   const handlePostComment = async () => {
     setIsLoading(true);
     const res = await addComment(post.owner, post.postID.toString(), comment);
@@ -77,8 +76,11 @@ const PostModal = (props: IProps) => {
         ...prev,
         comments: [...prev.comments, res.data]
       }))
+    } else {
+      handleSetErrmsg('Gagal menambahkan komentar, harap login!');
     }
   }
+
 
   // Components
   const main_section = Object.keys(post).length !== 0 && (
@@ -92,7 +94,7 @@ const PostModal = (props: IProps) => {
         variant="static" placeholder="Your Comment" rows={5} spellCheck={false}
         className="px-4 rounded-md focus:ring-0"
         value={comment} onChange={handleSetComment} />
-      <div className="flex w-full justify-between py-1.5">
+      <div className="flex w-full justify-between pt-1.5">
         <IconButton variant="text" color="blue-gray" size="sm" disabled>
           <div className={`${comment.length > 400 && 'text-red-300'} ms-3`}>
             {comment.length}/400
@@ -105,16 +107,18 @@ const PostModal = (props: IProps) => {
             Cancel
           </Button>
           <Button
-            size="sm" className="rounded-md"
+            size="sm" className="rounded-md w-32"
             disabled={comment.length === 0 || comment.length > 400}
             onClick={handlePostComment}>
-            Post Comment
+            {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Post Comment'}
           </Button>
         </div>
       </div>
+      <div className="pb-2">
+        <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
+      </div>
     </div>
   )
-
   const comment_list_section = (
     <div>
       {commenter?.map((item, index) => (
@@ -147,7 +151,6 @@ const PostModal = (props: IProps) => {
       ))}
     </div>
   )
-
 
   return (
     <Transition

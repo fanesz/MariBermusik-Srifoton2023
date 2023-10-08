@@ -8,7 +8,7 @@ import TransitionIn from "../../components/_shared/TransitionIn";
 import profile from "../../assets/profile.png";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import { Alert, Rating } from "@material-tailwind/react";
-import DeleteAlert from "../../components/Materi/DeleteAlert";
+import DeleteAlert from "../../components/Materi/DeleteMateriAlert";
 import ErrSuccessMsg from "../../components/_shared/ErrSuccessMsg";
 
 const Materi = () => {

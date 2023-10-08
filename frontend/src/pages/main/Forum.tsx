@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
 import Input from "../../components/_shared/Input"
 import TransitionIn from "../../components/_shared/TransitionIn"
 import { useEffect, useState } from "react";
-import { getPost } from "../../api/services";
+import { getPost, getUserByParams, userIsLogin } from "../../api/services";
 import { TListPost } from "../../types/Types";
 import PostPreview from "../../components/Forum/PostPreview";
 import CreatePostModal from "../../components/Forum/CreatePostModal";
@@ -15,8 +15,21 @@ const Forum = () => {
   const [cariMateri, setCariMateri] = useState('');
   const [listPost, setListPost] = useState<TListPost[]>([]);
   const [createPostModal, setCreatePostModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
 
+  // fetch data user yang sedang mengakses halaman
+  const fetchCurrentUser = async () => {
+    const isLogin = await userIsLogin();
+    if (isLogin.status) {
+      const UUID = await getUserByParams(true);
+      if (UUID.status) {
+        const currentUserUUID = UUID.data.UUID;
+        setCurrentUser(currentUserUUID);
+      }
+    }
+  }
 
+  // fetch data semua postingan
   const fetchListPost = async () => {
     const res = await getPost();
     if (res.status) {
@@ -35,7 +48,9 @@ const Forum = () => {
   }
   useEffect(() => {
     fetchListPost();
+    fetchCurrentUser();
   }, []);
+
 
   // handle cari materi
   const handleSetCariMateri = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +62,8 @@ const Forum = () => {
     });
   }
 
+
+  // Components
   const button_buat_post = (
     <div
       className="group relative h-full overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer flex"
@@ -57,13 +74,16 @@ const Forum = () => {
       </span>
     </div>
   )
+
   return (
     <div className="w-full max-w-3xl transform ms-auto me-auto md:mt-20 mt-10">
       <CreatePostModal isOpen={createPostModal} setModal={setCreatePostModal} />
       <div>
+
         <div className="text-center text-2xl font-semibold text-gray-700">
           Forum
         </div>
+
         <div className="md:flex mt-5 justify-center">
           <div className="px-3">
             <TransitionIn>
@@ -77,15 +97,17 @@ const Forum = () => {
                 </div>
               </div>
             </TransitionIn>
+
             <div className="mt-5">
               {listPost?.map((item, index) => (
                 <TransitionIn key={index} from='bottom' delay={index * 200}>
                   <div className="mt-3">
-                    <PostPreview post={item} clickablePost={true} />
+                    <PostPreview post={item} clickablePost={true} currentUser={currentUser} />
                   </div>
                 </TransitionIn>
               ))}
             </div>
+            
           </div>
         </div>
       </div>
