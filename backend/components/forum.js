@@ -26,7 +26,6 @@ export const getPostByOwner = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try { // body: { loginID, title, description }
-    // db_forum.deleteAll();
     const userInput = req.body;
     if (!userInput.title || !userInput.description) {
       return res.json({ status: false });
@@ -36,7 +35,7 @@ export const createPost = async (req, res) => {
     const newPost = [
       ...prevPost,
       {
-        "postID": prevPost.length,
+        "postID": prevPost[prevPost.length - 1]?.postID + 1 || 0,
         "owner": user.id,
         "title": req.body.title,
         "description": req.body.description,
@@ -80,6 +79,32 @@ export const deletePost = async (req, res) => {
     const prevPost = await db_forum.get(user.id) || [];
     const newPost = prevPost.filter(p => p.postID !== postID);
     await db_forum.set(user.id, newPost);
+    res.json({ status: true });
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+
+export const updateVote = async (req, res) => {
+  try { // params: { ownerUUID, postID, voterUUID, voteType }
+    const params = req.query;
+
+    const postList = await db_forum.get(params.ownerUUID);
+    if (!postList) return res.json({ status: false });
+
+    const postToEdit = postList.find(m => m.postID == params.postID);
+    if (!postToEdit) return res.json({ status: false });
+
+    if (postToEdit[params.voteType].includes(params.voterUUID))
+      return res.json({ status: false });
+
+    postToEdit[params.voteType].push(params.voterUUID);
+
+    const postNotToEdit = postList.filter(m => m.postID != params.postID);
+    const newPost = [...postNotToEdit, postToEdit];
+    await db_forum.set(params.ownerUUID, newPost);
+
     res.json({ status: true });
   } catch (error) {
     console.log(error);

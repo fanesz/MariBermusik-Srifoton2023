@@ -175,7 +175,6 @@ export const addPengunjung = async (alatMusik: string, materiID: string) => {
 }
 
 // === LOGIN ===
-
 export const getLoginUser = async () => {
   try {
     const res = await api.get(ENDPOINT.login);
@@ -253,7 +252,6 @@ export const resetPassword = async (email: string, newPassword: string) => {
 }
 
 // === FORUM ===
-
 export const getPost = async () => {
   try {
     const res = await api.get(ENDPOINT.forum);
@@ -305,12 +303,26 @@ export const editPost = async (postID: string, title: string, description: strin
   }
 }
 
-
 export const deletePost = async (postID: string) => {
   try {
     const loginID = getLocalStorage("loginID") || '';
     if (loginID.length < 1) return false;
     const res = await api.delete(ENDPOINT.forum + param([['loginID', loginID], ['postID', postID]]));
+    return res.data;
+  } catch (err) {
+    return false;
+  }
+}
+
+export const updateVote = async (ownerUUID: string, postID: string, voterUUID: string, voteType: string) => {
+  try {
+    const res = await api.patch(ENDPOINT.forum + "/vote",
+      {
+        ownerUUID: ownerUUID,
+        postID: postID,
+        voterUUID: voterUUID,
+        voteType: voteType
+      });
     return res.data;
   } catch (err) {
     return false;
