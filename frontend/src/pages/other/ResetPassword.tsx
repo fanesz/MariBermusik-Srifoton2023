@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import LoaderAnimation from "../../assets/LoaderAnimation";
 import { resetPassword, validatorVerificationCode } from "../../api/services";
-import { Alert } from "@material-tailwind/react";
 import Input from "../../components/_shared/Input";
 import TransitionIn from "../../components/_shared/TransitionIn";
 import { IErrSuccessMsg } from "../../types/Types";

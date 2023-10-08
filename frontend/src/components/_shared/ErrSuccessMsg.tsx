@@ -30,7 +30,6 @@ const ErrSuccessMsg = (props: IProps) => {
     }
   }, [errSuccessMsg]);
 
-
   return (
     <div className={`${className}`}>
       {errmsg.length > 0 && <Alert className='w-full p-0 bg-transparent text-red-400 text-sm'>{errmsg}</Alert>}

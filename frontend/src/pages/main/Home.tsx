@@ -4,7 +4,7 @@ import CategoryPreview from "../../components/Home/CategoryPreview";
 
 const Home = () => {
   return (
-    <>
+    <div>
       <div className="">
         <TopSection />
       </div>
@@ -16,7 +16,7 @@ const Home = () => {
           <CategoryPreview />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

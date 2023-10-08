@@ -14,14 +14,12 @@ type TMenu = {
   nama: string,
   link: string
 }
-
 const Navbar = () => {
 
   const navbarMenu: TMenu[] = [
     { nama: "Home", link: "/" },
     { nama: "Materi", link: "/materi" },
-    { nama: "Forum", link: "/forum" },
-    { nama: "About", link: "/about" }
+    { nama: "Forum", link: "/forum" }
   ]
 
   const [user, setUser] = useState<TUser>({} as TUser);

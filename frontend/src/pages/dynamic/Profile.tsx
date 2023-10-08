@@ -56,7 +56,7 @@ const Profile = () => {
     } else {
       fetchParamUserData(id);
     }
-  }, []);
+  }, [id]);
 
 
   // fetch data user yang sedang mengakses halaman

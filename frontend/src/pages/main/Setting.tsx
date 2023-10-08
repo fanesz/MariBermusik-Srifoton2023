@@ -3,7 +3,6 @@ import { getUserByParams, updateUser, userIsLogin } from '../../api/services';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import LoaderAnimation from '../../assets/LoaderAnimation';
-import { Alert } from '@material-tailwind/react';
 import Input from '../../components/_shared/Input';
 import TransitionIn from '../../components/_shared/TransitionIn';
 import { IErrSuccessMsg } from '../../types/Types';

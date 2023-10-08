@@ -1,10 +1,9 @@
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { EnvelopeIcon, KeyIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { Dispatch, Fragment, useState } from 'react';
+import { ChangeEvent, Dispatch, Fragment, useState } from 'react';
 import { createUser, sendVerificationCode, setLogin } from '../../api/services';
 import LoaderAnimation from '../../assets/LoaderAnimation';
 import { removeLocalStorage, setLocalStorage } from '../../utils/LocalStorage';
-import { Alert } from '@material-tailwind/react';
 import Input from './Input';
 import ErrSuccessMsg from './ErrSuccessMsg';
 import { IErrSuccessMsg } from '../../types/Types';
@@ -53,7 +52,7 @@ const LoginModal = (props: IProps) => {
 
 
   // handler untuk user input
-  const handleSetEmail = (e: any) => {
+  const handleSetEmail = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9@.]+$/.test(input) || input.length === 0) {
       setEmail(input);
@@ -61,7 +60,7 @@ const LoginModal = (props: IProps) => {
       handleSetErrmsg("Email hanya boleh mengandung huruf, angka, titik, dan symbol (@).");
     }
   }
-  const handleSetPassword = (e: any) => {
+  const handleSetPassword = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9!@#$%^&*]+$/.test(input) || input.length === 0) {
       setPassword(input);
@@ -69,7 +68,7 @@ const LoginModal = (props: IProps) => {
       handleSetErrmsg("Password hanya boleh mengandung huruf, angka, dan symbol (!@#$%^&*).");
     }
   }
-  const handleSetUsername = (e: any) => {
+  const handleSetUsername = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9_]+$/.test(input) || input.length === 0) {
       setUsername(input);
