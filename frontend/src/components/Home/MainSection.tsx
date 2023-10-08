@@ -1,9 +1,8 @@
 import TransitionIn from "../_shared/TransitionIn";
 import { motion, useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
-import pemainmusik1 from "../../assets/drum.jpg";
-import pemainmusik2 from "../../assets/biola.png";
-import pemainmusik3 from "../../assets/gitar.jpg";
+import pemainmusik1 from "../../assets/alatMusik/bass.jpg";
+import pemainmusik2 from "../../assets/pemain musik terkenal 1.jpeg";
 
 const MainSection = () => {
   return (
@@ -86,7 +85,7 @@ const cards: CardType[] = [
     id: 2,
   },
   {
-    url: pemainmusik3,
+    url: pemainmusik1,
     title: "Title 1",
     desc: "asdasd",
     id: 3,
