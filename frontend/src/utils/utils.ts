@@ -20,6 +20,7 @@ export function convertCreatedAt(date: string | {} | any): string {
 }
 
 export function isImgurLinkValid(imgurUrl: string) {
+  if(!imgurUrl) return false;
   return imgurUrl.match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i) ? true : false;
 }
 
