@@ -136,12 +136,12 @@ const PostModal = (props: IProps) => {
                 <img
                   src={isImgurLinkValid(item[1]) ? item[1] : profile}
                   className="w-7 h-7 rounded-full cursor-pointer"
-                  onClick={() => navigate(`/profile/${item[0]}`)} />
+                  onClick={() => { navigate(`/profile/${item[0]}`); setModal(false); }} />
               </div>
               <div className="flex gap-2 ">
                 <div
                   className="my-auto text-gray-700 hover:text-gray-800 cursor-pointer"
-                  onClick={() => navigate(`/profile/${item[0]}`)}>
+                  onClick={() => { navigate(`/profile/${item[0]}`); setModal(false); }}>
                   {item[0]}
                 </div>
                 <div className="font-extrabold my-auto">·</div>

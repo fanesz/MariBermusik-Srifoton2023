@@ -1,8 +1,8 @@
 import { Transition as HuiTransition } from "@headlessui/react"
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface IProps {
-  children: any,
+  children: ReactNode,
   from?: string,
   onScreen?: number,
   delay?: number

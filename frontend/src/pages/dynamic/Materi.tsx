@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { addPengunjung, deleteMateriByID, getMateriByAlatMusik, getRatingList, getUserByParams, updateRating, userIsLogin } from "../../api/services";
+import { addPengunjung, getMateriByAlatMusik, getRatingList, getUserByParams, updateRating, userIsLogin } from "../../api/services";
 import { useEffect, useState } from "react";
 import { IErrSuccessMsg, TListMateri, TUser } from "../../types/Types";
 import { convertCreatedAt, ratingAverage } from "../../utils/utils";
@@ -7,7 +7,7 @@ import { EyeIcon, PencilIcon, StarIcon, TrashIcon } from "@heroicons/react/24/so
 import TransitionIn from "../../components/_shared/TransitionIn";
 import profile from "../../assets/profile.png";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
-import { Alert, Rating } from "@material-tailwind/react";
+import { Rating } from "@material-tailwind/react";
 import DeleteAlert from "../../components/Materi/DeleteMateriAlert";
 import ErrSuccessMsg from "../../components/_shared/ErrSuccessMsg";
 

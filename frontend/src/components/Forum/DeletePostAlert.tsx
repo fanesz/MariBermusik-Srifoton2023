@@ -61,12 +61,12 @@ const DeletePostAlert = (props: IProps) => {
                   </div>
                   <div className="flex gap-3 mt-3">
                     <button
-                      className="px-3 py-1 rounded-md text-white bg-red-400 hover:bg-red-600"
+                      className="px-3 py-1 rounded-md text-white bg-red-400 hover:bg-red-600 focus:outline-none"
                       onClick={() => handleDeletePost()}>
                       Hapus
                     </button>
                     <button
-                      className="px-3 py-1 rounded-md text-white bg-gray-400 hover:bg-gray-500"
+                      className="px-3 py-1 rounded-md text-white bg-gray-400 hover:bg-gray-500 focus:outline-none"
                       onClick={() => setModal(false)}>
                       Cancel
                     </button>

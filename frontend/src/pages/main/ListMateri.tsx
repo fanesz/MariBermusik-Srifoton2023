@@ -28,6 +28,9 @@ type TFilterBy = {
   pengunjung_least: boolean,
   kesulitan: string[]
 }
+type TListFilterer = {
+  [key: string]: (a: TListMateri, b: TListMateri) => number;
+};
 
 const ListMateri = () => {
   const [materi, setMateri] = useState<TListMateri[]>([]);
@@ -83,9 +86,9 @@ const ListMateri = () => {
     fetchListAlatMusik();
   }, [])
 
-
+  
   // algoritma filtering
-  const handleFilteringMateri = (filterer: any, newestFilter: any, filterCondition: boolean) => {
+  const handleFilteringMateri = (filterer: TFilterBy, newestFilter: keyof TFilterBy | null, filterCondition: boolean) => {
     const filterByDate = (a: TListMateri, b: TListMateri, reverse: boolean) => {
       const dateA = new Date(a.data.createdAt).getTime();
       const dateB = new Date(b.data.createdAt).getTime();
@@ -110,7 +113,7 @@ const ListMateri = () => {
       return reverse ? pengunjungA - pengunjungB : pengunjungB - pengunjungA;
     }
 
-    const listFilterer: any = {
+    const listFilterer: TListFilterer = {
       date_newest: (a: TListMateri, b: TListMateri) => filterByDate(a, b, false),
       date_oldest: (a: TListMateri, b: TListMateri) => filterByDate(a, b, true),
       rating_highest: (a: TListMateri, b: TListMateri) => filterByRating(a, b, false),
@@ -118,7 +121,6 @@ const ListMateri = () => {
       pengunjung_most: (a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, false),
       pengunjung_least: (a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, true)
     }
-
     setFilteredMateri(
       prev => {
         let materiToSet = (prev.length === 0 ? materi : prev);
@@ -140,8 +142,8 @@ const ListMateri = () => {
         if (filterer.pengunjung_least) {
           materiToSet = materiToSet.sort((a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, true))
         }
-        if (filterCondition && newestFilter) {
-          materiToSet = filterer[newestFilter] && materiToSet.sort(listFilterer[newestFilter]);
+        if (filterCondition && newestFilter && filterer[newestFilter]) {
+          materiToSet =  materiToSet.sort(listFilterer[newestFilter]);
         }
         return materiToSet
       }

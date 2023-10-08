@@ -1,4 +1,4 @@
-export function convertCreatedAt(date: string | {} | any): string {
+export function convertCreatedAt(date: string | {} | Date | any): string {
   const timeDifference = new Date().getTime() - new Date(date).getTime();
   const seconds = Math.floor(timeDifference / 1000);
   const intervals = {
