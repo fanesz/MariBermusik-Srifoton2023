@@ -3,7 +3,7 @@ import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { TListPost, TUser } from "../../types/Types";
 import { convertCreatedAt, isImgurLinkValid } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
-import { getUserByParams } from "../../api/services";
+import { getUserByParams, updateVote } from "../../api/services";
 import { useEffect, useState } from "react";
 import PostModal from "./PostModal";
 import CreatePostModal from "./CreatePostModal";
@@ -13,12 +13,13 @@ import DeletePostAlert from "./DeletePostAlert";
 
 interface IProps {
   className?: string,
-  post: TListPost,
-  clickablePost: boolean,
-  currentUser?: string
+  prevPost: TListPost,
+  isFromModal: boolean,
+  currentUser: string,
+  setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>
 }
 const PostPreview = (props: IProps) => {
-  const { className, post, clickablePost, currentUser } = props;
+  const { className, prevPost, isFromModal, currentUser, setParentPost } = props;
   const navigate = useNavigate();
 
   const [owner, setOwner] = useState<TUser>({} as TUser);
@@ -29,10 +30,10 @@ const PostPreview = (props: IProps) => {
 
   // fetch data owner pemilik post
   const fetchOwner = async () => {
-    const resOwner = await getUserByParams(null, null, post.owner);
+    const resOwner = await getUserByParams(null, null, prevPost.owner);
     if (resOwner.status) {
       setOwner(resOwner.data);
-      if (currentUser === post.owner) setIsOwner(true);
+      if (currentUser === prevPost.owner) setIsOwner(true);
     }
   }
   useEffect(() => {
@@ -49,12 +50,46 @@ const PostPreview = (props: IProps) => {
   }
 
 
+  //ownerUUID: string, postID: string, voterUUID: string, voteType: string
+  const handleUpVote = async (type: 'upvotes' | 'downvotes') => {
+    if (isOwner) return;
+    if (currentUser) {
+      const res = await updateVote(prevPost.owner, prevPost.postID.toString(), currentUser, type);
+      if (res.status && setParentPost) {
+        setParentPost(prev => {
+          const updatedList = prev.map(item => {
+            if (item.owner === prevPost.owner && item.postID === prevPost.postID) {
+              return res.data;
+            }
+            return item;
+          });
+          return updatedList;
+        });
+        
+      }
+    }
+  }
+
+  
+  // cek apakah user sudah vote atau belum
+  const isUserVote = (type: 'upvotes' | 'downvotes') => {
+    if (currentUser) {
+      if (type === 'upvotes') return prevPost?.upvotes.includes(currentUser);
+      else return prevPost?.downvotes.includes(currentUser);
+    }
+  }
+
+
   // Components
   const updownvote = (
     <div className="text-center mt-2">
-      <ChevronUpIcon className="w-6 h-6" />
-      {post?.upvotes.length - post?.downvotes.length}
-      <ChevronDownIcon className="w-6 h-6" />
+      <ChevronUpIcon
+        className={`w-6 h-6 hover:scale-110 cursor-pointer ${isUserVote('upvotes') ? 'text-green-500' : 'text-gray-500'}`}
+        onClick={() => handleUpVote('upvotes')} />
+      {prevPost?.upvotes.length - prevPost?.downvotes.length}
+      <ChevronDownIcon
+        className={`w-6 h-6 hover:scale-110 cursor-pointer ${isUserVote('downvotes') ? 'text-red-500' : 'text-gray-500'}`}
+        onClick={() => handleUpVote('downvotes')} />
     </div>
   )
   const section_top = (
@@ -76,33 +111,33 @@ const PostPreview = (props: IProps) => {
       </div>
       <div className="font-extrabold">·</div>
       <div>
-        {convertCreatedAt(post.createdAt)}
+        {convertCreatedAt(prevPost?.createdAt)}
       </div>
     </div>
   )
   const title_desc = (
     <div
-      className={`h-full ${clickablePost && 'cursor-pointer'}`}
-      onClick={() => clickablePost && setPostModal(true)}>
+      className={`h-full ${!isFromModal && 'cursor-pointer'}`}
+      onClick={() => !isFromModal && setPostModal(true)}>
       <div className="text-xl font-medium h-2/6 truncate">
-        {post.title}
+        {prevPost?.title}
       </div>
-      <div className={`text-gray-800 h-4/6 md:text-sm text-xs mt-1 ${clickablePost && 'overflow-scroll'}`}>
-        {post.description}
+      <div className={`text-gray-800 h-4/6 md:text-sm text-xs mt-1 ${!isFromModal && 'overflow-scroll'}`}>
+        {prevPost?.description}
       </div>
     </div>
   )
   const footer = (
     <div className="flex gap-4">
       <div
-        className={`opacity-70 flex gap-1.5 ${clickablePost && 'cursor-pointer group'}`}
-        onClick={() => clickablePost && setPostModal(true)}>
+        className={`opacity-70 flex gap-1.5 ${!isFromModal && 'cursor-pointer group'}`}
+        onClick={() => !isFromModal && setPostModal(true)}>
         <ChatBubbleLeftEllipsisIcon className="w-5 h-5 pt-0.5 opacity-80 group-hover:opacity-100" />
         <div className="text-xs my-auto text-gray-700 group-hover:text-gray-900">
-          {post?.comments.length} Comments
+          {prevPost?.comments.length} Comments
         </div>
       </div>
-      <div className={`${(!isOwner || !clickablePost) && 'hidden'} cursor-pointer hover:bg-gray-200 rounded duration-75`}>
+      <div className={`${(!isOwner || isFromModal) && 'hidden'} cursor-pointer hover:bg-gray-200 rounded duration-75`}>
         <Popover placement="top-start">
           <PopoverHandler>
             <EllipsisHorizontalIcon className="w-5 h-5" onClick={() => alert(1)} />
@@ -123,7 +158,7 @@ const PostPreview = (props: IProps) => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className={`${clickablePost && 'hidden'} flex gap-3`}>
+      <div className={`${!isFromModal && 'hidden'} flex gap-3`}>
         <div className="font-extrabold">·</div>
         <div
           className="my-auto text-xs flex gap-1 cursor-pointer text-gray-700 hover:text-gray-900"
@@ -143,26 +178,26 @@ const PostPreview = (props: IProps) => {
   )
 
   return (
-    <div className={`w-full ${clickablePost && 'h-40'} border border-opacity-30 border-gray-700 shadow-md rounded-md flex ${className} px-2 hover:shadow-lg hover:transition-all duration-300`}>
+    <div className={`w-full ${!isFromModal && 'h-40'} border border-opacity-30 border-gray-700 shadow-md rounded-md flex ${className} px-2 hover:shadow-lg hover:transition-all duration-300`}>
 
-      <PostModal isOpen={postModal} setModal={setPostModal} prevPost={post} />
-      <CreatePostModal isOpen={editPostModal} setModal={setEditPostModal} prevPost={post} />
-      <DeletePostAlert isOpen={deleteAlertModal} setModal={setDeleteAlertModal} title={post.title} postID={post.postID.toString()} />
+      <PostModal isOpen={postModal} setModal={setPostModal} prevPost={prevPost} currentUser={currentUser} setParentPost={setParentPost} />
+      <CreatePostModal isOpen={editPostModal} setModal={setEditPostModal} prevPost={prevPost} />
+      <DeletePostAlert isOpen={deleteAlertModal} setModal={setDeleteAlertModal} title={prevPost.title} postID={prevPost.postID.toString()} />
 
       <div className="w-fit">
         {updownvote}
       </div>
 
       <div className="md:px-6 px-3 w-full">
-        <div className={`${clickablePost && 'h-1/5'} pt-2`}>
+        <div className={`${!isFromModal && 'h-1/5'} pt-2`}>
           {section_top}
         </div>
 
-        <div className={`${clickablePost ? 'h-3/5 pt-0' : 'pt-2'} -mt-1`}>
+        <div className={`${!isFromModal ? 'h-3/5 pt-0' : 'pt-2'} -mt-1`}>
           {title_desc}
         </div>
 
-        <div className={`${clickablePost && 'h-1/5'} pb-2 pt-1`}>
+        <div className={`${!isFromModal && 'h-1/5'} pb-2 pt-1`}>
           {footer}
         </div>
 

@@ -14,15 +14,15 @@ import profile from "../../assets/profile.png";
 interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
-  prevPost: TListPost
+  currentUser: string,
+  prevPost: TListPost,
+  setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>
 }
 const PostModal = (props: IProps) => {
-  const { isOpen, setModal } = props;
-  const { prevPost = {} as TListPost } = props;
+  const { isOpen, setModal, currentUser, setParentPost, prevPost } = props;
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [post, setPost] = useState<TListPost>(prevPost);
   const [comment, setComment] = useState("");
   const [commenter, setCommenter] = useState<[string, string, string, Date][]>([]);
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
@@ -45,11 +45,11 @@ const PostModal = (props: IProps) => {
   // fetch data user yang mengomentari post
   const fetchCommenter = async () => {
     let tempCommenter: [string, string, string, Date][] = [];
-    if (Object.keys(post).length !== 0) {
-      await Promise.all(post.comments.map(async (post) => {
-        const res = await getUserByParams(null, null, post.owner);
+    if (Object.keys(prevPost).length !== 0) {
+      await Promise.all(prevPost.comments.map(async (prevPost) => {
+        const res = await getUserByParams(null, null, prevPost.owner);
         if (res.status) {
-          tempCommenter.push([res.data.username, res.data.img, post.content, post.createdAt]);
+          tempCommenter.push([res.data.username, res.data.img, prevPost.content, prevPost.createdAt]);
         }
       }));
       if (tempCommenter.length !== 0) {
@@ -62,20 +62,25 @@ const PostModal = (props: IProps) => {
   }
   useEffect(() => {
     fetchCommenter();
-  }, [post]);
+  }, [prevPost]);
 
 
   // handler untuk posting commentar
   const handlePostComment = async () => {
     setIsLoading(true);
-    const res = await addComment(post.owner, post.postID.toString(), comment);
+    const res = await addComment(prevPost.owner, prevPost.postID.toString(), comment);
     setIsLoading(false);
     if (res.status) {
       setComment("");
-      setPost(prev => ({
-        ...prev,
-        comments: [...prev.comments, res.data]
-      }))
+      setParentPost(prev => {
+        const filterByOwner = prev.filter(prev => prev.owner === prevPost.owner);
+        const filterByNotOwner = prev.filter(prev => prev.owner !== prevPost.owner);
+        const postToEdit = filterByOwner.filter(prev => prev.postID === prevPost.postID);
+        const postNotToEdit = filterByOwner.filter(prev => prev.postID !== prevPost.postID);
+        const newPost = [...postNotToEdit, { ...postToEdit[0], comments: [...postToEdit[0].comments, res.data] }];
+        const newListPost = [...newPost, ...filterByNotOwner];
+        return newListPost;
+      })
     } else {
       handleSetErrmsg('Gagal menambahkan komentar, harap login!');
     }
@@ -83,9 +88,9 @@ const PostModal = (props: IProps) => {
 
 
   // Components
-  const main_section = Object.keys(post).length !== 0 && (
+  const main_section = Object.keys(prevPost).length !== 0 && (
     <div>
-      <PostPreview post={post} clickablePost={false} />
+      <PostPreview prevPost={prevPost} isFromModal={true} currentUser={currentUser} setParentPost={setParentPost} />
     </div>
   )
   const comment_input_section = (

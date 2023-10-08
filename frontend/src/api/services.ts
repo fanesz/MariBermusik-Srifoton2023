@@ -331,13 +331,7 @@ export const addComment = async (ownerUUID: string, postID: string, comment: str
 
 export const updateVote = async (ownerUUID: string, postID: string, voterUUID: string, voteType: string) => {
   try {
-    const res = await api.patch(ENDPOINT.forum + "/vote",
-      {
-        ownerUUID: ownerUUID,
-        postID: postID,
-        voterUUID: voterUUID,
-        voteType: voteType
-      });
+    const res = await api.patch(ENDPOINT.forum + "/vote"+param([['ownerUUID', ownerUUID], ['postID', postID], ['voterUUID', voterUUID], ['voteType', voteType]]));
     return res.data;
   } catch (err) {
     return false;

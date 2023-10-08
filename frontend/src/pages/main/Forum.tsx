@@ -29,6 +29,7 @@ const Forum = () => {
     }
   }
 
+
   // fetch data semua postingan
   const fetchListPost = async () => {
     const res = await getPost();
@@ -36,7 +37,6 @@ const Forum = () => {
       const groupedListPost = res.data.reduce((ac: TListPost[], cv: TCurrentValue) => {
         return ac.concat(cv.value);
       }, []);
-      // melakukan sorting untuk menampilkan berdasarkan upvote tertinggi -> terbaru
       const sortedByDateListPost = groupedListPost.sort((a: TListPost, b: TListPost) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
@@ -51,7 +51,7 @@ const Forum = () => {
     fetchCurrentUser();
   }, []);
 
-
+  
   // handle cari materi
   const handleSetCariMateri = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCariMateri(e.target.value);
@@ -102,12 +102,12 @@ const Forum = () => {
               {listPost?.map((item, index) => (
                 <TransitionIn key={index} from='bottom' delay={index * 200}>
                   <div className="mt-3">
-                    <PostPreview post={item} clickablePost={true} currentUser={currentUser} />
+                    <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} />
                   </div>
                 </TransitionIn>
               ))}
             </div>
-            
+
           </div>
         </div>
       </div>

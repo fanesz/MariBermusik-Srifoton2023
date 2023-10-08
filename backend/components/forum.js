@@ -120,17 +120,27 @@ export const updateVote = async (req, res) => {
     const postToEdit = postList.find(m => m.postID == params.postID);
     if (!postToEdit) return res.json({ status: false });
 
-    if (postToEdit[params.voteType].includes(params.voterUUID)) {
-      postToEdit[params.voteType].push(params.voterUUID);
-    } else {
-      postToEdit[params.voteType] = postToEdit[params.voteType].filter(m => m != params.voterUUID);
+    if (params.voteType === 'upvotes') {
+      if (postToEdit.upvotes.includes(params.voterUUID)) {
+        postToEdit.upvotes = postToEdit.upvotes.filter(m => m !== params.voterUUID);
+      } else {
+        postToEdit.downvotes = postToEdit.downvotes.filter(m => m !== params.voterUUID);
+        postToEdit.upvotes.push(params.voterUUID);
+      }
+    } else if (params.voteType === 'downvotes') {
+      if (postToEdit.downvotes.includes(params.voterUUID)) {
+        postToEdit.downvotes = postToEdit.downvotes.filter(m => m !== params.voterUUID);
+      } else {
+        postToEdit.upvotes = postToEdit.upvotes.filter(m => m !== params.voterUUID);
+        postToEdit.downvotes.push(params.voterUUID);
+      }
     }
 
     const postNotToEdit = postList.filter(m => m.postID != params.postID);
     const newPost = [...postNotToEdit, postToEdit];
     await db_forum.set(params.ownerUUID, newPost);
 
-    res.json({ status: true });
+    res.json({ status: true, data: postToEdit });
   } catch (error) {
     console.log(error);
     res.json({ status: false });
