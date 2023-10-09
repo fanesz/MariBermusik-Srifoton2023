@@ -37,16 +37,16 @@ const MainSection: React.FC = () => {
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
-  const handleButtonClick = () => {
-    const newPercentage = percentage === 0 ? -50 : 0;
+  // const handleButtonClick = () => {
+  //   const newPercentage = percentage === 0 ? -50 : 0;
 
-    setPercentage(newPercentage);
+  //   setPercentage(newPercentage);
 
-    if (targetRef.current) {
-      targetRef.current.style.transition = "transform 0.5s ease";
-      targetRef.current.style.transform = `translate(${newPercentage}%, -50%)`;
-    }
-  };
+  //   if (targetRef.current) {
+  //     targetRef.current.style.transition = "transform 0.5s ease";
+  //     targetRef.current.style.transform = `translate(${newPercentage}%, -50%)`;
+  //   }
+  // };
 
   return (
     <div className="h-screen overflow-hidden relative">

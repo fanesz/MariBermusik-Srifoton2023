@@ -1,6 +1,7 @@
 import TopSection from "../../components/Home/TopSection";
-import MainSection from "../../components/Home/MainSection";
+// import MainSection from "../../components/Home/MainSection";
 import CategoryPreview from "../../components/Home/CategoryPreview";
+import MusicianCarousel from "../../components/Home/MusicianCarousel";
 
 const Home = () => {
   return (
@@ -10,7 +11,8 @@ const Home = () => {
       </div>
       <div className="ms-auto me-auto w-[75vw]">
         <div>
-          <MainSection />
+          <MusicianCarousel />
+          {/* <MainSection /> */}
         </div>
         <div className="mt-16 xl:w-[50vw] ms-auto me-auto">
           <CategoryPreview />
