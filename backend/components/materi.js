@@ -165,3 +165,27 @@ export const updateRating = async (req, res) => {
   }
 }
 
+export const addPengunjung = async (req, res) => {
+  try { // params: { alatMusik, materiID }
+    const params = req.query;
+    const materi = await db_materi.get(params.alatMusik);
+    const filteredMateri = materi.filter(m => m.materiID == params.materiID);
+    if (!filteredMateri) return res.json({ status: false });
+    let found = false;
+    materi.map(async (item, index) => {
+      if (item.materiID == params.materiID) {
+        const materi = await db_materi.get(params.alatMusik);
+        materi[index].data.pengunjung += 1;
+        await db_materi.set(`${params.alatMusik}`, materi);
+        res.json({ status: true });
+        found = true;
+      }
+    })
+    if (found) res.json({ status: false });
+
+  } catch (error) {
+    console.log(error);
+    res.json({ status: false });
+  }
+}
+

@@ -9,6 +9,7 @@ import {
   deleteMateriByID,
   updateRating,
   getRatingList,
+  addPengunjung,
 } from "../components/materi.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.patch("/", editMateriByID);
 router.delete("/", deleteMateriByID);
 router.get("/rating", getRatingList);
 router.patch("/rating", updateRating);
+router.get("/pengunjung", addPengunjung);
 
 export default router;

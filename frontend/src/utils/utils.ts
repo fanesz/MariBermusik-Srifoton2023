@@ -1,4 +1,4 @@
-export function convertCreatedAt(date: string | {} | any): string {
+export function convertCreatedAt(date: string | {} | Date | any): string {
   const timeDifference = new Date().getTime() - new Date(date).getTime();
   const seconds = Math.floor(timeDifference / 1000);
   const intervals = {
@@ -20,6 +20,7 @@ export function convertCreatedAt(date: string | {} | any): string {
 }
 
 export function isImgurLinkValid(imgurUrl: string) {
+  if(!imgurUrl) return false;
   return imgurUrl.match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i) ? true : false;
 }
 

@@ -24,7 +24,7 @@ export default function sendMail(target, text, purpose) {
     message.html =
       `<table style="max-width: 600px; margin: 0 auto; font-family: 'Poppins', sans-serif;">
       <tr>
-        <td style="background-color: #80e026; padding: 20px; text-align: center;">
+        <td style="background-color: #fed7aa; padding: 20px; text-align: center;">
           <h2>Password Reset Verification</h2>
         </td>
       </tr>
@@ -42,7 +42,7 @@ export default function sendMail(target, text, purpose) {
       </tr>
       <tr>
         <td style="background-color: #f5f5f5; padding: 20px; text-align: center;">
-          <p style="font-size: 12px; color: #80e026;">If you want to cancel the reset pasword, just ignore this email and <a href="https://example.com/unsubscribe" style="color: #999999; text-decoration: underline;">login here</a>.</p>
+          <p style="font-size: 12px; color: #fed7aa;">If you want to cancel the reset pasword, just ignore this email and <a href="#" style="color: #999999; text-decoration: underline;">login here</a>.</p>
         </td>
       </tr>
     </table>`;
