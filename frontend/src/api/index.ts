@@ -1,15 +1,16 @@
 import axios from "axios";
 
-const JWTTOKEN = import.meta.env.VITE_JWT_TOKEN
+const secretToken = import.meta.env.VITE_API_KEY;
 
 const headers = {
-  'Authorization': `Bearer ${JWTTOKEN}`,
-  Accept: 'application/json', 'Content-type': 'application/json',
-}
+  Accept: "application/json",
+  "Content-type": "application/json",
+  "x-api-key": secretToken, // Include the API key here
+};
 
 const api = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_URL}api`,
-  headers
-})
+  headers,
+});
 
 export default api;
