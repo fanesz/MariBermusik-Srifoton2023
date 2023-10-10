@@ -96,33 +96,39 @@ const PostModal = (props: IProps) => {
     </div>
   )
   const comment_input_section = (
-    <div className="relative border-b border-gray-300 pb-1">
-      <Textarea
-        variant="static" placeholder="Your Comment" rows={5} spellCheck={false}
-        className="px-4 rounded-md focus:ring-0"
-        value={comment} onChange={handleSetComment} />
-      <div className="flex w-full justify-between pt-1.5">
-        <IconButton variant="text" color="blue-gray" size="sm" disabled>
-          <div className={`${comment.length > 400 && 'text-red-300'} ms-3`}>
-            {comment.length}/400
+    <div>
+      <div className="relative border-b border-gray-300 pb-1">
+        <Textarea
+          variant="static" placeholder="Your Comment" rows={5} spellCheck={false}
+          className="px-4 rounded-md focus:ring-0 blur-sm" disabled={currentUser.length === 0}
+          value={comment} onChange={handleSetComment} />
+        <div className="flex w-full justify-between pt-1.5">
+          <IconButton variant="text" color="blue-gray" size="sm" disabled>
+            <div className={`${comment.length > 400 && 'text-red-300'} ms-3`}>
+              {comment.length}/400
+            </div>
+          </IconButton>
+          <div className="flex gap-2">
+            <Button
+              size="sm" color="red" variant="text" className="rounded-md"
+              onClick={() => setModal(false)}>
+              Cancel
+            </Button>
+            <Button
+              size="sm" className="rounded-md w-32"
+              disabled={comment.length === 0 || comment.length > 400}
+              onClick={handlePostComment}>
+              {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Post Comment'}
+            </Button>
           </div>
-        </IconButton>
-        <div className="flex gap-2">
-          <Button
-            size="sm" color="red" variant="text" className="rounded-md"
-            onClick={() => setModal(false)}>
-            Cancel
-          </Button>
-          <Button
-            size="sm" className="rounded-md w-32"
-            disabled={comment.length === 0 || comment.length > 400}
-            onClick={handlePostComment}>
-            {isLoading ? <LoaderAnimation className='w-1 h-1' color='bg-white' /> : 'Post Comment'}
-          </Button>
+        </div>
+        <div className="pb-2">
+          <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
         </div>
       </div>
-      <div className="pb-2">
-        <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
+
+      <div className="absolute -mt-32 w-full text-center font-medium pe-20">
+        You need to Login before comment!
       </div>
     </div>
   )
