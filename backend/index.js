@@ -8,7 +8,12 @@ import forumRoute from "./routes/forumRoute.js";
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://maribermusik.fanesp.online/',
+  optionsSuccessStatus: 200 
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
