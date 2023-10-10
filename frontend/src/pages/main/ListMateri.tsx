@@ -71,6 +71,7 @@ const ListMateri = () => {
         return ac.concat(cv.value);
       }, []);
       setMateri(result);
+      setFilteredMateri(result);
     }
   }
   const fetchListAlatMusik = async () => {
@@ -123,7 +124,7 @@ const ListMateri = () => {
     }
     setFilteredMateri(
       prev => {
-        let materiToSet = (prev.length === 0 ? materi : prev);
+        let materiToSet = prev;
         if (filterer.date_newest) {
           materiToSet = materiToSet.sort((a: TListMateri, b: TListMateri) => filterByDate(a, b, false))
         }
@@ -156,9 +157,9 @@ const ListMateri = () => {
     if (alatMusik !== 'semua' && kesulitan.length !== 0) {
       const materiByAlatMusik = materi.filter(filterByKesulitan);
       newMateri = materiByAlatMusik.filter(filterByAlatMusik);
-    } if (alatMusik !== 'semua' && kesulitan.length === 0) {
+    } else if (alatMusik !== 'semua' && kesulitan.length === 0) {
       newMateri = materi.filter(filterByAlatMusik)
-    } if (alatMusik === 'semua' && kesulitan.length !== 0) {
+    } else if (alatMusik === 'semua' && kesulitan.length !== 0) {
       newMateri = materi.filter(filterByKesulitan);
     } else if (alatMusik === 'semua' && kesulitan.length === 0) {
       newMateri = [];
@@ -475,7 +476,7 @@ const ListMateri = () => {
               </TransitionIn>
             </div>
             <div className="mt-5">
-              {(filteredMateri.length === 0 ? materi : filteredMateri).map((materi, index) => (
+              {filteredMateri?.map((materi, index) => (
                 <TransitionIn key={index} from='bottom' delay={index * 200}>
                   <MateriPreview
                     className='mb-5'
