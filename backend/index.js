@@ -17,11 +17,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/user', userRoute);
-app.use('/api/materi', materiRoute);
-app.use('/api/login', loginRoute);
-app.use('/api/forgetPass', forgetPassRoute);
-app.use('/api/forum', forumRoute);
+app.use('/api/user', cors(corsOptions), userRoute);
+app.use('/api/materi', cors(corsOptions), materiRoute);
+app.use('/api/login', cors(corsOptions), loginRoute);
+app.use('/api/forgetPass', cors(corsOptions), forgetPassRoute);
+app.use('/api/forum', cors(corsOptions), forumRoute);
 
 
 app.listen(5000, () => console.log('Server running at port 5000'));
