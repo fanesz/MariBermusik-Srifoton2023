@@ -11,7 +11,7 @@ const Home = () => {
       <div className="mt-12">
         <MainSection />
       </div>
-      <div className="mt-20 w-full max-w-7xl  mx-auto">
+      <div className="mt-20 w-full max-w-7xl mx-auto">
         <MusicianCarousel />
       </div>
     </div>

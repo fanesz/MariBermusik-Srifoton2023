@@ -13,10 +13,10 @@ const TopSection = () => {
       <div className="absolute 2xl:top-[15vh] xl:top-28 md:top-20 w-full md:flex hidden justify-around">
         <TransitionIn from="left">
           <div className="font-bold 2xl:text-[1.5vw] xl:text-3xl md:text-2xl xl:mt-16 md:mt-10">
-            <span className="text-blue-900 hover:text-blue-950">Stay </span>
-            <span className="text-emerald-400 hover:text-emerald-500">Hungry </span>
-            <span className="text-blue-900 hover:text-blue-950">Stay </span>
-            <span className="text-emerald-400 hover:text-emerald-500">Foolish</span>
+            <span className="text-blue-900 hover:text-blue-950 font_noto">Stay </span>
+            <span className="text-emerald-400 hover:text-emerald-500 font_noto">Hungry </span>
+            <span className="text-blue-900 hover:text-blue-950 font_noto">Stay </span>
+            <span className="text-emerald-400 hover:text-emerald-500 font_noto">Foolish</span>
           </div>
         </TransitionIn>
 

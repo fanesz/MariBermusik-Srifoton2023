@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Adlam:wght@600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -38,6 +44,28 @@
   text-decoration: none;
   font-family: roboto;
 }
+
+
+.font_rock {
+  font-family: 'RocknRoll One', sans-serif;
+}
+.font_kod {
+  font-family: 'Kodchasan', sans-serif;
+}
+.font_fira {
+  font-family: 'Fira Sans', sans-serif;
+}
+.font_kelly {
+  font-family: 'Kelly Slab', cursive;
+}
+.font_alkatra {
+  font-family: 'Alkatra', sans-serif;
+}
+.font_noto {
+  font-family: 'Noto Sans Adlam', sans-serif;
+}
+
+
 
 #root {
   background-color: white;
