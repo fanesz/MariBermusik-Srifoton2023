@@ -8,17 +8,17 @@ const MainSection = () => {
   const navigate = useNavigate();
 
   const materi_button = (
-    <button className="before:ease relative h-12 w-36 overflow-hidden border border-orange-500 bg-orange-500 text-white shadow-2xl transition-all before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-1000 hover:shadow-orange-500 hover:before:-translate-x-40 rounded-md duration-700"
+    <button className="before:ease relative md:h-12 h-10 md:w-36 w-32 overflow-hidden border border-orange-500 bg-orange-500 text-white shadow-2xl transition-all before:absolute before:right-0 before:top-0 before:h-12 before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-1000 hover:shadow-orange-500 hover:before:-translate-x-40 rounded-md duration-700"
       onClick={() => { navigate('/materi'); window.scrollTo(0, 0); }}>
-      <span className="z-10 text-lg">Materi</span>
+      <span className="z-10 text-lg font_fira">Materi</span>
     </button>
   )
 
   const forum_button = (
     <button
-      className="relative h-12 w-40 overflow-hidden border border-indigo-600 text-indigo-600 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0 before:m-auto before:h-0 before:w-0 before:rounded-sm before:bg-indigo-600 before:duration-500 before:ease-out hover:text-white hover:shadow-indigo-600 hover:before:h-40 hover:before:w-40 hover:before:opacity-80 rounded-md duration-200"
+      className="relative md:h-12 h-10 md:w-40 w-36 overflow-hidden border border-indigo-600 text-indigo-600 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:right-0 before:top-0 before:m-auto before:h-0 before:w-0 before:rounded-sm before:bg-indigo-600 before:duration-500 before:ease-out hover:text-white hover:shadow-indigo-600 hover:before:h-40 hover:before:w-40 hover:before:opacity-80 rounded-md duration-200"
       onClick={() => { navigate('/forum'); window.scrollTo(0, 0); }}>
-      <span className="relative z-10">Forum</span>
+      <span className="relative z-10 font_fira">Forum</span>
     </button>
   )
 
@@ -32,8 +32,8 @@ const MainSection = () => {
         "In the hands of the troubadour, became a storyteller, painting vivid tales of love, loss, and the human experience."
       ],
       style: 'md:w-2/4 w-3/4 text-start my-auto ps-16',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg',
-      descriptionStyle: 'mb-4 md:text-sm text-xs opacity-80'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg font_kelly',
+      descriptionStyle: 'mb-4 md:text-sm text-xs opacity-80 font_alkatra'
     },
     {
       alatMusik: "bass",
@@ -44,8 +44,8 @@ const MainSection = () => {
         "Deep vibrations coursed through the room, like the heartbeat of the universe."
       ],
       style: 'w-4/6 text-end ms-auto pe-12 pt-8',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-end',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-end'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-end font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-end font_alkatra'
     },
     {
       alatMusik: "biola",
@@ -56,8 +56,8 @@ const MainSection = () => {
         "The bow danced upon delicate strings, conjuring a symphony of tears and laughter."
       ],
       style: 'w-4/6 text-start m-auto',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center font_alkatra'
     },
     {
       alatMusik: "cello",
@@ -68,8 +68,8 @@ const MainSection = () => {
         "Its resonant timbre enveloped the audience in a warm, melancholic embrace."
       ],
       style: 'w-4/6 text-end ms-auto my-auto pe-16 pt-12',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-end',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-end'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-end font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-end font_alkatra'
     },
     {
       alatMusik: "cello",
@@ -80,8 +80,8 @@ const MainSection = () => {
         "Its resonant timbre enveloped the audience in a warm, melancholic embrace."
       ],
       style: 'w-4/6 text-end ms-auto my-auto pe-16 pt-12',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-end',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-end'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-end font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-end font_alkatra'
     },
     {
       alatMusik: "drum",
@@ -92,8 +92,8 @@ const MainSection = () => {
         "Rhythmic thunder rumbled, forging a primal connection to the pulse of existence."
       ],
       style: 'w-4/6 text-start m-auto',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center font_alkatra'
     },
     {
       alatMusik: "gitar listrik",
@@ -104,8 +104,8 @@ const MainSection = () => {
         "Lightning bolts of sound surged forth, electrifying the very air around it."
       ],
       style: 'w-4/6 text-start m-auto mb-20',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center font_alkatra'
     },
     {
       alatMusik: "piano",
@@ -116,8 +116,8 @@ const MainSection = () => {
         "Ivory and ebony keys whispered tales of joy and sorrow with each gentle touch."
       ],
       style: 'md:w-2/4 w-3/4 text-start my-auto ps-16 pt-10',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 font_alkatra'
     },
     {
       alatMusik: "trompoet",
@@ -128,8 +128,8 @@ const MainSection = () => {
         "Its brassy voice blared triumphant, commanding attention with every soulful bellow."
       ],
       style: 'w-3/4 text-start ps-16 pt-10',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 font_alkatra'
     },
     {
       alatMusik: "ukulele",
@@ -140,8 +140,8 @@ const MainSection = () => {
         "Like a miniature serenade, it whispered sweet lullabies into the night."
       ],
       style: 'w-3/4 text-start m-auto text-center',
-      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center',
-      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center'
+      titleStyle: 'mb-2 text-sm md:text-base lg:text-lg text-center font_kelly',
+      descriptionStyle: 'mb-4 text-xs md:text-sm opacity-80 text-center font_alkatra'
     },
   ];
 
@@ -174,10 +174,10 @@ const MainSection = () => {
         <div className="flex md:w-1/2">
           <div className="my-auto pb-5">
             <TransitionIn from="left" delay={500}>
-              <Typography variant="lead" className="text-3xl">
+              <Typography variant="lead" className="md:text-3xl text-xl font_rock">
                 Panduan Belajar Alat Musik Pilihanmu Hanya Satu Klik Jauhnya
               </Typography>
-              <div className="mt-3 me-2">
+              <div className="mt-4 me-2">
                 {materi_button}
               </div>
             </TransitionIn>
@@ -193,10 +193,10 @@ const MainSection = () => {
       <TransitionIn from="bottom" delay={1000}>
         <div className="w-full max-w-5xl mx-auto text-center mt-20 border-t border-gray-300 pt-10">
           <div className="my-auto">
-            <Typography variant="lead" className="text-2xl">
+            <Typography variant="lead" className="text-2xl font_kod font-semibold">
               Temui Musisi Lain, Tanyakan Pertanyaan, dan Berbagi Pengetahuan!
             </Typography>
-            <div className="mt-3">
+            <div className="mt-4">
               {forum_button}
             </div>
           </div>

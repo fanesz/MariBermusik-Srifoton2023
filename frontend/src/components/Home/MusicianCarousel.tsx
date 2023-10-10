@@ -18,7 +18,7 @@ const MusicianCarousel = () => {
   ]
 
 
-  const imgClass = 'w-[15rem] h-[10rem] object-cover rounded shadow-xl'
+  const imgClass = 'md:w-[15rem] w-[10rem] h-[8rem] md:h-[10rem] object-cover rounded shadow-xl'
 
   return (
     <TransitionIn from="bottom" delay={1500}>
@@ -29,7 +29,7 @@ const MusicianCarousel = () => {
         ul.insertAdjacentHTML('afterend', ul.outerHTML);
         ul.nextSibling.setAttribute('aria-hidden', 'true');
     })"
-        className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] border-t border-gray-300 pt-10"
+        className="w-full inline-flex flex-nowrap overflow-hidden md:[mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)] border-t border-gray-300 pt-10"
       >
         <ul x-ref="logos" className="flex items-center justify-center md:justify-start [&_li]:mx-5 [&_img]:max-w-none animate-infinite-scroll">
           {alatMusikList.map((item, index) => (
@@ -54,7 +54,7 @@ const MusicianCarousel = () => {
         ul.insertAdjacentHTML('afterend', ul.outerHTML);
         ul.nextSibling.setAttribute('aria-hidden', 'true');
     })"
-        className="mt-5 w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+        className="mt-5 w-full inline-flex flex-nowrap overflow-hidden md:[mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
       >
         <ul x-ref="logos" className="flex items-center justify-center md:justify-start [&_li]:mx-5 [&_img]:max-w-none animate-infinite-scroll">
           {alatMusikList2.reverse().map((item, index) => (

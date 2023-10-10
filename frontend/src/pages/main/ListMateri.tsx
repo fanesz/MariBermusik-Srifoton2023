@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react"
 import { getAlatMusikList, getMateriByAlatMusik, userIsLogin } from "../../api/services";
 import MateriPreview from "../../components/Materi/MateriPreview";
 import { TListMateri } from "../../types/Types";
-import {  FunnelIcon, InformationCircleIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { FunnelIcon, InformationCircleIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dialog, Transition } from "@headlessui/react";
 import CreateMateriModal from "../../components/Materi/CreateMateriModal";
 import Input from "../../components/_shared/Input";
@@ -86,7 +86,7 @@ const ListMateri = () => {
     fetchListAlatMusik();
   }, [])
 
-  
+
   // algoritma filtering
   const handleFilteringMateri = (filterer: TFilterBy, newestFilter: keyof TFilterBy | null, filterCondition: boolean) => {
     const filterByDate = (a: TListMateri, b: TListMateri, reverse: boolean) => {
@@ -143,7 +143,7 @@ const ListMateri = () => {
           materiToSet = materiToSet.sort((a: TListMateri, b: TListMateri) => filterByPengunjung(a, b, true))
         }
         if (filterCondition && newestFilter && filterer[newestFilter]) {
-          materiToSet =  materiToSet.sort(listFilterer[newestFilter]);
+          materiToSet = materiToSet.sort(listFilterer[newestFilter]);
         }
         return materiToSet
       }
@@ -311,8 +311,11 @@ const ListMateri = () => {
             {items.title}
           </div>
           {items.data.map((item, index) => (
-            <div key={index} className="" onClick={() => handleCheckBox(item.key)}>
-              <input className="focus:ring-0 focus:border-none focus:ring-offset-0 me-2 rounded" type="checkbox" checked={!!filterBy[item.key as keyof TFilterBy]} onChange={() => handleCheckBox(item.key)} />
+            <div key={index} onClick={() => handleCheckBox(item.key)}>
+              <input
+                className="focus:ring-0 me-2 rounded"
+                type="checkbox" checked={!!filterBy[item.key as keyof TFilterBy]}
+                readOnly={true} />
               <label className="text-gray-800">{item.text}</label>
             </div>
           ))}
