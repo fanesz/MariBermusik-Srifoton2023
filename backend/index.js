@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import userRoute from "./routes/userRoute.js";
 import materiRoute from "./routes/materiRoute.js";
 import loginRoute from "./routes/loginRoute.js";
@@ -8,6 +9,7 @@ import { validateToken } from "./config/validation.js";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
