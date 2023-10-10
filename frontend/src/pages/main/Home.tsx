@@ -1,22 +1,18 @@
 import TopSection from "../../components/Home/TopSection";
-// import MainSection from "../../components/Home/MainSection";
-import CategoryPreview from "../../components/Home/CategoryPreview";
 import MusicianCarousel from "../../components/Home/MusicianCarousel";
+import MainSection from "../../components/Home/MainSection";
 
 const Home = () => {
   return (
-    <div>
-      <div className="">
+    <div className="min-h-screen">
+      <div>
         <TopSection />
       </div>
-      <div className="ms-auto me-auto w-[75vw]">
-        <div>
-          <MusicianCarousel />
-          {/* <MainSection /> */}
-        </div>
-        <div className="mt-16 xl:w-[50vw] ms-auto me-auto">
-          <CategoryPreview />
-        </div>
+      <div className="mt-12">
+        <MainSection />
+      </div>
+      <div className="mt-20 w-full max-w-7xl  mx-auto">
+        <MusicianCarousel />
       </div>
     </div>
   );

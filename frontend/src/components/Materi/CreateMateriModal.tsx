@@ -160,7 +160,7 @@ const CreateMateriModal = (props: IProps) => {
 
   // Components
   const main_section = (
-    <div>
+    <div className="border-b border-gray-400 border-opacity-40 pb-1">
       <div className="lg:flex gap-10">
         <div className="w-full max-w-sm">
           <Input variant='standard' label='Judul materi'
@@ -193,10 +193,10 @@ const CreateMateriModal = (props: IProps) => {
       {daftarMateri.map((item, index) => (
         <div className="border-b border-gray-400 border-opacity-40 mt-2 pb-2" key={index}>
           <div className="w-full max-w-xs">
-            <Input variant='standard' className="border-none" label={`Sub materi-${index + 1}`}
+            <Input variant='standard' label={`Sub materi-${index + 1}`}
               value={item.judul} onChange={(e: any) => handleSetDaftarMateri('judul', e.target.value, index)} />
           </div>
-          <div className="mt-1">
+          <div className="mt-2">
             <Textarea label="Materi" value={item.materi} spellCheck={false}
               className="focus:ring-0" resize={true}
               onChange={(e: any) => handleSetDaftarMateri('materi', e.target.value, index)} />
@@ -267,10 +267,10 @@ const CreateMateriModal = (props: IProps) => {
                 </Dialog.Title>
 
                 <div className="rounded-md mt-2 bg-white bg-opacity-70 p-5 ">
-                  <div className="">
+                  <div className="mb-3">
                     {main_section}
                   </div>
-                  <div className="">
+                  <div>
                     {daftarMateri_section}
                   </div>
                   <div className="mt-3">
