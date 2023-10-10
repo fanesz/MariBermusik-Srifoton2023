@@ -10,7 +10,7 @@ import { validateToken } from "./config/validation.js";
 const app = express();
 
 const corsOptions = {
-  origin: ["https://maribermusik.fanesp.online", "http://localhost:5173"],
+  origin: "https://maribermusik.fanesp.online",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 
