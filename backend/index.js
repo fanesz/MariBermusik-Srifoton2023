@@ -9,12 +9,7 @@ import { validateToken } from "./config/validation.js";
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://maribermusik.fanesp.online",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
