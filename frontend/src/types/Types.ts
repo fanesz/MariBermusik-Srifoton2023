@@ -49,3 +49,10 @@ export type TListPost = {
     content: string
   }[]
 }
+export type TProfileUser = {
+  UUID: string,
+  username: string,
+  email: string,
+  img: string,
+  createdAt: string
+}

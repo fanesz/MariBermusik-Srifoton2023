@@ -92,7 +92,7 @@ const PostPreview = (props: IProps) => {
         onClick={() => handleUpVote('downvotes')} />
     </div>
   )
-  const section_top = (
+  const top_section = (
     <div className="flex gap-1 text-xs text-gray-600">
       <div className="sm:flex gap-1">
         <div className="sm:block hidden">
@@ -103,7 +103,7 @@ const PostPreview = (props: IProps) => {
           onClick={() => navigate(`/profile/${owner?.username}`)}>
           <img
             src={isImgurLinkValid(owner?.img) ? owner?.img : profile}
-            className="w-4 h-4 rounded-full" />
+            className={`w-4 h-4 rounded-full ${!isFromModal && 'hidden'}`} />
           <div className="my-auto">
             {owner?.username}
           </div>
@@ -190,7 +190,7 @@ const PostPreview = (props: IProps) => {
 
       <div className="md:px-6 px-3 w-full">
         <div className={`${!isFromModal && 'h-1/5'} pt-2`}>
-          {section_top}
+          {top_section}
         </div>
 
         <div className={`${!isFromModal ? 'h-3/5 pt-0' : 'pt-2'} -mt-1`}>
