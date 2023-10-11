@@ -16,6 +16,7 @@ const MateriPreview = (props: IProps) => {
     <img
       className="w-full h-full object-cover rounded-s-md"
       src={getAlatMusikImg(materi.alatMusik)}
+      alt={materi.alatMusik}
     />
   )
   const section_top = (
@@ -27,8 +28,8 @@ const MateriPreview = (props: IProps) => {
           </div>
         )}
       </div>
-      <div className="font-extrabold">·</div>
-      <div className="mt-auto mb-auto md:text-sm text-xs text-gray-700">
+      <div className="font-extrabold sm:block hidden">·</div>
+      <div className="mt-auto mb-auto md:text-sm text-xs text-gray-700 sm:block hidden">
         {convertCreatedAt(materi.data.createdAt)}
       </div>
     </div>

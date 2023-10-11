@@ -91,11 +91,12 @@ const Profile = () => {
   // Components
   const profileCard = (
     <div className='p-4'>
-      <div className='flex'>
-        <div className=''>
-          <img src={user.img || profile} className='h-36 w-36 object-cover rounded-full border' />
+      <div className='md:flex text-center'>
+        <div>
+          <img src={user.img || profile} alt={user.username}
+            className='h-36 w-36 object-cover rounded-full border mx-auto' />
         </div>
-        <div className='my-auto ms-8'>
+        <div className='md:ms-8 md:my-auto mt-2'>
           <div className='text-xl text-gray-800 font-semibold'>
             {user.username}
           </div>
