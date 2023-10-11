@@ -1,12 +1,12 @@
-import bass from "../assets/alatMusik/bass.jpg";
-import biola from "../assets/alatMusik/biola.png";
-import cello from "../assets/alatMusik/cello.jpg";
-import drum from "../assets/alatMusik/drum.jpg";
-import gitar from "../assets/alatMusik/gitar.jpg";
-import gitarListrik from "../assets/alatMusik/gitarListrik.jpg";
-import piano from "../assets/alatMusik/piano.jpg";
-import trompoet from "../assets/alatMusik/trompet.jpg";
-import ukulele from "../assets/alatMusik/ukulele.jpg";
+import bass from "../assets/alatMusik/bass.webp";
+import biola from "../assets/alatMusik/biola.webp";
+import cello from "../assets/alatMusik/cello.webp";
+import drum from "../assets/alatMusik/drum.webp";
+import gitar from "../assets/alatMusik/gitar.webp";
+import gitarListrik from "../assets/alatMusik/gitarListrik.webp";
+import piano from "../assets/alatMusik/piano.webp";
+import trompoet from "../assets/alatMusik/trompet.webp";
+import ukulele from "../assets/alatMusik/ukulele.webp";
 
 type TAlatMusik = {
   nama: string;

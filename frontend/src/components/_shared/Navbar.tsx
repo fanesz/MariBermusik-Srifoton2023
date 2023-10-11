@@ -71,7 +71,7 @@ const Navbar = () => {
     <div className="flex justify-center text-center ms-5">
       <div className="mt-auto mb-auto hover:scale-110 transition duration-200">
         <Link to="/">
-          <img src={logo} alt="MariBermusik Logo" className="2xl:h-[4.5vh] md:h-10 h-6" />
+          <img src={logo} alt="MariBermusik Logo" className="2xl:h-[4.5vh] md:h-10 h-6 w-auto" />
         </Link>
       </div>
       <div className="hidden xl:block 2xl:text-[1.5vw] md:text-2xl text-sm mt-auto mb-auto ms-4 font-bold cursor-pointer">
@@ -84,7 +84,7 @@ const Navbar = () => {
   const Menu_Phone = (
     <div className="md:hidden">
       <Menu as="div" className="relative z-10">
-        <Menu.Button className="me-3">
+        <Menu.Button className="me-3" aria-label="menu">
           <Bars3Icon className="h-9" />
         </Menu.Button>
         <Transition

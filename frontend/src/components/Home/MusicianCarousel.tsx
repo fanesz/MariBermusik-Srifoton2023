@@ -34,14 +34,14 @@ const MusicianCarousel = () => {
         <ul x-ref="logos" className="flex items-center justify-center md:justify-start [&_li]:mx-5 [&_img]:max-w-none animate-infinite-scroll">
           {alatMusikList.map((item, index) => (
             <li key={index}>
-              <img className={`${imgClass}`} src={item.img} />
+              <img className={`${imgClass}`} src={item.img} alt={item.nama} />
             </li>
           ))}
         </ul>
         <ul className="flex items-center justify-center md:justify-start [&_li]:mx-5 [&_img]:max-w-none animate-infinite-scroll" aria-hidden="true">
           {alatMusikList.map((item, index) => (
             <li key={index}>
-              <img className={`${imgClass}`} src={item.img} />
+              <img className={`${imgClass}`} src={item.img} alt={item.nama} />
             </li>
           ))}
         </ul>
@@ -59,20 +59,19 @@ const MusicianCarousel = () => {
         <ul x-ref="logos" className="flex items-center justify-center md:justify-start [&_li]:mx-5 [&_img]:max-w-none animate-infinite-scroll">
           {alatMusikList2.reverse().map((item, index) => (
             <li key={index}>
-              <img className={`${imgClass} ms-10`} src={item.img} />
+              <img className={`${imgClass} ms-10`} src={item.img} alt={item.nama} />
             </li>
           ))}
         </ul>
         <ul className="flex items-center justify-center md:justify-start [&_li]:mx-5 [&_img]:max-w-none animate-infinite-scroll" aria-hidden="true">
           {alatMusikList2.map((item, index) => (
             <li key={index}>
-              <img className={`${imgClass} ms-10`} src={item.img} />
+              <img className={`${imgClass} ms-10`} src={item.img} alt={item.nama} />
             </li>
           ))}
         </ul>
       </div>
     </TransitionIn>
-
   )
 }
 export default MusicianCarousel
