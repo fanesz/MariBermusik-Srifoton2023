@@ -1,14 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment, useEffect, useState } from "react";
-import Input from "../_shared/Input";
-import { IErrSuccessMsg, TDaftarMateri, TListMateri, TTingkatan } from "../../types/Types";
-import { createMateri, editMateriByID } from "../../api/services";
+import Input from "../../_shared/Input";
+import { IErrSuccessMsg, TDaftarMateri, TListMateri, TTingkatan } from "../../../types/Types";
+import { createMateri, editMateriByID } from "../../../api/services";
 import { Option, Select, Textarea } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import LoaderAnimation from "../../assets/LoaderAnimation";
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from "../../utils/LocalStorage";
-import ErrSuccessMsg from "../_shared/ErrSuccessMsg";
+import LoaderAnimation from "../../../assets/LoaderAnimation";
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from "../../../utils/LocalStorage";
+import ErrSuccessMsg from "../../_shared/ErrSuccessMsg";
 
 interface IProps {
   isOpen: boolean,

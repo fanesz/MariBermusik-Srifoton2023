@@ -2,10 +2,10 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid"
 import TransitionIn from "../../_shared/TransitionIn"
 import { TListMateri } from "../../../types/Types"
 import { useState } from "react"
-import DeleteMateriAlert from "../DeleteMateriAlert"
-import CreateMateriModal from "../CreateMateriModal"
+import DeleteMateriAlert from "./DeleteMateriAlert"
+import CreateMateriModal from "../_shared/CreateMateriModal"
 
-type TProps = {
+interface TProps {
   materi: TListMateri,
   alatmusik: string,
   id: string

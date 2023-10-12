@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Dispatch, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteMateriByID } from "../../api/services";
+import { deleteMateriByID } from "../../../api/services";
 
 interface IProps {
   isOpen: boolean,

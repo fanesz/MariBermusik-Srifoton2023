@@ -1,32 +1,22 @@
+import React from "react";
+import { TFilterBy, TListMateri } from "../../../types/Types";
 import { FunnelIcon } from "@heroicons/react/24/solid"
 import FilterByAlatMusik from "./FilterByAlatMusik"
 import FilterByStats from "./FilterByStats"
-import { TFilterBy, TListMateri } from "../../../types/Types";
-import React, { useState } from "react";
 import FilterByKesulitan from "./FilterByKesulitan";
 
-type TProps = {
-  materi: TListMateri[]
+interface TProps {
+  materi: TListMateri[],
+  filterBy: TFilterBy,
+  setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   setFilteredMateri: React.Dispatch<React.SetStateAction<TListMateri[]>>
 }
-
 type TListFilterer = {
   [key: string]: (a: TListMateri, b: TListMateri) => number;
 };
-
 const MenuFilter = (props: TProps) => {
-  const { materi, setFilteredMateri } = props;
-  const [filterBy, setFilterBy] = useState<TFilterBy>({
-    alatMusik: "semua",
-    date_newest: false,
-    date_oldest: false,
-    rating_highest: false,
-    rating_lowest: false,
-    pengunjung_most: false,
-    pengunjung_least: false,
-    kesulitan: []
-  })
-  
+  const { materi, setFilteredMateri, filterBy, setFilterBy } = props;
+
   // algoritma filtering
   const handleFilteringMateri = (filterer: TFilterBy, newestFilter: keyof TFilterBy | null, filterCondition: boolean) => {
     const filterByDate = (a: TListMateri, b: TListMateri, reverse: boolean) => {
@@ -52,7 +42,6 @@ const MenuFilter = (props: TProps) => {
       const pengunjungB = b.data.pengunjung;
       return reverse ? pengunjungA - pengunjungB : pengunjungB - pengunjungA;
     }
-
     const listFilterer: TListFilterer = {
       date_newest: (a: TListMateri, b: TListMateri) => filterByDate(a, b, false),
       date_oldest: (a: TListMateri, b: TListMateri) => filterByDate(a, b, true),
@@ -89,6 +78,8 @@ const MenuFilter = (props: TProps) => {
       }
     )
   };
+
+  // handle filter alat musik dan kesulitan
   const filterAlatMusikAndKesulitan = (alatMusik: string, kesulitan: string[]) => {
     let newMateri: TListMateri[] = [];
     const filterByKesulitan = (materi: TListMateri) => kesulitan.includes(materi.data.tingkatan);

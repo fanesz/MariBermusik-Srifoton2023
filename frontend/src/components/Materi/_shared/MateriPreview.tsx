@@ -1,7 +1,7 @@
 import { ArrowRightIcon, EyeIcon, StarIcon } from "@heroicons/react/24/solid";
-import { TListMateri } from "../../types/Types";
-import { getAlatMusikImg } from "../../utils/AlatMusikList";
-import { convertCreatedAt, ratingAverage } from "../../utils/utils";
+import { TListMateri } from "../../../types/Types";
+import { getAlatMusikImg } from "../../../utils/AlatMusikList";
+import { convertCreatedAt, ratingAverage } from "../../../utils/utils";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {

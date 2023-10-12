@@ -7,7 +7,7 @@ import profile from '../../../assets/profile.png';
 import { useEffect, useState } from "react"
 import { getUserByParams } from "../../../api/services"
 
-type TProps = {
+interface TProps {
   materi: TListMateri,
 }
 const OwnerAndStatsSection = (props: TProps) => {

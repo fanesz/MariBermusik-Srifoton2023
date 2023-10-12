@@ -1,7 +1,7 @@
 import { TListMateri } from "../../../types/Types"
 import TransitionIn from "../../_shared/TransitionIn"
 
-type TProps = {
+interface TProps {
   materi: TListMateri,
 }
 const MainSection = (props: TProps) => {

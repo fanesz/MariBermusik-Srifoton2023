@@ -5,7 +5,7 @@ import { IErrSuccessMsg } from "../../../types/Types";
 import { getRatingList, updateRating } from "../../../api/services";
 import { Rating } from "@material-tailwind/react";
 
-type TProps = {
+interface TProps {
   alatmusik: string,
   id: string,
   currentUser: string,

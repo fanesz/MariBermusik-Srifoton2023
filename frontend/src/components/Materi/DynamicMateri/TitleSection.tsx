@@ -1,6 +1,6 @@
 import { TListMateri } from "../../../types/Types"
 
-type TProps = {
+interface TProps {
   materi: TListMateri
 }
 const TitleSection = (props: TProps) => {

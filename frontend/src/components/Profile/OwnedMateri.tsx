@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TListMateri } from "../../types/Types";
 import { getMateriByID } from "../../api/services";
 import TransitionIn from "../_shared/TransitionIn";
-import MateriPreview from "../Materi/MateriPreview";
+import MateriPreview from "../Materi/_shared/MateriPreview";
 
 type TProps = {
   UUID: string

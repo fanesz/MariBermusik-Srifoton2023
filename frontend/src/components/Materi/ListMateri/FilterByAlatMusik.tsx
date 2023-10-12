@@ -7,7 +7,7 @@ type TListAlatMusik = {
   id: string,
   totalMateri: number
 }
-type TProps = {
+interface TProps {
   filterBy: TFilterBy,
   setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   handleFiltering: (alatMusik: string, kesulitan: string[]) => void
