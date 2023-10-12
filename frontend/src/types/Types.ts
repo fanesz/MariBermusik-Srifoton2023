@@ -56,3 +56,13 @@ export type TProfileUser = {
   img: string,
   createdAt: string
 }
+export type TFilterBy = {
+  alatMusik: string
+  date_newest: boolean,
+  date_oldest: boolean,
+  rating_highest: boolean,
+  rating_lowest: boolean,
+  pengunjung_most: boolean,
+  pengunjung_least: boolean,
+  kesulitan: string[]
+}

@@ -1,16 +1,16 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid"
-import TransitionIn from "../_shared/TransitionIn"
-import { TListMateri } from "../../types/Types"
+import TransitionIn from "../../_shared/TransitionIn"
+import { TListMateri } from "../../../types/Types"
 import { useState } from "react"
-import DeleteMateriAlert from "./DeleteMateriAlert"
-import CreateMateriModal from "./CreateMateriModal"
+import DeleteMateriAlert from "../DeleteMateriAlert"
+import CreateMateriModal from "../CreateMateriModal"
 
 type TProps = {
   materi: TListMateri,
   alatmusik: string,
   id: string
 }
-const MateriEditDeleteSection = (props: TProps) => {
+const EditDeleteSection = (props: TProps) => {
   const { materi, alatmusik, id } = props
 
   const [deleteAlertModal, setDeleteAlertModal] = useState(false);
@@ -47,4 +47,4 @@ const MateriEditDeleteSection = (props: TProps) => {
   )
 }
 
-export default MateriEditDeleteSection
+export default EditDeleteSection

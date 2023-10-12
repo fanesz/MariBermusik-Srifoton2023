@@ -1,9 +1,9 @@
-import { TListMateri } from "../../types/Types"
+import { TListMateri } from "../../../types/Types"
 
 type TProps = {
   materi: TListMateri
 }
-const MateriTitleSection = (props: TProps) => {
+const TitleSection = (props: TProps) => {
   const { materi } = props
   
   return materi?.data && (
@@ -23,4 +23,4 @@ const MateriTitleSection = (props: TProps) => {
   )
 }
 
-export default MateriTitleSection
+export default TitleSection

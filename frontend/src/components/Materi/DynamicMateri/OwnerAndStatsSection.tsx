@@ -1,16 +1,16 @@
 import { EyeIcon, StarIcon } from "@heroicons/react/24/solid"
-import { TListMateri, TUser } from "../../types/Types"
-import { convertCreatedAt, ratingAverage } from "../../utils/utils"
-import TransitionIn from "../_shared/TransitionIn"
+import { TListMateri, TUser } from "../../../types/Types"
+import { convertCreatedAt, ratingAverage } from "../../../utils/utils"
+import TransitionIn from "../../_shared/TransitionIn"
 import { useNavigate } from "react-router-dom"
-import profile from '../../assets/profile.png';
+import profile from '../../../assets/profile.png';
 import { useEffect, useState } from "react"
-import { getUserByParams } from "../../api/services"
+import { getUserByParams } from "../../../api/services"
 
 type TProps = {
   materi: TListMateri,
 }
-const MateriOwnerAndStatsSection = (props: TProps) => {
+const OwnerAndStatsSection = (props: TProps) => {
   const { materi } = props
 
   const navigate = useNavigate();
@@ -78,4 +78,4 @@ const MateriOwnerAndStatsSection = (props: TProps) => {
   )
 }
 
-export default MateriOwnerAndStatsSection
+export default OwnerAndStatsSection

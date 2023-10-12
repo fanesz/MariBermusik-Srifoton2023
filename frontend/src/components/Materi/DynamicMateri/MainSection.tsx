@@ -1,10 +1,10 @@
-import { TListMateri } from "../../types/Types"
-import TransitionIn from "../_shared/TransitionIn"
+import { TListMateri } from "../../../types/Types"
+import TransitionIn from "../../_shared/TransitionIn"
 
 type TProps = {
   materi: TListMateri,
 }
-const MateriIsiSection = (props: TProps) => {
+const MainSection = (props: TProps) => {
   const { materi } = props
 
   // handler untuk konversi string ke html
@@ -62,4 +62,4 @@ const MateriIsiSection = (props: TProps) => {
   )
 }
 
-export default MateriIsiSection
+export default MainSection

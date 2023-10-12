@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ErrSuccessMsg from "../_shared/ErrSuccessMsg"
-import TransitionIn from "../_shared/TransitionIn"
-import { IErrSuccessMsg } from "../../types/Types";
-import { getRatingList, updateRating } from "../../api/services";
+import ErrSuccessMsg from "../../_shared/ErrSuccessMsg"
+import TransitionIn from "../../_shared/TransitionIn"
+import { IErrSuccessMsg } from "../../../types/Types";
+import { getRatingList, updateRating } from "../../../api/services";
 import { Rating } from "@material-tailwind/react";
 
 type TProps = {
@@ -12,7 +12,7 @@ type TProps = {
   rating: number,
   setRating: React.Dispatch<React.SetStateAction<number>>
 }
-const MateriRatingSection = (props: TProps) => {
+const RatingSection = (props: TProps) => {
   const { alatmusik, id, currentUser, rating, setRating } = props;
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
     type: "",
@@ -65,4 +65,4 @@ const MateriRatingSection = (props: TProps) => {
   )
 }
 
-export default MateriRatingSection
+export default RatingSection
