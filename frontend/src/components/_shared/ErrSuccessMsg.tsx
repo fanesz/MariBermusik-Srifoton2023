@@ -8,7 +8,7 @@ interface IProps {
   errSuccessMsg: IErrSuccessMsg;
   setErrSuccessMsg: Dispatch<SetStateAction<IErrSuccessMsg>>;
   className?: string;
-}
+};
 const ErrSuccessMsg = (props: IProps) => {
   const { errSuccessMsg, setErrSuccessMsg, className } = props;
   const [errmsg, setErrmsg] = useState("");
@@ -27,7 +27,7 @@ const ErrSuccessMsg = (props: IProps) => {
         setSuccessmsg("");
         setErrSuccessMsg({ type: '', message: '' });
       }, 3000);
-    }
+    };
   }, [errSuccessMsg]);
 
   return (

@@ -5,7 +5,7 @@ import { Dispatch, Fragment } from "react"
 interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>
-}
+};
 const InfoCreateMateriModal = (props: IProps) => {
   const { isOpen, setModal } = props;
 
@@ -31,7 +31,7 @@ const InfoCreateMateriModal = (props: IProps) => {
       Dan jika ingin mengedit materi, anda dapat mengklik tombol Edit di halaman Materi.<br /><br />
       Note: Materi yang kalian buat, akan tersimpan sebagai draft bila secara tidak sengaja menutup halaman/menu Buat Materi, dan dapat dibuka kembali kapan saja.<br />
     </div>
-  )
+  );
 
   return (
     <Transition

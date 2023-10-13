@@ -4,7 +4,6 @@ import TransitionIn from "../_shared/TransitionIn"
 import { useNavigate } from "react-router-dom"
 
 const MainSection = () => {
-
   const navigate = useNavigate();
 
   const materi_button = (
@@ -12,7 +11,7 @@ const MainSection = () => {
       onClick={() => { navigate('/materi'); window.scrollTo(0, 0); }}>
       <span className="z-10 text-lg font_fira">Materi</span>
     </button>
-  )
+  );
 
   const forum_button = (
     <button
@@ -20,7 +19,7 @@ const MainSection = () => {
       onClick={() => { navigate('/forum'); window.scrollTo(0, 0); }}>
       <span className="relative z-10 font_fira">Forum</span>
     </button>
-  )
+  );
 
   const alatMusikCarousel = [
     {
@@ -165,8 +164,7 @@ const MainSection = () => {
         ))}
       </Carousel>
     </TransitionIn>
-
-  )
+  );
 
   return (
     <div className="">

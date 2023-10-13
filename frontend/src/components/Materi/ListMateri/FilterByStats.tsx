@@ -4,7 +4,7 @@ interface TProps {
   filterBy: TFilterBy,
   setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   handleFiltering: (filterer: TFilterBy, newestFilter: keyof TFilterBy | null, filterCondition: boolean) => void
-}
+};
 const FilterByStats = (props: TProps) => {
   const { setFilterBy, filterBy, handleFiltering } = props;
 
@@ -13,7 +13,7 @@ const FilterByStats = (props: TProps) => {
     { title: 'Tanggal Upload', data: [{ key: 'date_newest', text: 'Terbaru' }, { key: 'date_oldest', text: 'Terlama' }] },
     { title: 'Rating', data: [{ key: 'rating_highest', text: 'Tertinggi' }, { key: 'rating_lowest', text: 'Terendah' }] },
     { title: 'Pengunjung', data: [{ key: 'pengunjung_most', text: 'Terbanyak' }, { key: 'pengunjung_least', text: 'Tersedikit' }] },
-  ]
+  ];
 
   // handle radio button filter
   const handleCheckBox = (key: keyof TFilterBy) => {
@@ -24,11 +24,11 @@ const FilterByStats = (props: TProps) => {
         ...prev,
         [key]: !prev[key],
         [oppositeOption]: false,
-      }
+      };
       handleFiltering(newFilterBy, key, !prev[key]);
       return newFilterBy;
     });
-  }
+  };
 
   return (
     <div>
@@ -51,4 +51,5 @@ const FilterByStats = (props: TProps) => {
     </div>
   )
 }
+
 export default FilterByStats

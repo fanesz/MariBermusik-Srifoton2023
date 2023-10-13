@@ -11,7 +11,7 @@ interface TProps {
   filterBy: TFilterBy,
   setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   setFilteredMateri: React.Dispatch<React.SetStateAction<TListMateri[]>>
-}
+};
 const FilterMenuModal = (props: TProps) => {
   const { filterModal, setFilterModal, materi, setFilteredMateri, filterBy, setFilterBy } = props;
 

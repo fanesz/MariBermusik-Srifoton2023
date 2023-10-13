@@ -6,12 +6,12 @@ import { TFilterBy } from "../../../types/Types";
 type TListAlatMusik = {
   id: string,
   totalMateri: number
-}
+};
 interface TProps {
   filterBy: TFilterBy,
   setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   handleFiltering: (alatMusik: string, kesulitan: string[]) => void
-}
+};
 const FilterByAlatMusik = (props: TProps) => {
   const { setFilterBy, filterBy, handleFiltering } = props;
 
@@ -22,19 +22,20 @@ const FilterByAlatMusik = (props: TProps) => {
     if (res.status) {
       setListAlatMusik([
         { id: 'semua', totalMateri: -1 },
-        ...res.data.filter((item: TListAlatMusik) => item.totalMateri >= 1)]);
-    }
-  }
+        ...res.data.filter((item: TListAlatMusik) => item.totalMateri >= 1)
+      ]);
+    };
+  };
   useEffect(() => {
     fetchListAlatMusik();
-  }, [])
+  }, []);
 
   const handleFilterAlatMusik = (alatMusik: string) => {
     setFilterBy(prev => {
       return {
         ...prev,
         alatMusik: alatMusik
-      }
+      };
     });
     handleFiltering(alatMusik, filterBy.kesulitan);
   };
@@ -51,7 +52,6 @@ const FilterByAlatMusik = (props: TProps) => {
       </Select>
     </div>
   )
-
 }
 
 export default FilterByAlatMusik

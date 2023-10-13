@@ -2,7 +2,9 @@ import { useState } from "react";
 import CreateMateriModal from "../_shared/CreateMateriModal";
 
 const CreateMateriButton = () => {
+  
   const [createMateriModal, setCreateMateriModal] = useState(false);
+
   return (
     <div>
       <CreateMateriModal isOpen={createMateriModal} setModal={setCreateMateriModal} />

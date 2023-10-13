@@ -7,18 +7,18 @@ import { useNavigate } from "react-router-dom";
 interface IProps {
   className?: string,
   materi: TListMateri
-}
+};
 const MateriPreview = (props: IProps) => {
   const { className, materi } = props;
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const image = (
     <img
       className="w-full h-full object-cover rounded-s-md"
       src={getAlatMusikImg(materi.alatMusik)}
       alt={materi.alatMusik}
     />
-  )
+  );
   const section_top = (
     <div className="flex gap-2">
       <div>
@@ -33,7 +33,7 @@ const MateriPreview = (props: IProps) => {
         {convertCreatedAt(materi.data.createdAt)}
       </div>
     </div>
-  )
+  );
   const title_desc = (
     <div className="h-full">
       <div className="text-xl font-medium h-2/6 truncate">
@@ -43,7 +43,7 @@ const MateriPreview = (props: IProps) => {
         {materi.data.deskripsi}
       </div>
     </div>
-  )
+  );
   const footer = (
     <div className="flex gap-2.5">
       <div className="flex gap-1">
@@ -57,18 +57,16 @@ const MateriPreview = (props: IProps) => {
         <span className="text-xs mt-auto mb-auto text-gray-500">({materi.data.rating.length})</span>
       </div>
     </div>
-  )
+  );
   const go_button = (
     <div className="flex h-full justify-end">
       <div
         className="bg-green-400 flex w-12 rounded-e-md justify-end md:hover:w-1/2 hover:transition-all ease-in-out duration-300 cursor-pointer"
         onClick={() => { navigate(`/materi/${materi.alatMusik}/${materi.materiID}`); window.scrollTo(0, 0); }}>
-
-
         <ArrowRightIcon className="h-6 w-6 mt-auto mb-auto me-1 fill-white" />
       </div>
     </div>
-  )
+  );
 
   return (
     <div className={`w-full h-40 border border-opacity-30 border-gray-700 shadow-md rounded-md flex ${className}`}>

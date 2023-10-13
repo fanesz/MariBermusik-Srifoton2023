@@ -8,17 +8,14 @@ const MusicianCarousel = () => {
     { nama: 'cello', img: getAlatMusikImg('cello') },
     { nama: 'drum', img: getAlatMusikImg('drum') },
     { nama: 'gitar', img: getAlatMusikImg('gitar') },
-  ]
-
+  ];
   const alatMusikList2 = [
     { nama: 'gitar listrik', img: getAlatMusikImg('gitar listrik') },
     { nama: 'piano', img: getAlatMusikImg('piano') },
     { nama: 'trompoet', img: getAlatMusikImg('trompoet') },
     { nama: 'ukulele', img: getAlatMusikImg('ukulele') },
-  ]
-
-
-  const imgClass = 'md:w-[15rem] w-[10rem] h-[8rem] md:h-[10rem] object-cover rounded shadow-xl'
+  ];
+  const imgClass = 'md:w-[15rem] w-[10rem] h-[8rem] md:h-[10rem] object-cover rounded shadow-xl';
 
   return (
     <TransitionIn from="bottom" delay={1500}>
@@ -74,4 +71,5 @@ const MusicianCarousel = () => {
     </TransitionIn>
   )
 }
+
 export default MusicianCarousel

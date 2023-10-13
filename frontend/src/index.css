@@ -9,34 +9,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-
+@layer base {
   .navbar_menu_items {
-    @apply hover:bg-orange-300 hover:bg-opacity-50 rounded-md p-2 px-4 transition-all duration-300 ;
+    @apply hover:bg-orange-300 hover:bg-opacity-50 rounded-md p-2 px-4 transition-all duration-300;
   }
-
-  .border1 {
-    @apply border border-red-600
-  }
-  .border2 {
-    @apply border border-orange-500
-  }
-  .border3 {
-    @apply border border-yellow-500
-  }
-  .border4 {
-    @apply border border-green-500
-  }
-  .border5 {
-    @apply border border-blue-500
-  }
-  .border6 {
-    @apply border border-indigo-500
-  }
-  .border7 {
-    @apply border border-purple-500
-  }
-
 }
 
 * {
@@ -45,27 +21,29 @@
   font-family: roboto;
 }
 
-
 .font_rock {
   font-family: 'RocknRoll One', sans-serif;
 }
+
 .font_kod {
   font-family: 'Kodchasan', sans-serif;
 }
+
 .font_fira {
   font-family: 'Fira Sans', sans-serif;
 }
+
 .font_kelly {
   font-family: 'Kelly Slab', cursive;
 }
+
 .font_alkatra {
   font-family: 'Alkatra', sans-serif;
 }
+
 .font_noto {
   font-family: 'Noto Sans Adlam', sans-serif;
 }
-
-
 
 #root {
   background-color: white;
@@ -82,6 +60,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 a.MateriURL {
   color: blue;
   text-decoration: underline;

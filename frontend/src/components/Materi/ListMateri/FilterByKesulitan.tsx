@@ -4,7 +4,7 @@ interface TProps {
   filterBy: TFilterBy,
   setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   handleFiltering: (alatMusik: string, kesulitan: string[]) => void
-}
+};
 const FilterByKesulitan = (props: TProps) => {
   const { setFilterBy, filterBy, handleFiltering } = props;
 
@@ -16,12 +16,12 @@ const FilterByKesulitan = (props: TProps) => {
         newKesulitan = [...prev.kesulitan].filter(m => m !== kesulitan);
       } else {
         newKesulitan = [...prev.kesulitan, kesulitan];
-      }
+      };
       handleFiltering(filterBy.alatMusik, newKesulitan);
       return {
         ...prev,
         kesulitan: newKesulitan
-      }
+      };
     });
   };
 
@@ -29,7 +29,7 @@ const FilterByKesulitan = (props: TProps) => {
     ['Pemula', 'bg-green-400 hover:bg-green-600'],
     ['Menengah', 'bg-orange-400 hover:bg-orange-600'],
     ['Sulit', 'bg-red-400 hover:bg-red-600']
-  ]
+  ];
 
   return (
     <div>
@@ -46,4 +46,5 @@ const FilterByKesulitan = (props: TProps) => {
     </div>
   )
 }
+
 export default FilterByKesulitan

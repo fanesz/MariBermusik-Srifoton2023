@@ -13,38 +13,33 @@ type TUser = {
   username: string,
   terimaEmail: boolean,
   img: string
-}
+};
 const Setting = () => {
 
   const navigate = useNavigate();
   const [hasChanged, setHasChanged] = useState(false);
-  const [oldData, setOldData] = useState({
-    username: '', terimaEmail: false, img: ''
-  });
-  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
-  });
+  const [loader, setLoader] = useState({updateSetting: false});
   const [user, setUser] = useState<TUser>({
     email: '',
     username: '',
     terimaEmail: false,
     img: ''
   });
-  const [loader, setLoader] = useState({
-    updateSetting: false
+  const [oldData, setOldData] = useState({
+    username: '', terimaEmail: false, img: ''
   });
-
+  const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
+    type: "", message: ""
+  });
 
   // pengecekan apakah user sudah login
   useEffect(() => {
     const fetchData = async () => {
       const res = await userIsLogin();
       if (!res.status) navigate('/');
-    }
+    };
     fetchData();
   }, []);
-
 
   // mendapatkan username dari user yang login
   useEffect(() => {
@@ -64,20 +59,18 @@ const Setting = () => {
         });
       } else {
         navigate('/');
-      }
-    }
+      };
+    };
     fetchData();
   }, []);
-
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
-  }
+  };
   const handleSetSuccessmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'success', message: msg });
-  }
-
+  };
 
   // handler input username dan terima informasi melalui email
   const handleSetUsername = (e: any) => {
@@ -87,28 +80,28 @@ const Setting = () => {
       setUser(prev => ({ ...prev, username: input }));
     } else {
       handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
-    }
-  }
+    };
+  };
   const handleSetFotoProfil = (e: any) => {
     setHasChanged(true);
     const input = e.target.value;
     if (/^[http|https://\S]+$/.test(input) || input.length === 0) {
       setUser(prev => ({ ...prev, img: input }));
     } else {
-      handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
-    }
-  }
+      handleSetErrmsg("Foto profil harus berupa link yang valid.");
+    };
+  };
   const handleTerimaEmail = () => {
     setUser(prev => ({
       ...prev, terimaEmail: !prev.terimaEmail
     }));
-  }
+  };
   useEffect(() => {
     setHasChanged(
       oldData.username === user.username &&
         oldData.img === user.img &&
         oldData.terimaEmail === user.terimaEmail ? false : true
-    )
+    );
   }, [user]);
 
 
@@ -125,8 +118,8 @@ const Setting = () => {
       handleSetErrmsg(res.message)
     } else {
       handleSetErrmsg("Gagal melakukan update!, harap melakukan login ulang.")
-    }
-  }
+    };
+  };
 
   return (
     <TransitionIn from='bottom'>
@@ -166,7 +159,7 @@ const Setting = () => {
             <button
               className={`w-full p-2 rounded-lg text-white font-medium focus:outline-none h-10 ${hasChanged ? 'bg-orange-500 hover:bg-orange-600' : 'bg-gray-500 hover:bg-gray-600'}`}
               onClick={handleUpdateSetting} disabled={!hasChanged}>
-              {loader.updateSetting ? <LoaderAnimation className='w-2 h-2' /> : "Update Setting"}
+              {loader.updateSetting ? <LoaderAnimation className='w-2 h-2' color='bg-white' /> : "Update Setting"}
             </button>
           </div>
 
@@ -175,4 +168,5 @@ const Setting = () => {
     </TransitionIn>
   )
 }
+
 export default Setting

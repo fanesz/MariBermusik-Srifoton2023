@@ -17,12 +17,10 @@ const ResetPassword = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState('');
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
+    type: "", message: ""
   });
   const [loader, setLoader] = useState({
-    validasiKode: true,
-    ubahPassword: false
+    validasiKode: true, ubahPassword: false
   });
 
   // melakukan validasi terhadap verifikasi ID
@@ -37,20 +35,18 @@ const ResetPassword = () => {
         setEmail(res.email);
       } else {
         setLoader(prev => ({ ...prev, validasiKode: false }))
-      }
-    }
+      };
+    };
     fetchData(verificationID || '');
   }, [])
-
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
-  }
+  };
   const handleSetSuccessmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'success', message: msg });
-  }
-
+  };
 
   // handler untuk input password dan konfirmasi password
   const handleSetPassword = (e: any) => {
@@ -59,17 +55,16 @@ const ResetPassword = () => {
       setPassword(input);
     } else {
       handleSetErrmsg("Password hanya boleh mengandung huruf, angka, dan symbol (!@#$%^&*).");
-    }
-  }
+    };
+  };
   const handleSetKonfirmasiPassword = (e: any) => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9!@#$%^&*]+$/.test(input) || input.length === 0) {
       setKonfirmasiPassword(input);
     } else {
       handleSetErrmsg("Password hanya boleh mengandung huruf, angka, dan symbol (!@#$%^&*).");
-    }
-  }
-
+    };
+  };
 
   // handle reset password
   const handleResetPassword = async () => {
@@ -85,9 +80,8 @@ const ResetPassword = () => {
       }, 3000);
     } else {
       setIsVerified(false);
-    }
-  }
-
+    };
+  };
 
   // Components
   const Form_Reset_Password = (
@@ -112,7 +106,7 @@ const ResetPassword = () => {
         </button>
       </div>
     </div>
-  )
+  );
 
   return (
     <TransitionIn from='bottom'>
@@ -140,7 +134,7 @@ const ResetPassword = () => {
         </div>
       </div>
     </TransitionIn>
-
   )
 }
+
 export default ResetPassword

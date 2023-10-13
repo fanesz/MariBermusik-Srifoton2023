@@ -12,9 +12,8 @@ interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
   setIsLogin: Dispatch<boolean>
-}
+};
 const LoginModal = (props: IProps) => {
-
   const { isOpen, setModal, setIsLogin } = props;
 
   const [username, setUsername] = useState("")
@@ -25,31 +24,24 @@ const LoginModal = (props: IProps) => {
   const [lupaPassword, setLupaPassword] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
   const [loader, setLoader] = useState({
-    login: false,
-    signup: false,
-    lupaPassword: false
+    login: false, signup: false, lupaPassword: false
   });
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
+    type: "", message: ""
   });
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
-  }
+  };
   const handleSetSuccessmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'success', message: msg });
-  }
-
+  };
 
   // event untuk menghapus loginID dari localStorage ketika tab/browser ditutup
   window.addEventListener("beforeunload", () => {
-    if (!rememberme) {
-      removeLocalStorage("loginID");
-    }
+    !rememberme && removeLocalStorage("loginID");
   });
-
 
   // handler untuk user input
   const handleSetEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,31 +50,29 @@ const LoginModal = (props: IProps) => {
       setEmail(input);
     } else {
       handleSetErrmsg("Email hanya boleh mengandung huruf, angka, titik, dan symbol (@).");
-    }
-  }
+    };
+  };
   const handleSetPassword = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9!@#$%^&*]+$/.test(input) || input.length === 0) {
       setPassword(input);
     } else {
       handleSetErrmsg("Password hanya boleh mengandung huruf, angka, dan symbol (!@#$%^&*).");
-    }
-  }
+    };
+  };
   const handleSetUsername = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     if (/^[a-zA-Z0-9_]+$/.test(input) || input.length === 0) {
       setUsername(input);
     } else {
       handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
-    }
-  }
+    };
+  };
   const handleRememberme = () => setRememberme(prev => !prev);
   const handleTerimaEmail = () => setTerimaEmail(prev => !prev);
 
-
   // handler untuk menampilkan modal lupa password
   const handleLupaPasswordModal = (inp: boolean) => setLupaPassword(inp);
-
 
   // handler untuk login, signup, dan lupa password
   const handleSignIn = async () => {
@@ -97,8 +87,8 @@ const LoginModal = (props: IProps) => {
       setPassword("");
     } else {
       handleSetErrmsg(res.message);
-    }
-  }
+    };
+  };
   const handleSignUp = async () => {
     // validator
     if (!/^[a-zA-Z0-9.].*[@].*[a-zA-Z.]+$/.test(email)) return handleSetErrmsg("Email tidak valid!");
@@ -117,8 +107,8 @@ const LoginModal = (props: IProps) => {
       setUsername("");
     } else {
       handleSetErrmsg("Email sudah terdaftar!");
-    }
-  }
+    };
+  };
   const handleLupaPassword = async () => {
     // validator
     if (!email.includes("@")) return handleSetErrmsg("Email tidak valid!");
@@ -135,9 +125,8 @@ const LoginModal = (props: IProps) => {
       setEmail("");
     } else {
       handleSetErrmsg("Email tidak terdaftar!");
-    }
-  }
-
+    };
+  };
 
   // Components
   const Tab_SignIn = (
@@ -176,7 +165,7 @@ const LoginModal = (props: IProps) => {
         </div>
       </div>
     </Tab.Panel>
-  )
+  );
   const Tab_SignUp = (
     <Tab.Panel className="focus:outline-none">
       <div>
@@ -210,7 +199,7 @@ const LoginModal = (props: IProps) => {
         </button>
       </div>
     </Tab.Panel>
-  )
+  );
   const Login_Logout_Tab = (
     <Tab.Group defaultIndex={0} selectedIndex={currentTab} onChange={setCurrentTab} as="div" className="border-x border-b border-gray-300">
       <Tab.List className="flex">
@@ -229,7 +218,7 @@ const LoginModal = (props: IProps) => {
 
       </Tab.Panels>
     </Tab.Group>
-  )
+  );
   const lupa_password_modal = (
     <div>
       <div className='mt-4'>
@@ -250,7 +239,7 @@ const LoginModal = (props: IProps) => {
         </button>
       </div>
     </div>
-  )
+  );
 
   return (
     <Transition
@@ -302,7 +291,5 @@ const LoginModal = (props: IProps) => {
     </Transition>
   )
 }
-
-
 
 export default LoginModal

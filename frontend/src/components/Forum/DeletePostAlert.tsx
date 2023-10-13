@@ -8,15 +8,15 @@ interface IProps {
   setModal: Dispatch<boolean>,
   title: string,
   postID?: string
-}
+};
 const DeletePostAlert = (props: IProps) => {
   const { isOpen, setModal, title, postID } = props;
   const handleDeletePost = async () => {
     const res = await deletePost(postID || '');
     if (res.status) {
       window.location.reload();
-    }
-  }
+    };
+  };
 
   return (
     <Transition
@@ -79,7 +79,7 @@ const DeletePostAlert = (props: IProps) => {
         </div>
       </Dialog>
     </Transition>
-  );
+  )
 }
 
 export default DeletePostAlert

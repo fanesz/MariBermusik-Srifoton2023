@@ -8,7 +8,7 @@ import { useState } from "react";
 interface TProps {
   filteredMateri: TListMateri[],
   setFilteredMateri: React.Dispatch<React.SetStateAction<TListMateri[]>>
-}
+};
 const MateriSection = (props: TProps) => {
   const { filteredMateri, setFilteredMateri } = props;
 
@@ -22,7 +22,7 @@ const MateriSection = (props: TProps) => {
       const otherItem = prev.filter((materi: TListMateri) => !materi.data.nama.toLowerCase().includes(e.target.value.toLowerCase()));
       return filteredItem.concat(otherItem);
     });
-  }
+  };
   
   return (
     <div className="md:w-4/6 px-4">

@@ -2,10 +2,10 @@ import { TListMateri } from "../../../types/Types"
 import TransitionIn from "../../_shared/TransitionIn"
 
 interface TProps {
-  materi: TListMateri,
-}
+  materi: TListMateri
+};
 const MainSection = (props: TProps) => {
-  const { materi } = props
+  const { materi } = props;
 
   // handler untuk konversi string ke html
   const handleMateriHTMLInject = (materi: string) => {
@@ -24,17 +24,17 @@ const MainSection = (props: TProps) => {
           proceededLink = link.split('?v=')[1];
         } else if (link.includes('youtu.be/')) {
           proceededLink = link.split('youtu.be/')[1];
-        }
+        };
         materiPerLine[item] = `<iframe src="https://www.youtube.com/embed/${proceededLink}" allowFullScreen></iframe>`
       } else if (URLMatch.length > 0) {
         materiPerLine[item] = `<a class="MateriURL" href="${URLMatch[2]}" target="_blank" rel="noopener noreferrer">${URLMatch[1]}</a>`;
-      }
+      };
       if (!materiPerLine[item].includes('<li>')) {
         materiPerLine[item] += '<br />';
-      }
-    }
+      };
+    };
     return materiPerLine.join('');
-  }
+  };
 
   return materi?.data && (
     <div>

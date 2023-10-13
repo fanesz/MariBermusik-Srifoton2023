@@ -10,7 +10,7 @@ import CreatePostButton from "../../components/Forum/CreatePostButton";
 type TCurrentValue = {
   id: string,
   value: TListPost[]
-}
+};
 const Forum = () => {
   const [cariMateri, setCariMateri] = useState('');
   const [listPost, setListPost] = useState<TListPost[]>([]);
@@ -24,9 +24,9 @@ const Forum = () => {
       if (UUID.status) {
         const currentUserUUID = UUID.data.UUID;
         setCurrentUser(currentUserUUID);
-      }
-    }
-  }
+      };
+    };
+  };
 
   // fetch data semua postingan
   const fetchListPost = async () => {
@@ -43,7 +43,7 @@ const Forum = () => {
       });
       setListPost(sortedByUpvotesListPost);
     }
-  }
+  };
   useEffect(() => {
     fetchListPost();
     fetchCurrentUser();
@@ -57,7 +57,7 @@ const Forum = () => {
       const otherItem = prev.filter((post: TListPost) => !post.title.toLowerCase().includes(e.target.value.toLowerCase()));
       return filteredItem.concat(otherItem);
     });
-  }
+  };
 
   return (
     <div className="w-full max-w-3xl transform ms-auto me-auto md:mt-20 mt-10">

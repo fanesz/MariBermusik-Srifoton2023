@@ -4,7 +4,6 @@ import TransitionIn from "../_shared/TransitionIn";
 
 const TopSection = () => {
 
-
   return (
     <div>
       <div>
@@ -27,4 +26,5 @@ const TopSection = () => {
     </div>
   )
 }
+
 export default TopSection

@@ -12,25 +12,22 @@ interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
   prevPost?: TListPost
-}
+};
 type TPost = {
   title: string,
   description: string
-}
+};
 const CreatePostModal = (props: IProps) => {
   const { isOpen, setModal } = props;
   const { prevPost = {} as TListPost } = props
-
+  
   const [isLoading, setIsLoading] = useState(false);
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
+    type: "", message: ""
   });
   const [post, setPost] = useState<TPost>({
-    title: '',
-    description: ''
+    title: '', description: ''
   });
-
 
   // fitur untuk set materi bila user memanggil untuk melakukan update materi
   useEffect(() => {
@@ -39,21 +36,18 @@ const CreatePostModal = (props: IProps) => {
         title: prevPost.title,
         description: prevPost.description
       });
-    }
+    };
   }, [prevPost]);
-
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
-  }
-
+  };
 
   // handler untuk set post
   const handleSetMateri = (key: string, value: string) => {
     setPost(prev => ({ ...prev, [key]: value }))
-  }
-
+  };
 
   // handler untuk validasi dan uploadPost
   const validasiPost = () => {
@@ -68,8 +62,8 @@ const CreatePostModal = (props: IProps) => {
       window.location.reload();
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
-    }
-  }
+    };
+  };
   const handleUpdatePost = async () => {
     setIsLoading(true);
     const res = await editPost(prevPost?.postID.toString(), post.title, post.description);
@@ -78,8 +72,8 @@ const CreatePostModal = (props: IProps) => {
       window.location.reload();
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
-    }
-  }
+    };
+  };
 
 
   // Components
@@ -97,7 +91,7 @@ const CreatePostModal = (props: IProps) => {
           onChange={(e: any) => handleSetMateri('description', e.target.value)} />
       </div>
     </div >
-  )
+  );
   const button_section = (
     <div>
       <div className="flex gap-3">
@@ -111,7 +105,7 @@ const CreatePostModal = (props: IProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 
   return (
     <Transition
@@ -165,7 +159,6 @@ const CreatePostModal = (props: IProps) => {
       </Dialog>
     </Transition>
   )
-
 }
 
 export default CreatePostModal

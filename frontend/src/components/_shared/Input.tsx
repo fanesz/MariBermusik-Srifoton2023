@@ -12,16 +12,13 @@ interface IProps {
   onKeyDown?: any,
   disabled?: boolean,
   variant?: TVariant
-}
-
+};
 const Input = (props: IProps) => {
-  const { className, type, label, icon, value, onChange, onKeyDown, disabled, variant } = props
+  const { className, type, label, icon, value, onChange, onKeyDown, disabled, variant } = props;
 
   const handleKeyboardEvent = (e: any, action: Function) => {
-    if (e.key === 'Enter') {
-      action();
-    }
-  }
+    e.key === 'Enter' && action();
+  };
 
   return (
     <MaterialInput

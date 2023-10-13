@@ -9,9 +9,9 @@ interface TProps {
   materi: TListMateri,
   alatmusik: string,
   id: string
-}
+};
 const EditDeleteSection = (props: TProps) => {
-  const { materi, alatmusik, id } = props
+  const { materi, alatmusik, id } = props;
 
   const [deleteAlertModal, setDeleteAlertModal] = useState(false);
   const [createMateriModal, setCreateMateriModal] = useState(false);
@@ -19,10 +19,10 @@ const EditDeleteSection = (props: TProps) => {
   // handler delete dan edit materi
   const handleDeleteMateri = async () => {
     setDeleteAlertModal(true);
-  }
+  };
   const handleEditMateri = () => {
     setCreateMateriModal(true);
-  }
+  };
 
   return materi?.data && (
     <div>

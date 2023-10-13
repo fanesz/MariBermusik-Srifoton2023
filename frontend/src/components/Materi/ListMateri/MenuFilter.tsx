@@ -10,7 +10,7 @@ interface TProps {
   filterBy: TFilterBy,
   setFilterBy: React.Dispatch<React.SetStateAction<TFilterBy>>,
   setFilteredMateri: React.Dispatch<React.SetStateAction<TListMateri[]>>
-}
+};
 type TListFilterer = {
   [key: string]: (a: TListMateri, b: TListMateri) => number;
 };
@@ -88,12 +88,12 @@ const MenuFilter = (props: TProps) => {
       const materiByAlatMusik = materi.filter(filterByKesulitan);
       newMateri = materiByAlatMusik.filter(filterByAlatMusik);
     } else if (alatMusik !== 'semua' && kesulitan.length === 0) {
-      newMateri = materi.filter(filterByAlatMusik)
+      newMateri = materi.filter(filterByAlatMusik);
     } else if (alatMusik === 'semua' && kesulitan.length !== 0) {
       newMateri = materi.filter(filterByKesulitan);
     } else if (alatMusik === 'semua' && kesulitan.length === 0) {
       newMateri = materi;
-    }
+    };
     setFilteredMateri(newMateri);
     handleFilteringMateri(filterBy, null, false);
   };
@@ -124,4 +124,5 @@ const MenuFilter = (props: TProps) => {
     </div >
   )
 }
+
 export default MenuFilter

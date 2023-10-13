@@ -14,33 +14,31 @@ interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
   prevMateri?: TListMateri
-}
+};
 type TMateri = {
   nama: string,
   deskripsi: string,
   alatMusik: string,
   tingkatan: TTingkatan
-}
+};
 const CreateMateriModal = (props: IProps) => {
   const { isOpen, setModal } = props;
-  const { prevMateri = {} as TListMateri } = props
+  const { prevMateri = {} as TListMateri } = props;
 
-  const DEFAULT_VALUE = { id: 0, judul: '', materi: '', }
+  const DEFAULT_VALUE = { id: 0, judul: '', materi: '' };
 
   const navigate = useNavigate();
   const [daftarMateri, setDaftarMateri] = useState<TDaftarMateri[]>([DEFAULT_VALUE]);
   const [isLoading, setIsLoading] = useState(false);
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
+    type: "", message: ""
   });
   const [materi, setMateri] = useState<TMateri>({
     nama: '',
     deskripsi: '',
     alatMusik: '',
-    tingkatan: 'Pemula',
+    tingkatan: 'Pemula'
   });
-
 
   // fitur untuk set materi bila user memanggil untuk melakukan update materi
   useEffect(() => {
@@ -54,7 +52,6 @@ const CreateMateriModal = (props: IProps) => {
       setDaftarMateri(prevMateri.data.daftarMateri);
     }
   }, [prevMateri]);
-
 
   // fitur untuk draft materi bila user refresh page
   useEffect(() => {
@@ -76,17 +73,15 @@ const CreateMateriModal = (props: IProps) => {
     setLocalStorage('createMateri', stringMateri);
   }, [materi, daftarMateri]);
 
-
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
-  }
-
+  };
 
   // handler untuk set materi dan daftar materi
   const handleSetMateri = (key: string, value: string) => {
     setMateri(prev => ({ ...prev, [key]: value }))
-  }
+  };
   const handleSetDaftarMateri = (key: string, value: string, id: number) => {
     setDaftarMateri(prev => {
       const newDaftarMateri: TDaftarMateri[] = [...prev];
@@ -94,7 +89,6 @@ const CreateMateriModal = (props: IProps) => {
       return newDaftarMateri;
     })
   };
-
 
   // handler untuk tambah, kurang sub materi
   const handleAddSubMateri = () => {
@@ -111,7 +105,6 @@ const CreateMateriModal = (props: IProps) => {
       return newDaftarMateri;
     });
   };
-
 
   // handler untuk validasi dan simpan materi
   const validasiSimpanMateri = () => {
@@ -139,7 +132,7 @@ const CreateMateriModal = (props: IProps) => {
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
     }
-  }
+  };
   const handleUpdateMateri = async () => {
     setIsLoading(true);
     const res = await editMateriByID(prevMateri.alatMusik.toLowerCase(), prevMateri.materiID, {
@@ -155,8 +148,7 @@ const CreateMateriModal = (props: IProps) => {
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
     }
-  }
-
+  };
 
   // Components
   const main_section = (
@@ -187,7 +179,7 @@ const CreateMateriModal = (props: IProps) => {
           onChange={(e: any) => handleSetMateri('deskripsi', e.target.value)} />
       </div>
     </div >
-  )
+  );
   const daftarMateri_section = (
     <div>
       {daftarMateri.map((item, index) => (
@@ -204,7 +196,7 @@ const CreateMateriModal = (props: IProps) => {
         </div>
       ))}
     </div>
-  )
+  );
   const button_section = (
     <div>
       <div className="flex gap-3">
@@ -228,7 +220,7 @@ const CreateMateriModal = (props: IProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 
   return (
     <Transition
@@ -285,7 +277,6 @@ const CreateMateriModal = (props: IProps) => {
       </Dialog>
     </Transition>
   )
-
 }
 
 export default CreateMateriModal

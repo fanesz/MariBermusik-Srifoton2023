@@ -10,7 +10,7 @@ interface IProps {
   judul: string,
   alatmusik?: string,
   id?: string
-}
+};
 const DeleteMateriAlert = (props: IProps) => {
   const { isOpen, setModal, judul, alatmusik, id } = props;
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ const DeleteMateriAlert = (props: IProps) => {
     if (res.status) {
       setModal(false);
       navigate(`/materi`);
-    }
-  }
+    };
+  };
 
   return (
     <Transition

@@ -11,12 +11,12 @@ interface TProps {
   currentUser: string,
   rating: number,
   setRating: React.Dispatch<React.SetStateAction<number>>
-}
+};
 const RatingSection = (props: TProps) => {
   const { alatmusik, id, currentUser, rating, setRating } = props;
+
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
+    type: "", message: ""
   });
 
   // mendapatkan list rating
@@ -26,18 +26,18 @@ const RatingSection = (props: TProps) => {
       if (resRatingList.status) {
         const currentUserRating = resRatingList.data.find((m: [string, number]) => m[0] === currentUser);
         setRating(currentUserRating ? currentUserRating[1] : 0);
-      }
-    }
+      };
+    };
     currentUser && fetchData();
   }, [currentUser]);
 
   // handler untuk menampilkan pesan error/success
   const handleSetErrmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'error', message: msg });
-  }
+  };
   const handleSetSuccessmsg = (msg: string) => {
     setErrSuccessMsg({ type: 'success', message: msg });
-  }
+  };
 
   // handler untuk update rating
   const handleUpdateRating = async (input: number) => {
@@ -47,8 +47,8 @@ const RatingSection = (props: TProps) => {
       handleSetSuccessmsg('Rating saved!');
     } else {
       handleSetErrmsg('Failed saving rating!')
-    }
-  }
+    };
+  };
 
   return rating !== -1 && (
     <TransitionIn from="bottom">

@@ -15,7 +15,7 @@ const Home = () => {
         <MusicianCarousel />
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Home;

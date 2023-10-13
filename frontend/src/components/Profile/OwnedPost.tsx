@@ -34,9 +34,6 @@ const OwnedPost = (props: TProps) => {
     getPost(UUID);
   }, []);
 
-
-
-
   return (
     <div>
       {listPost.length !== 0 && (

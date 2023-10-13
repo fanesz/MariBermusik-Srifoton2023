@@ -28,13 +28,13 @@ const ListMateri = () => {
     pengunjung_most: false,
     pengunjung_least: false,
     kesulitan: []
-  })
+  });
 
   // pengecekan apakah user sudah login
   const fetchIsLogin = async () => {
     const res = await userIsLogin();
     if (res.status) setIsLogin(true);
-  }
+  };
 
   // mendapatkan semua data materi
   const fetchMateri = async () => {
@@ -45,8 +45,8 @@ const ListMateri = () => {
       }, []);
       setMateri(result);
       setFilteredMateri(result);
-    }
-  }
+    };
+  };
   useEffect(() => {
     fetchMateri();
     fetchIsLogin();
@@ -57,7 +57,7 @@ const ListMateri = () => {
     <InformationCircleIcon
       className="h-6 w-6 cursor-help fill-gray-600"
       onClick={() => setInfoCreateMateriModal(true)} />
-  )
+  );
   const page_phone_view = (
     <TransitionIn>
       <div className="p-4 md:hidden flex gap-5 px-5 justify-end">
@@ -81,7 +81,7 @@ const ListMateri = () => {
         </div>
       </div>
     </TransitionIn>
-  )
+  );
   const page_desktop_view = (
     <div className="px-4 md:block hidden">
       <TransitionIn from='right'>
@@ -98,7 +98,7 @@ const ListMateri = () => {
         </div>
       </TransitionIn>
     </div>
-  )
+  );
 
   return (
     <div className="w-full max-w-7xl transform ms-auto me-auto md:mt-20 mt-10">

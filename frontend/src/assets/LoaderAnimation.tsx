@@ -1,8 +1,13 @@
-export default function LoaderAnimation(props: { className?: string, color?: string }) {
+interface IProps {
+  className?: string,
+  color?: string
+};
+export default function LoaderAnimation(props: IProps) {
   const { className, color } = props;
+
   return (
-    <div className="">
-      <div role="status" className="">
+    <div>
+      <div role="status">
         <div className="flex items-center justify-center space-x-2 animate-pulse">
           <div className={`${color} rounded-full ${className}`}></div>
           <div className={`${color} rounded-full ${className}`}></div>

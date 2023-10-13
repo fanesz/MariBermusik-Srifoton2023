@@ -1,4 +1,5 @@
 import notFoundImage from "../../assets/notfound.svg";
+
 const NotFound = () => {
 
   return (

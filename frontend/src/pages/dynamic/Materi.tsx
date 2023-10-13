@@ -38,7 +38,7 @@ const Materi = () => {
         }
       }
     }
-  }
+  };
   useEffect(() => {
     fetchMateriOwnerAndRating();
     // add Pengunjung saat page di akses

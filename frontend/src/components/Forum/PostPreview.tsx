@@ -17,11 +17,11 @@ interface IProps {
   isFromModal: boolean,
   currentUser: string,
   setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>
-}
+};
 const PostPreview = (props: IProps) => {
   const { className, prevPost, isFromModal, currentUser, setParentPost } = props;
+  
   const navigate = useNavigate();
-
   const [owner, setOwner] = useState<TUser>({} as TUser);
   const [isOwner, setIsOwner] = useState(false);
   const [postModal, setPostModal] = useState(false);
@@ -34,21 +34,19 @@ const PostPreview = (props: IProps) => {
     if (resOwner.status) {
       setOwner(resOwner.data);
       if (currentUser === prevPost.owner) setIsOwner(true);
-    }
-  }
+    };
+  };
   useEffect(() => {
     fetchOwner();
   }, []);
 
-
   // handler edit dan delete post
   const handleEditPost = () => {
     setEditPostModal(true);
-  }
+  };
   const handleDeletePost = async () => {
     setDeleteAlertModal(true);
-  }
-
+  };
 
   //ownerUUID: string, postID: string, voterUUID: string, voteType: string
   const handleUpVote = async (type: 'upvotes' | 'downvotes') => {
@@ -65,20 +63,17 @@ const PostPreview = (props: IProps) => {
           });
           return updatedList;
         });
-        
-      }
-    }
-  }
+      };
+    };
+  };
 
-  
   // cek apakah user sudah vote atau belum
   const isUserVote = (type: 'upvotes' | 'downvotes') => {
     if (currentUser) {
       if (type === 'upvotes') return prevPost?.upvotes.includes(currentUser);
       else return prevPost?.downvotes.includes(currentUser);
-    }
-  }
-
+    };
+  };
 
   // Components
   const updownvote = (
@@ -91,7 +86,7 @@ const PostPreview = (props: IProps) => {
         className={`w-6 h-6 hover:scale-110 cursor-pointer ${isUserVote('downvotes') ? 'text-red-500' : 'text-gray-500'}`}
         onClick={() => handleUpVote('downvotes')} />
     </div>
-  )
+  );
   const top_section = (
     <div className="flex gap-1 text-xs text-gray-600">
       <div className="sm:flex gap-1">
@@ -114,7 +109,7 @@ const PostPreview = (props: IProps) => {
         {convertCreatedAt(prevPost?.createdAt)}
       </div>
     </div>
-  )
+  );
   const title_desc = (
     <div
       className={`h-full ${!isFromModal && 'cursor-pointer'}`}
@@ -126,7 +121,7 @@ const PostPreview = (props: IProps) => {
         {prevPost?.description}
       </div>
     </div>
-  )
+  );
   const footer = (
     <div className="flex gap-4">
       <div
@@ -175,7 +170,7 @@ const PostPreview = (props: IProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 
   return (
     <div className={`w-full ${!isFromModal && 'h-40'} border border-opacity-30 border-gray-700 shadow-md rounded-md flex ${className} px-2 hover:shadow-lg hover:transition-all duration-300`}>

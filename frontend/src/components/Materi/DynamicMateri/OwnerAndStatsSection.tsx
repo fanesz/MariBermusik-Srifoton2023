@@ -9,9 +9,9 @@ import { getUserByParams } from "../../../api/services"
 
 interface TProps {
   materi: TListMateri,
-}
+};
 const OwnerAndStatsSection = (props: TProps) => {
-  const { materi } = props
+  const { materi } = props;
 
   const navigate = useNavigate();
   const [materiOwner, setMateriOwner] = useState<TUser>({} as TUser);
@@ -20,9 +20,9 @@ const OwnerAndStatsSection = (props: TProps) => {
   useEffect(() => {
     const fetchData = async () => {
       const resOwner = await getUserByParams(null, null, materi?.owner);
-      if (resOwner.status) setMateriOwner(resOwner.data);
-    }
-    if (materi) fetchData();
+      resOwner.status && setMateriOwner(resOwner.data);
+    };
+    materi && fetchData();
   }, [materi]);
 
   return materi?.data && (
@@ -74,7 +74,6 @@ const OwnerAndStatsSection = (props: TProps) => {
         </div>
       </div>
     </TransitionIn>
-
   )
 }
 

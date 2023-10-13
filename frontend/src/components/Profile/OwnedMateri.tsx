@@ -4,9 +4,9 @@ import { getMateriByID } from "../../api/services";
 import TransitionIn from "../_shared/TransitionIn";
 import MateriPreview from "../Materi/_shared/MateriPreview";
 
-type TProps = {
+interface TProps {
   UUID: string
-}
+};
 const OwnedMateri = (props: TProps) => {
   const { UUID } = props;
 
@@ -16,7 +16,7 @@ const OwnedMateri = (props: TProps) => {
   const getMateri = async (UUID: string) => {
     const res = await getMateriByID(UUID);
     if (res.status) setListMateri(res.data);
-  }
+  };
   useEffect(() => {
     getMateri(UUID);
   }, []);

@@ -2,9 +2,9 @@ import { TListMateri } from "../../../types/Types"
 
 interface TProps {
   materi: TListMateri
-}
+};
 const TitleSection = (props: TProps) => {
-  const { materi } = props
+  const { materi } = props;
   
   return materi?.data && (
     <div className="text-center flex justify-center gap-3">

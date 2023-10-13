@@ -20,7 +20,7 @@ const Profile = () => {
       const res = id ? await getUserByParams(null, id) : await getUserByParams(true);
       if (res.status) {
         const userObj = id ? res.data.value : res.data.user;
-        const userUUID = id ? res.data.id : res.data.UUID
+        const userUUID = id ? res.data.id : res.data.UUID;
         setUser({
           UUID: userUUID,
           username: userObj.username,
@@ -30,7 +30,7 @@ const Profile = () => {
         });
       } else {
         navigate('/');
-      }
+      };
     };
     fetchData();
   }, [id]);
@@ -68,4 +68,5 @@ const Profile = () => {
     </TransitionIn>
   )
 }
+
 export default Profile

@@ -2,7 +2,6 @@ import { useState } from "react";
 import CreatePostModal from "./CreatePostModal"
 
 const CreatePostButton = () => {
-
   const [createPostModal, setCreatePostModal] = useState(false);
 
   return (

@@ -11,30 +11,30 @@ export type TListMateri = {
     pengunjung: number,
     createdAt: Date,
     daftarMateri: TDaftarMateri[]
-  }
-}
+  };
+};
 export type TMateriToPost = {
   nama: string,
   deskripsi: string,
   tingkatan: string,
   daftarMateri: TDaftarMateri[]
-}
+};
 export type TDaftarMateri = {
   id: number,
   judul: string,
   materi: string,
-}
+};
 export type TUser = {
   email: string,
   password: string,
   username: string,
   terimaEmail: boolean,
   img: string
-}
+};
 export type IErrSuccessMsg = {
   type: 'error' | 'success' | '',
   message: string
-}
+};
 export type TListPost = {
   postID: number,
   owner: string,
@@ -48,14 +48,14 @@ export type TListPost = {
     createdAt: Date,
     content: string
   }[]
-}
+};
 export type TProfileUser = {
   UUID: string,
   username: string,
   email: string,
   img: string,
   createdAt: string
-}
+};
 export type TFilterBy = {
   alatMusik: string
   date_newest: boolean,
@@ -65,4 +65,4 @@ export type TFilterBy = {
   pengunjung_most: boolean,
   pengunjung_least: boolean,
   kesulitan: string[]
-}
+};

@@ -2,9 +2,9 @@ import { TProfileUser } from "../../types/Types"
 import profile from '../../assets/profile.png';
 import { convertCreatedAt } from "../../utils/utils";
 
-type TProps = {
+interface TProps {
   user: TProfileUser
-}
+};
 const ProfileCard = (props: TProps) => {
   const { user } = props;
 

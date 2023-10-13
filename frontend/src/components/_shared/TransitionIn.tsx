@@ -6,7 +6,7 @@ interface IProps {
   from?: string,
   onScreen?: number,
   delay?: number
-}
+};
 const TransitionIn = (props: IProps) => {
   const { children, from, delay } = props;
   const { onScreen = 0 } = props;
@@ -20,9 +20,7 @@ const TransitionIn = (props: IProps) => {
   const [isShowingOnScroll, setIsShowingOnScroll] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > onScreen) {
-        setIsShowingOnScroll(true);
-      }
+      window.scrollY > onScreen && setIsShowingOnScroll(true);
     };
     onScreen > 0 && window.addEventListener('scroll', handleScroll);
     return () => {
@@ -36,19 +34,15 @@ const TransitionIn = (props: IProps) => {
         from === 'left' ? '-translate-x-28' :
           from === 'right' ? 'translate-x-28' : '';
 
-
   return (
     <HuiTransition
       show={onScreen === 0 ? isShowing : isShowingOnScroll}
       enter={`transition-all duration-1000`}
       enterFrom={`opacity-0 ${direction}`}
-      enterTo="opacity-100"
-    >
+      enterTo="opacity-100">
       {children}
     </HuiTransition>
   )
-
-
 }
 
 export default TransitionIn

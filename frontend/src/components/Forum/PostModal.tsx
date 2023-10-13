@@ -17,7 +17,7 @@ interface IProps {
   currentUser: string,
   prevPost: TListPost,
   setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>
-}
+};
 const PostModal = (props: IProps) => {
   const { isOpen, setModal, currentUser, setParentPost, prevPost } = props;
 
@@ -26,8 +26,7 @@ const PostModal = (props: IProps) => {
   const [comment, setComment] = useState("");
   const [commenter, setCommenter] = useState<[string, string, string, Date][]>([]);
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
-    type: "",
-    message: ""
+    type: "", message: ""
   });
 
   // handler untuk menampilkan pesan error/success
@@ -35,12 +34,10 @@ const PostModal = (props: IProps) => {
     setErrSuccessMsg({ type: 'error', message: msg });
   }
 
-
   // handler untuk set comment dari inputan user
   const handleSetComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   }
-
 
   // fetch data user yang mengomentari post
   const fetchCommenter = async () => {
@@ -63,7 +60,6 @@ const PostModal = (props: IProps) => {
   useEffect(() => {
     fetchCommenter();
   }, [prevPost]);
-
 
   // handler untuk posting commentar
   const handlePostComment = async () => {
@@ -88,13 +84,12 @@ const PostModal = (props: IProps) => {
     }
   }
 
-
   // Components
   const main_section = Object.keys(prevPost).length !== 0 && (
     <div>
       <PostPreview prevPost={prevPost} isFromModal={true} currentUser={currentUser} setParentPost={setParentPost} />
     </div>
-  )
+  );
   const comment_input_section = (
     <div>
       <div className="relative border-b border-gray-300 pb-1">
@@ -131,7 +126,7 @@ const PostModal = (props: IProps) => {
         You need to Login before comment!
       </div>
     </div>
-  )
+  );
   const comment_list_section = (
     <div>
       {commenter?.map((item, index) => (
@@ -163,7 +158,7 @@ const PostModal = (props: IProps) => {
         </div>
       ))}
     </div>
-  )
+  );
 
   return (
     <Transition
@@ -217,7 +212,6 @@ const PostModal = (props: IProps) => {
       </Dialog>
     </Transition>
   )
-
 }
 
 export default PostModal

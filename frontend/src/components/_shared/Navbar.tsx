@@ -13,20 +13,18 @@ import { isImgurLinkValid } from "../../utils/utils";
 type TMenu = {
   nama: string,
   link: string
-}
+};
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<TUser>({} as TUser);
+  const [isLogin, setIsLogin] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
 
   const navbarMenu: TMenu[] = [
     { nama: "Home", link: "/" },
     { nama: "Materi", link: "/materi" },
     { nama: "Forum", link: "/forum" }
-  ]
-
-  const [user, setUser] = useState<TUser>({} as TUser);
-  const [isLogin, setIsLogin] = useState(false);
-  const [loginModal, setLoginModal] = useState(false);
-  const navigate = useNavigate();
-
+  ];
 
   // pengecekan apakah user sudah login
   useEffect(() => {
@@ -37,7 +35,6 @@ const Navbar = () => {
     }
     fetchData();
   }, []);
-
 
   // mendapatkan username dari user yang login
   useEffect(() => {
@@ -51,11 +48,10 @@ const Navbar = () => {
           terimaEmail: res.data.user.terimaEmail,
           img: isImgurLinkValid(res.data.user.img) ? res.data.user.img : profile
         });
-      }
-    }
+      };
+    };
     if (isLogin) fetchData();
   }, [isLogin]);
-
 
   // handler untuk logout
   const handleLogout = async () => {
@@ -63,8 +59,7 @@ const Navbar = () => {
     removeLocalStorage("loginID");
     setIsLogin(false);
     navigate('/');
-  }
-
+  };
 
   // Components
   const Logo = (
@@ -80,7 +75,7 @@ const Navbar = () => {
         <span className="text-green-900 hover:text-black duration-200">.</span>
       </div>
     </div>
-  )
+  );
   const Menu_Phone = (
     <div className="md:hidden">
       <Menu as="div" className="relative z-10">
@@ -144,7 +139,7 @@ const Navbar = () => {
         </Transition>
       </Menu>
     </div>
-  )
+  );
   const Menu_Desktop = (
     <div className="hidden md:flex gap-5 me-7">
       <div className="flex mt-auto mb-auto gap-2 2xl:text-[1vw] md:text-base font-medium">
@@ -199,20 +194,15 @@ const Navbar = () => {
         </Menu>
       </div>
     </div>
-  )
+  );
 
   return (
     <nav className="flex justify-between bg-navbar_color p-4">
 
       <LoginModal isOpen={loginModal} setModal={setLoginModal} setIsLogin={setIsLogin} />
 
-      {/* Logo */}
       {Logo}
-
-      {/* Menu Desktop */}
       {Menu_Desktop}
-
-      {/* Menu Phone */}
       {Menu_Phone}
 
     </nav >
