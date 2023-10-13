@@ -161,10 +161,6 @@ const Setting = () => {
             <Input type='text' label='Username' icon={<UserCircleIcon />}
               value={user.username} onChange={handleSetUsername} onKeyDown={handleUpdateSetting} />
           </div>
-          <div className='mt-4 mb-2'>
-            {/* <Input type='text' label='Foto Profil' icon={<UserCircleIcon />}
-              value={user.img} onChange={handleSetFotoProfil} onKeyDown={handleUpdateSetting} /> */}
-          </div>
 
           <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
 
@@ -188,9 +184,6 @@ const Setting = () => {
           </div>
 
         </div>
-
-
-
       </div>
     </TransitionIn>
   )
