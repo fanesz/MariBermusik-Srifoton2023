@@ -8,7 +8,6 @@ import LoginModal from "./LoginModal";
 import { removeLocalStorage } from "../../utils/LocalStorage";
 import { getUserByParams, setLogout, userIsLogin } from "../../api/services";
 import { TUser } from "../../types/Types";
-import { isImgurLinkValid } from "../../utils/utils";
 
 type TMenu = {
   nama: string,
@@ -36,7 +35,7 @@ const Navbar = () => {
     fetchData();
   }, []);
 
-  // mendapatkan username dari user yang login
+  // mendapatkan data dari user yang login
   useEffect(() => {
     const fetchData = async () => {
       const res = await getUserByParams(true);
@@ -46,7 +45,7 @@ const Navbar = () => {
           password: res.data.user.password,
           username: res.data.user.username,
           terimaEmail: res.data.user.terimaEmail,
-          img: isImgurLinkValid(res.data.user.img) ? res.data.user.img : profile
+          img: res.data.user.img ? res.data.user.img : profile
         });
       };
     };

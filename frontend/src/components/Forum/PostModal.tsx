@@ -7,7 +7,7 @@ import { Button, IconButton, Textarea } from "@material-tailwind/react";
 import LoaderAnimation from "../../assets/LoaderAnimation";
 import ErrSuccessMsg from "../_shared/ErrSuccessMsg";
 import PostPreview from "./PostPreview";
-import { convertCreatedAt, isImgurLinkValid } from "../../utils/utils";
+import { convertCreatedAt } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import profile from "../../assets/profile.png";
 
@@ -135,7 +135,7 @@ const PostModal = (props: IProps) => {
             <div className="flex gap-2">
               <div>
                 <img
-                  src={isImgurLinkValid(item[1]) ? item[1] : profile}
+                  src={item[1] ? item[1] : profile}
                   className="w-7 h-7 rounded-full cursor-pointer"
                   onClick={() => { navigate(`/profile/${item[0]}`); setModal(false); }} />
               </div>

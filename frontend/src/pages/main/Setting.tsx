@@ -7,18 +7,20 @@ import Input from '../../components/_shared/Input';
 import TransitionIn from '../../components/_shared/TransitionIn';
 import { IErrSuccessMsg } from '../../types/Types';
 import ErrSuccessMsg from '../../components/_shared/ErrSuccessMsg';
+import Dropzone from 'react-dropzone';
+import { Tooltip } from '@material-tailwind/react';
 
 type TUser = {
   email: string,
   username: string,
   terimaEmail: boolean,
-  img: string
+  img: any
 };
 const Setting = () => {
 
   const navigate = useNavigate();
   const [hasChanged, setHasChanged] = useState(false);
-  const [loader, setLoader] = useState({updateSetting: false});
+  const [loader, setLoader] = useState({ updateSetting: false });
   const [user, setUser] = useState<TUser>({
     email: '',
     username: '',
@@ -41,7 +43,7 @@ const Setting = () => {
     fetchData();
   }, []);
 
-  // mendapatkan username dari user yang login
+  // mendapatkan data user yang login
   useEffect(() => {
     const fetchData = async () => {
       const res = await getUserByParams(true);
@@ -82,13 +84,19 @@ const Setting = () => {
       handleSetErrmsg("Username hanya boleh mengandung huruf, angka, dan underscore (_).");
     };
   };
-  const handleSetFotoProfil = (e: any) => {
+  const handleUploadImage = async (acceptedFiles: any) => {
+    if (acceptedFiles.length !== 1) return handleSetErrmsg('Hanya boleh mengupload 1 foto!');
+    if (acceptedFiles[0].size > 10000000) return handleSetErrmsg('Ukuran foto maksimal 10MB!');
+    if (!acceptedFiles[0].type.includes('image')) return handleSetErrmsg('Hanya boleh mengupload foto!');
     setHasChanged(true);
-    const input = e.target.value;
-    if (/^[http|https://\S]+$/.test(input) || input.length === 0) {
-      setUser(prev => ({ ...prev, img: input }));
-    } else {
-      handleSetErrmsg("Foto profil harus berupa link yang valid.");
+    const reader = new FileReader();
+    reader.readAsDataURL(acceptedFiles[0]);
+    reader.onload = function () {
+      setUser(prev => ({ ...prev, img: reader.result }));
+    };
+    reader.onerror = function (error) {
+      console.log(error);
+      handleSetErrmsg('Error saat melakukan upload foto');
     };
   };
   const handleTerimaEmail = () => {
@@ -103,7 +111,6 @@ const Setting = () => {
         oldData.terimaEmail === user.terimaEmail ? false : true
     );
   }, [user]);
-
 
   // handler update setting
   const handleUpdateSetting = async () => {
@@ -130,6 +137,23 @@ const Setting = () => {
             Setting
           </div>
 
+          <div className='flex justify-center mt-6'>
+            <div className='border border-black border-opacity-50 w-fit rounded-full'>
+              <Dropzone onDrop={acceptedFiles => handleUploadImage(acceptedFiles)}>
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <Tooltip content="change" placement="top" className="mt-5 bg-opacity-30">
+                      <div {...getRootProps()} className='bg-gray-400 rounded-full'>
+                        <input {...getInputProps()} />
+                        <img src={user.img} className='w-24 h-24 rounded-full cursor-pointer hover:opacity-70 duration-200 object-cover shadow-md' />
+                      </div>
+                    </Tooltip>
+                  </section>
+                )}
+              </Dropzone>
+            </div>
+          </div>
+
           <div className='mt-5'>
             <Input type='email' label='Email' icon={<EnvelopeIcon />} value={user.email} disabled={true} />
           </div>
@@ -138,12 +162,12 @@ const Setting = () => {
               value={user.username} onChange={handleSetUsername} onKeyDown={handleUpdateSetting} />
           </div>
           <div className='mt-4 mb-2'>
-            <Input type='text' label='Foto Profil' icon={<UserCircleIcon />}
-              value={user.img} onChange={handleSetFotoProfil} onKeyDown={handleUpdateSetting} />
+            {/* <Input type='text' label='Foto Profil' icon={<UserCircleIcon />}
+              value={user.img} onChange={handleSetFotoProfil} onKeyDown={handleUpdateSetting} /> */}
           </div>
 
           <ErrSuccessMsg errSuccessMsg={errSuccessMsg} setErrSuccessMsg={setErrSuccessMsg} />
-          
+
           <div className='mt-4 flex cursor-pointer'>
             <input type='checkbox'
               className='rounded focus:ring-offset-0 focus:ring-0 mt-0.5 cursor-pointer'
@@ -164,6 +188,9 @@ const Setting = () => {
           </div>
 
         </div>
+
+
+
       </div>
     </TransitionIn>
   )

@@ -1,7 +1,7 @@
 import { ChevronDownIcon, ChevronUpIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { TListPost, TUser } from "../../types/Types";
-import { convertCreatedAt, isImgurLinkValid } from "../../utils/utils";
+import { convertCreatedAt } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { getUserByParams, updateVote } from "../../api/services";
 import { useEffect, useState } from "react";
@@ -97,7 +97,7 @@ const PostPreview = (props: IProps) => {
           className="cursor-pointer hover:text-gray-800 flex gap-1"
           onClick={() => navigate(`/profile/${owner?.username}`)}>
           <img
-            src={isImgurLinkValid(owner?.img) ? owner?.img : profile}
+            src={owner?.img ? owner?.img : profile}
             className={`w-4 h-4 rounded-full ${!isFromModal && 'hidden'}`} />
           <div className="my-auto">
             {owner?.username}

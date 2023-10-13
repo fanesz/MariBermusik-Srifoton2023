@@ -10,7 +10,7 @@ import { validateToken } from "./config/validation.js";
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '11mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/user', validateToken, userRoute);

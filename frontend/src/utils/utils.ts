@@ -17,11 +17,6 @@ export function convertCreatedAt(date: string | {} | Date | any): string {
   return "just now";
 };
 
-export function isImgurLinkValid(imgurUrl: string) {
-  if(!imgurUrl) return false;
-  return imgurUrl.match(/\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i) ? true : false;
-};
-
 export function ratingAverage(arr: [string, number][]) {
   return arr.reduce((a, b) => a + b[1], 0) / arr.length;
 };

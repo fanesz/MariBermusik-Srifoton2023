@@ -117,7 +117,6 @@ const user1 = {
   "password": "admin123",
   "username": "Admin1",
   "terimaEmail": true,
-  "img": "https://i.imgur.com/OXMLZLo.png",
   "akses": "admin",
   "createdAt": "2023-10-01T11:28:33.724Z"
 };
@@ -126,7 +125,6 @@ const user2 = {
   "password": "admins123",
   "username": "Admin2",
   "terimaEmail": false,
-  "img": "https://i.imgur.com/5XlFTpa.png",
   "akses": "admin",
   "createdAt": "2021-10-01T11:28:33.724Z"
 };

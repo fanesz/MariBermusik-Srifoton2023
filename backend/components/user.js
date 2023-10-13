@@ -1,5 +1,5 @@
 import { QuickDB } from "quick.db";
-import { generateUUID } from "../utils/utils.js";
+import { generateUUID, getImage, saveImage } from "../utils/utils.js";
 const db = new QuickDB();
 const db_user = db.table("user");
 const db_loggedUser = db.table("loggedUser");
@@ -20,14 +20,20 @@ export const getUserByParam = async (req, res) => {
     if (params.loginID) {
       const loggedUser = await db_loggedUser.get(params.loginID);
       const user = await db_user.get(loggedUser.id);
+      const img = getImage(loggedUser.id);
+      if (img) user['img'] = img;
       return res.json({ status: true, data: { UUID: loggedUser.id, user: user } });
     } else if (params.username) {
       const user = (await db_user.all()).find(u => u.value.username === params.username);
       if (user?.id) {
+        const img = getImage(user.id);
+        if (img) user['img'] = img;
         return res.json({ status: true, data: user });
       }
     } else if (params.UUID) {
       const user = await db_user.get(params.UUID);
+      const img = getImage(params.UUID);
+      if (img) user['img'] = img;
       return res.json({ status: true, data: user });
     }
     res.json({ status: false });
@@ -51,7 +57,6 @@ export const createUser = async (req, res) => {
       password: userInput.password,
       username: userInput.username,
       terimaEmail: userInput.terimaEmail,
-      img: "",
       akses: "user",
       createdAt: new Date(),
     });
@@ -73,7 +78,10 @@ export const updateUser = async (req, res) => {
     };
     await db_user.set(`${userDataToUpdate.id}.username`, userInput.username);
     await db_user.set(`${userDataToUpdate.id}.terimaEmail`, userInput.terimaEmail);
-    await db_user.set(`${userDataToUpdate.id}.img`, userInput.img);
+    if (userInput.img) {
+      const save = saveImage(userInput.img, userDataToUpdate.id);
+      if (!save) return res.json({ status: false });
+    };
 
     res.json({ status: true });
   } catch (error) {
