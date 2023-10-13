@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getPost, getUserByParams, userIsLogin } from "../../api/services";
 import { TListPost } from "../../types/Types";
 import PostPreview from "../../components/Forum/PostPreview";
-import CreatePostModal from "../../components/Forum/CreatePostModal";
+import CreatePostButton from "../../components/Forum/CreatePostButton";
 
 type TCurrentValue = {
   id: string,
@@ -14,7 +14,6 @@ type TCurrentValue = {
 const Forum = () => {
   const [cariMateri, setCariMateri] = useState('');
   const [listPost, setListPost] = useState<TListPost[]>([]);
-  const [createPostModal, setCreatePostModal] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
 
   // fetch data user yang sedang mengakses halaman
@@ -50,7 +49,6 @@ const Forum = () => {
     fetchCurrentUser();
   }, []);
 
-
   // handle cari materi
   const handleSetCariMateri = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCariMateri(e.target.value);
@@ -61,53 +59,36 @@ const Forum = () => {
     });
   }
 
-
-  // Components
-  const button_buat_post = (
-    <div
-      className="group relative h-full overflow-hidden rounded-lg bg-white text-lg shadow-md text-center cursor-pointer flex"
-      onClick={() => setCreatePostModal(true)}>
-      <div className="absolute inset-0 md:w-3 bg-green-400 transition-all duration-500 ease-out group-hover:w-full"></div>
-      <span className="relative md:text-gray-800 text-white group-hover:text-white transition-colors duration-300 m-auto md:text-lg sm:text-base text-xs">
-        Buat Post
-      </span>
-    </div>
-  )
-
   return (
     <div className="w-full max-w-3xl transform ms-auto me-auto md:mt-20 mt-10">
-      <CreatePostModal isOpen={createPostModal} setModal={setCreatePostModal} />
-      <div>
+      <div className="text-center text-2xl font-semibold text-gray-700">
+        Forum
+      </div>
 
-        <div className="text-center text-2xl font-semibold text-gray-700">
-          Forum
-        </div>
-
-        <div className="md:flex mt-5 justify-center">
-          <div className="px-3 w-full">
-            <TransitionIn>
-              <div className="flex gap-3">
-                <div className="w-full">
-                  <Input className='shadow-md' type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
-                    value={cariMateri} onChange={handleSetCariMateri} />
-                </div>
-                <div className="w-2/6">
-                  {button_buat_post}
-                </div>
+      <div className="md:flex mt-5 justify-center">
+        <div className="px-3 w-full">
+          <TransitionIn>
+            <div className="flex gap-3">
+              <div className="w-full">
+                <Input className='shadow-md' type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
+                  value={cariMateri} onChange={handleSetCariMateri} />
               </div>
-            </TransitionIn>
-
-            <div className="mt-5 w-full">
-              {listPost?.map((item, index) => (
-                <TransitionIn key={index} from='bottom' delay={index * 200}>
-                  <div className="mt-3">
-                    <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} />
-                  </div>
-                </TransitionIn>
-              ))}
+              <div className="w-2/6">
+                <CreatePostButton />
+              </div>
             </div>
+          </TransitionIn>
 
+          <div className="mt-5 w-full">
+            {listPost?.map((item, index) => (
+              <TransitionIn key={index} from='bottom' delay={index * 200}>
+                <div className="mt-3">
+                  <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} />
+                </div>
+              </TransitionIn>
+            ))}
           </div>
+
         </div>
       </div>
     </div>
