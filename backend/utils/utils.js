@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import fs from "fs";
+import path from 'path';
 
 export const generateUUID = () => {
   return uuidv4();
@@ -19,7 +20,13 @@ export const saveImage = (base64Data, outputPath) => {
     const base64Image = base64Data.split(';base64,').pop();
     const imageBuffer = Buffer.from(base64Image, 'base64');
 
-    fs.writeFile('./image/user/' + outputPath + '.webp', imageBuffer, (err) => {
+    const directoryPath = './image/user';
+
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath, { recursive: true });
+    }
+    const filePath = path.join(directoryPath, outputPath + '.webp');
+    fs.writeFile(filePath, imageBuffer, (err) => {
       if (err) {
         console.error(err);
         return false;
@@ -29,6 +36,8 @@ export const saveImage = (base64Data, outputPath) => {
     });
     return true;
   } catch (err) {
+    console.error(err);
+    return false;
   }
 };
 
