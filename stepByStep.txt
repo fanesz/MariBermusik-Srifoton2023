@@ -6,12 +6,16 @@ NodeJS (v18.17.0)
 NPM (9.6.7) (otomatis dari NodeJS)
 
 
-Step by step pengoperasian :
-1. Buka file backend.bat
-2. Buka file seeder.bat (tunggu hingga muncul "Seeding complete")
-3. Buka file build.bat (tunggu hingga muncul "Build complete")
-4. Buka file frontend.bat
+1. Buka file env.bat (tunggu hingga muncul "Enviroment files created", baru di close)
+2. Buka file backend.bat (hingga muncul "Server running at port xxxx", dibiarkan saja terbuka)
+3. Buka file seeder.bat (tunggu hingga muncul "Seeding complete", baru di close)
+4. Buka file build.bat (tunggu hingga muncul "Build complete", baru di close)
+5. Buka file frontend.bat (tunggu hingga muncul clickable link, buka link tersebut)
 
 
-note: jika build sudah dilakukan,
-maka step tersebut dapat di skip dan lanjut ke step 4
+note: 
+- jika build sudah dilakukan, maka step tersebut dapat di skip dan lanjut ke step 4
+- jika muncul error bahwa port 5000 sudah digunakan, tutup terminal yang menggunakan port 5000 dan tunggu sekitar 1 menit
+  bila tidak memungkinkan, ubah port tersebut dengan cara :
+  - ubah file /backend/index.js, cari angka 5000, ubah ke port yang diinginkan
+  - ubah file /frontend/.env, cari angka 5000, ubah ke port yang diinginkan
