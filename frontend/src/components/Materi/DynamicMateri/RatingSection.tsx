@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ErrSuccessMsg from "../../_shared/ErrSuccessMsg"
 import TransitionIn from "../../_shared/TransitionIn"
-import { IErrSuccessMsg } from "../../../types/Types";
+import { IErrSuccessMsg, TListMateri } from "../../../types/Types";
 import { getRatingList, updateRating } from "../../../api/services";
 import { Rating } from "@material-tailwind/react";
 
@@ -10,10 +10,11 @@ interface TProps {
   id: string,
   currentUser: string,
   rating: number,
-  setRating: React.Dispatch<React.SetStateAction<number>>
+  setRating: React.Dispatch<React.SetStateAction<number>>,
+  setParentMateri: React.Dispatch<React.SetStateAction<TListMateri>>
 };
 const RatingSection = (props: TProps) => {
-  const { alatmusik, id, currentUser, rating, setRating } = props;
+  const { alatmusik, id, currentUser, rating, setRating, setParentMateri } = props;
 
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
     type: "", message: ""
@@ -45,8 +46,18 @@ const RatingSection = (props: TProps) => {
     const res = await updateRating(alatmusik || '', id || '', currentUser, input.toString());
     if (res.status) {
       handleSetSuccessmsg('Rating saved!');
+      setParentMateri(prev => {
+        const prevRating = prev.data.rating;
+        const index = prevRating.findIndex(([user]) => user === currentUser);
+        if (index !== -1) {
+          prevRating[index][1] = input;
+        } else {
+          prevRating.push([currentUser, input]);
+        }
+        return { ...prev };
+      });
     } else {
-      handleSetErrmsg('Failed saving rating!')
+      handleSetErrmsg('Failed saving rating!');
     };
   };
 

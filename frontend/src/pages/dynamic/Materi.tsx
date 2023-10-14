@@ -67,7 +67,9 @@ const Materi = () => {
       </div>
 
       <div className={`mt-4 ${isOwner && 'hidden'}`}>
-        <RatingSection alatmusik={alatmusik || ''} id={id || ''} currentUser={currentUser} rating={rating} setRating={setRating} />
+        <RatingSection alatmusik={alatmusik || ''} id={id || ''} 
+        rating={rating} setRating={setRating} 
+        currentUser={currentUser} setParentMateri={setMateri}/>
       </div>
     </div>
   )

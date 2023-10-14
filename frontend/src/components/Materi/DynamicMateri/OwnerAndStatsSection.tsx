@@ -23,6 +23,7 @@ const OwnerAndStatsSection = (props: TProps) => {
       resOwner.status && setMateriOwner(resOwner.data);
     };
     materi && fetchData();
+    
   }, [materi]);
 
   return materi?.data && (
