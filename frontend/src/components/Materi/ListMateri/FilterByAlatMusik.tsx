@@ -42,7 +42,7 @@ const FilterByAlatMusik = (props: TProps) => {
 
   return (
     <div>
-      <Select label="Alat Musik" menuProps={{ className: 'p-0 py-1' }}>
+      <Select label="Alat Musik" menuProps={{ className: 'p-0 py-1' }} aria-label="Alat musik">
         {listAlatMusik.map((alatMusik, index) => (
           <Option key={index} value={alatMusik.id}
             onClick={() => handleFilterAlatMusik(alatMusik.id)}>

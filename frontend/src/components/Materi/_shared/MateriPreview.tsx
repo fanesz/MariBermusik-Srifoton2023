@@ -52,7 +52,7 @@ const MateriPreview = (props: IProps) => {
       </div>
       <div className="font-extrabold">·</div>
       <div className="flex gap-0.5">
-        {ratingAverage(materi.data.rating) | 0}
+        {ratingAverage(materi.data.rating)}
         <StarIcon className="h-3.5 w-3.5 mt-auto mb-auto fill-yellow-900" />
         <span className="text-xs mt-auto mb-auto text-gray-500">({materi.data.rating.length})</span>
       </div>
