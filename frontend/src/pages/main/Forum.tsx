@@ -19,7 +19,7 @@ const Forum = (props: IProps) => {
   
   const [cariMateri, setCariMateri] = useState('');
   const [listPost, setListPost] = useState<TListPost[]>([]);
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState<null | string>(null);
 
   // fetch data user yang sedang mengakses halaman
   const fetchCurrentUser = async () => {
@@ -30,6 +30,8 @@ const Forum = (props: IProps) => {
         const currentUserUUID = UUID.data.UUID;
         setCurrentUser(currentUserUUID);
       };
+    } else {
+      setCurrentUser('-1');
     };
   };
 
@@ -85,7 +87,7 @@ const Forum = (props: IProps) => {
           </TransitionIn>
 
           <div className="mt-5 w-full">
-            {currentUser && listPost?.map((item, index) => (
+            {listPost?.map((item, index) => (
               <TransitionIn key={index} from='bottom' delay={index * 200}>
                 <div className="mt-3">
                   <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} setLoginModal={setLoginModal} />

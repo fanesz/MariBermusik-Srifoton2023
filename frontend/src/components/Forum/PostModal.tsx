@@ -14,7 +14,7 @@ import profile from "../../assets/profile.png";
 interface IProps {
   isOpen: boolean,
   setModal: Dispatch<boolean>,
-  currentUser: string,
+  currentUser: string | null,
   prevPost: TListPost,
   setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>
 };
@@ -95,7 +95,7 @@ const PostModal = (props: IProps) => {
       <div className="relative border-b border-gray-300 pb-1">
         <Textarea
           variant="static" placeholder="Your Comment" rows={5} spellCheck={false}
-          className={`px-4 rounded-md focus:ring-0 ${currentUser.length === 0 && 'blur-sm'}`} disabled={currentUser.length === 0}
+          className={`px-4 rounded-md focus:ring-0 ${currentUser?.length === 0 && 'blur-sm'}`} disabled={currentUser?.length === 0}
           value={comment} onChange={handleSetComment} />
         <div className="flex w-full justify-between pt-1.5">
           <IconButton variant="text" color="blue-gray" size="sm" disabled>
@@ -122,7 +122,7 @@ const PostModal = (props: IProps) => {
         </div>
       </div>
 
-      <div className={`absolute -mt-32 w-full text-center font-medium pe-20 ${currentUser.length !== 0 && 'hidden'}`}>
+      <div className={`absolute -mt-32 w-full text-center font-medium pe-20 ${currentUser?.length !== 0 && 'hidden'}`}>
         You need to Login before comment!
       </div>
     </div>

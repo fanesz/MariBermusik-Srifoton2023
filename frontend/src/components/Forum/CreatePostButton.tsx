@@ -2,7 +2,7 @@ import { useState } from "react";
 import CreatePostModal from "./CreatePostModal"
 
 interface IProps {
-  currentUser: string,
+  currentUser: string | null,
   setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
 };
 const CreatePostButton = (props: IProps) => {

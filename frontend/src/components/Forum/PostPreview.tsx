@@ -15,13 +15,13 @@ interface IProps {
   className?: string,
   prevPost: TListPost,
   isFromModal: boolean,
-  currentUser: string,
+  currentUser: string | null,
   setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>,
   setLoginModal?: React.Dispatch<React.SetStateAction<boolean>>
 };
 const PostPreview = (props: IProps) => {
   const { className, prevPost, isFromModal, currentUser, setParentPost, setLoginModal } = props;
-  
+
   const navigate = useNavigate();
   const [owner, setOwner] = useState<TUser>({} as TUser);
   const [isOwner, setIsOwner] = useState<null | boolean>(null);
@@ -39,7 +39,7 @@ const PostPreview = (props: IProps) => {
   };
   useEffect(() => {
     fetchOwner();
-  }, []);
+  }, [currentUser]);
 
   // handler edit dan delete post
   const handleEditPost = () => {
@@ -51,14 +51,9 @@ const PostPreview = (props: IProps) => {
 
   //ownerUUID: string, postID: string, voterUUID: string, voteType: string
   const handleUpVote = async (type: 'upvotes' | 'downvotes') => {
-    !currentUser && setLoginModal && setLoginModal(true);
-    console.log(currentUser);
-    console.log(isOwner);
-    
+    if (!currentUser || currentUser === '-1') return setLoginModal && setLoginModal(true);
     if (isOwner || isOwner === null) return;
     if (currentUser) {
-      console.log(isOwner);
-      
       const res = await updateVote(prevPost.owner, prevPost.postID.toString(), currentUser, type);
       if (res.status && setParentPost) {
         setParentPost(prev => {
