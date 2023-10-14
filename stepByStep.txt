@@ -1,0 +1,17 @@
+Kelompok = RPL-4
+Aplikasi = MariBermusik
+
+Software yang perlu di install :
+NodeJS (v18.17.0)
+NPM (9.6.7) (otomatis dari NodeJS)
+
+
+Step by step pengoperasian :
+1. Buka file backend.bat
+2. Buka file seeder.bat (tunggu hingga muncul "Seeding complete")
+3. Buka file build.bat (tunggu hingga muncul "Build complete")
+4. Buka file frontend.bat
+
+
+note: jika build sudah dilakukan,
+maka step tersebut dapat di skip dan lanjut ke step 4
