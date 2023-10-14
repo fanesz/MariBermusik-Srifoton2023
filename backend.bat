@@ -2,4 +2,4 @@
 cd backend
 call npm install
 call npm run seed
-call npm start
+call nodemon index.js 5000

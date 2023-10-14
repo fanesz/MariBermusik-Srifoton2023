@@ -7,6 +7,7 @@ import forgetPassRoute from "./routes/forgetPassRoute.js";
 import forumRoute from "./routes/forumRoute.js";
 import { validateToken } from "./config/validation.js";
 
+const port = process.argv[2] || 5000;
 const app = express();
 
 app.use(cors());
@@ -19,5 +20,23 @@ app.use('/api/login', validateToken, loginRoute);
 app.use('/api/forgetPass', validateToken, forgetPassRoute);
 app.use('/api/forum', validateToken, forumRoute);
 
-
-app.listen(5000, () => console.log('Server running at port 5000'));
+const findAvailablePort = (port, callback) => {
+  const server = app.listen(port, () => {
+    server.close(() => {
+      callback(port);
+    });
+  });
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      findAvailablePort(port + 1, callback);
+    }
+  });
+};
+findAvailablePort(5000, (port) => {
+  app.get('/', (req, res) => {
+    res.send('Hello, World!');
+  });
+  app.listen(port, () => {
+    console.log(`Server running at port ${port}`);
+  });
+});
