@@ -11,7 +11,12 @@ type TCurrentValue = {
   id: string,
   value: TListPost[]
 };
-const Forum = () => {
+interface IProps {
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+};
+const Forum = (props: IProps) => {
+  const { setLoginModal } = props;
+  
   const [cariMateri, setCariMateri] = useState('');
   const [listPost, setListPost] = useState<TListPost[]>([]);
   const [currentUser, setCurrentUser] = useState('');
@@ -74,7 +79,7 @@ const Forum = () => {
                   value={cariMateri} onChange={handleSetCariMateri} />
               </div>
               <div className="w-2/6">
-                <CreatePostButton />
+                <CreatePostButton currentUser={currentUser} setLoginModal={setLoginModal} />
               </div>
             </div>
           </TransitionIn>
@@ -83,7 +88,7 @@ const Forum = () => {
             {listPost?.map((item, index) => (
               <TransitionIn key={index} from='bottom' delay={index * 200}>
                 <div className="mt-3">
-                  <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} />
+                  <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} setLoginModal={setLoginModal} />
                 </div>
               </TransitionIn>
             ))}

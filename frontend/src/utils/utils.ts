@@ -18,5 +18,6 @@ export function convertCreatedAt(date: string | {} | Date | any): string {
 };
 
 export function ratingAverage(arr: [string, number][]) {
-  return arr.reduce((a, b) => a + b[1], 0) / arr.length;
-};
+  const sum = arr.reduce((a, b) => a + b[1], 0);
+  return (sum / arr.length).toFixed(1);
+}

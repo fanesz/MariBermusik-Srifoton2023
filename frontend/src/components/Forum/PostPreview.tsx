@@ -16,14 +16,15 @@ interface IProps {
   prevPost: TListPost,
   isFromModal: boolean,
   currentUser: string,
-  setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>
+  setParentPost: React.Dispatch<React.SetStateAction<TListPost[]>>,
+  setLoginModal?: React.Dispatch<React.SetStateAction<boolean>>
 };
 const PostPreview = (props: IProps) => {
-  const { className, prevPost, isFromModal, currentUser, setParentPost } = props;
+  const { className, prevPost, isFromModal, currentUser, setParentPost, setLoginModal } = props;
   
   const navigate = useNavigate();
   const [owner, setOwner] = useState<TUser>({} as TUser);
-  const [isOwner, setIsOwner] = useState(false);
+  const [isOwner, setIsOwner] = useState<null | boolean>(null);
   const [postModal, setPostModal] = useState(false);
   const [editPostModal, setEditPostModal] = useState(false);
   const [deleteAlertModal, setDeleteAlertModal] = useState(false);
@@ -33,7 +34,7 @@ const PostPreview = (props: IProps) => {
     const resOwner = await getUserByParams(null, null, prevPost.owner);
     if (resOwner.status) {
       setOwner(resOwner.data);
-      if (currentUser === prevPost.owner) setIsOwner(true);
+      currentUser && setIsOwner(currentUser === prevPost.owner ? true : false);
     };
   };
   useEffect(() => {
@@ -50,8 +51,11 @@ const PostPreview = (props: IProps) => {
 
   //ownerUUID: string, postID: string, voterUUID: string, voteType: string
   const handleUpVote = async (type: 'upvotes' | 'downvotes') => {
-    if (isOwner) return;
+    setLoginModal && setLoginModal(true);
+    if (isOwner || isOwner === null) return;
     if (currentUser) {
+      console.log(1);
+      
       const res = await updateVote(prevPost.owner, prevPost.postID.toString(), currentUser, type);
       if (res.status && setParentPost) {
         setParentPost(prev => {

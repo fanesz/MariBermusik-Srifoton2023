@@ -10,7 +10,7 @@ const ProfileCard = (props: TProps) => {
 
   return (
     <div className='p-4'>
-      <div className='md:flex text-center'>
+      <div className='md:flex md:text-left text-center'>
         <div>
           <img src={user.img || profile} alt={user.username}
             className='h-36 w-36 object-cover rounded-full border mx-auto' />

@@ -13,7 +13,12 @@ type TCurrentValue = {
   id: string,
   value: TListMateri[]
 }
-const ListMateri = () => {
+interface IProps {
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+};
+const ListMateri = (props: IProps) => {
+  const { setLoginModal } = props;
+
   const [materi, setMateri] = useState<TListMateri[]>([]);
   const [filteredMateri, setFilteredMateri] = useState<TListMateri[]>([]);
   const [filterModal, setFilterModal] = useState(false);
@@ -61,9 +66,9 @@ const ListMateri = () => {
   const page_phone_view = (
     <TransitionIn>
       <div className="p-4 md:hidden flex gap-5 px-5 justify-end">
-        <div className={`w-4/5 ${isLogin ? 'flex' : 'hidden'}`}>
+        <div className="flex w-4/5">
           <div className="w-full">
-            <CreateMateriButton />
+            <CreateMateriButton isLogin={isLogin} setLoginModal={setLoginModal} />
           </div>
           <div className="mb-auto">
             {button_informasi_buat_materi}
@@ -85,9 +90,9 @@ const ListMateri = () => {
   const page_desktop_view = (
     <div className="px-4 md:block hidden">
       <TransitionIn from='right'>
-        <div className={`${isLogin ? 'flex' : 'hidden'}`}>
+        <div className='flex'>
           <div className="w-full">
-            <CreateMateriButton />
+            <CreateMateriButton isLogin={isLogin} setLoginModal={setLoginModal} />
           </div>
           <div className="mb-auto">
             {button_informasi_buat_materi}

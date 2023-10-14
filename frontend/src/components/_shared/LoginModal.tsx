@@ -85,6 +85,7 @@ const LoginModal = (props: IProps) => {
       setIsLogin(true);
       setEmail("");
       setPassword("");
+      window.location.reload();
     } else {
       handleSetErrmsg(res.message);
     };

@@ -4,20 +4,24 @@ import profile from "../../assets/profile.png";
 import { Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import LoginModal from "./LoginModal";
 import { removeLocalStorage } from "../../utils/LocalStorage";
-import { getUserByParams, setLogout, userIsLogin } from "../../api/services";
+import { getUserByParams, setLogout } from "../../api/services";
 import { TUser } from "../../types/Types";
 
 type TMenu = {
   nama: string,
   link: string
 };
-const Navbar = () => {
+interface IProps {
+  isLogin: boolean,
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>,
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+};
+const Navbar = (props: IProps) => {
+  const { isLogin, setIsLogin, setLoginModal } = props;
+
   const navigate = useNavigate();
   const [user, setUser] = useState<TUser>({} as TUser);
-  const [isLogin, setIsLogin] = useState(false);
-  const [loginModal, setLoginModal] = useState(false);
 
   const navbarMenu: TMenu[] = [
     { nama: "Home", link: "/" },
@@ -25,15 +29,7 @@ const Navbar = () => {
     { nama: "Forum", link: "/forum" }
   ];
 
-  // pengecekan apakah user sudah login
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await userIsLogin();
-      if (res.status) setIsLogin(true);
 
-    }
-    fetchData();
-  }, []);
 
   // mendapatkan data dari user yang login
   useEffect(() => {
@@ -197,8 +193,6 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between bg-navbar_color p-4">
-
-      <LoginModal isOpen={loginModal} setModal={setLoginModal} setIsLogin={setIsLogin} />
 
       {Logo}
       {Menu_Desktop}
