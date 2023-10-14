@@ -85,7 +85,7 @@ const Forum = (props: IProps) => {
           </TransitionIn>
 
           <div className="mt-5 w-full">
-            {listPost?.map((item, index) => (
+            {currentUser && listPost?.map((item, index) => (
               <TransitionIn key={index} from='bottom' delay={index * 200}>
                 <div className="mt-3">
                   <PostPreview prevPost={item} isFromModal={false} currentUser={currentUser} setParentPost={setListPost} setLoginModal={setLoginModal} />

@@ -51,10 +51,13 @@ const PostPreview = (props: IProps) => {
 
   //ownerUUID: string, postID: string, voterUUID: string, voteType: string
   const handleUpVote = async (type: 'upvotes' | 'downvotes') => {
-    setLoginModal && setLoginModal(true);
+    !currentUser && setLoginModal && setLoginModal(true);
+    console.log(currentUser);
+    console.log(isOwner);
+    
     if (isOwner || isOwner === null) return;
     if (currentUser) {
-      console.log(1);
+      console.log(isOwner);
       
       const res = await updateVote(prevPost.owner, prevPost.postID.toString(), currentUser, type);
       if (res.status && setParentPost) {
