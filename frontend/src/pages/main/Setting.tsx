@@ -120,11 +120,14 @@ const Setting = () => {
     setLoader(prev => ({ ...prev, updateSetting: false }));
     if (res.status) {
       setOldData({ username: user.username, terimaEmail: user.terimaEmail, img: user.img });
-      handleSetSuccessmsg("Berhasil update setting")
+      handleSetSuccessmsg("Berhasil update setting, auto refresh in 3s...");
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } else if (res.message) {
-      handleSetErrmsg(res.message)
+      handleSetErrmsg(res.message);
     } else {
-      handleSetErrmsg("Gagal melakukan update!, harap melakukan login ulang.")
+      handleSetErrmsg("Gagal melakukan update!, harap melakukan login ulang.");
     };
   };
 
