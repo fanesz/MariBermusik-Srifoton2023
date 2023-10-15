@@ -17,7 +17,7 @@ interface IProps {
 const Forum = (props: IProps) => {
   const { setLoginModal } = props;
   
-  const [cariMateri, setCariMateri] = useState('');
+  const [cariPost, setCariPost] = useState('');
   const [listPost, setListPost] = useState<TListPost[]>([]);
   const [currentUser, setCurrentUser] = useState<null | string>(null);
 
@@ -56,9 +56,9 @@ const Forum = (props: IProps) => {
     fetchCurrentUser();
   }, []);
 
-  // handle cari materi
-  const handleSetCariMateri = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCariMateri(e.target.value);
+  // handle cari post
+  const handleSetCariPost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCariPost(e.target.value);
     setListPost(prev => {
       const filteredItem = prev.filter((post: TListPost) => post.title.toLowerCase().includes(e.target.value.toLowerCase()));
       const otherItem = prev.filter((post: TListPost) => !post.title.toLowerCase().includes(e.target.value.toLowerCase()));
@@ -77,8 +77,8 @@ const Forum = (props: IProps) => {
           <TransitionIn>
             <div className="flex gap-3">
               <div className="w-full">
-                <Input className='shadow-md' type='text' label='Cari Materi' icon={<MagnifyingGlassIcon />}
-                  value={cariMateri} onChange={handleSetCariMateri} />
+                <Input className='shadow-md' type='text' label='Cari Post' icon={<MagnifyingGlassIcon />}
+                  value={cariPost} onChange={handleSetCariPost} />
               </div>
               <div className="w-2/6">
                 <CreatePostButton currentUser={currentUser} setLoginModal={setLoginModal} />
