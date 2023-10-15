@@ -224,7 +224,7 @@ const LoginModal = (props: IProps) => {
     <div>
       <div className='mt-4'>
         <Input type='email' label='Email' icon={<EnvelopeIcon />}
-          value={email} onChange={handleSetEmail} onKeyDown={handleSignUp} />
+          value={email} onChange={handleSetEmail} onKeyDown={handleLupaPassword} />
       </div>
       <div
         className='text-gray-700 text-sm hover:text-gray-800 cursor-pointer mt-1 text-right me-1 mb-2'
