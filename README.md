@@ -23,7 +23,7 @@ Website ini mengharuskan kalian login bila ingin membuat materi, rating, membuat
 ### Halaman Materi
 Website ini memiliki halaman Materi yang menampilkan semua materi yang tersedia. Kalian dapat membuat materi kalian sendiri dengan hanya 1 tombol klik!. Tiap materi dilengkapi dengan fitur total pengunjung dan rating sehingga semua orang tau seberapa bagus materi tersebut!.
 
-![List Materi Page](image.png)
+![List Materi Page](https://i.imgur.com/5VYjmOf.png)
 
 ![Materi Page](https://i.imgur.com/fFrvvao.png)
 
