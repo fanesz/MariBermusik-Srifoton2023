@@ -127,7 +127,7 @@ const CreateMateriModal = (props: IProps) => {
     setIsLoading(false);
     if (res.status) {
       removeLocalStorage('createMateri');
-      navigate(`/materi/${materi.alatMusik}/${res.materiID}`);
+      navigate(`/materi/${materi.alatMusik.toLowerCase()}/${res.materiID}`);
       setModal(false);
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
