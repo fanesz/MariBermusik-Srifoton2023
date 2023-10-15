@@ -20,58 +20,6 @@ const materi_gitar = [
   {
     "materiID": 0,
     "alatMusik": "gitar",
-    "owner": "59d1756f-5259-4527-bc72-640db97372b5",
-    "data": {
-      "nama": "Dasar Dasar gitar",
-      "deskripsi": "Mempelajari Dasar-dasar gitar, dimulai dari pengenalan bagian-bagian alat musik, hingga cara bermain",
-      "tingkatan": "pemula",
-      "rating": [
-        [
-          "e6adfbb7-36ac-4418-90f5-f022a5d436c5",
-          1
-        ],
-        [
-          "3a17b9b5-e6f1-4e58-8464-ce80b2b0d821",
-          5
-        ],
-        [
-          "aa1a2295-fdcf-47d3-acd9-fd187288ebd7",
-          4
-        ],
-        [
-          "862b6cb7-7579-493d-a9b6-dd92ed4ee0cc",
-          4
-        ],
-        [
-          "ed07659b-6c2e-4d12-bedc-a918c87325ee",
-          5
-        ],
-        [
-          "325647e3-6cc5-4f23-a304-ca16ed12c85c",
-          4
-        ],
-        [
-          "258234d6-f69c-4a48-a229-f4faf24197e5",
-          4
-        ]
-      ],
-      "pengunjung": 113,
-      "createdAt": "2023-10-01T11:28:33.724Z",
-      "daftarMateri": [
-        {
-          "judul": "Sejarah",
-          "materi": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        },
-        {
-          "judul": "Pencipta",
-          "materi": "<img>https://i.imgur.com/TqPdNrR.jpeg</img>\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.\n        [wikipedia](https://en.wikipedia.org/wiki/Albert_Einstein)\n        <b>This is bold</b>\n        <li>This is list</li>\n        <li>This is list</li>\n        <video>https://www.youtube.com/watch?v=yi2KjoZBYsU</video>"
-        }
-      ]
-    }
-  },
-  {
-    "materiID": 3,
-    "alatMusik": "gitar",
     "owner": "e6adfbb7-36ac-4418-90f5-f022a5d436c5",
     "data": {
       "nama": "Tips Bermain Gitar",
@@ -104,7 +52,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 4,
+    "materiID": 1,
     "alatMusik": "gitar",
     "owner": "3a17b9b5-e6f1-4e58-8464-ce80b2b0d821",
     "data": {
@@ -134,7 +82,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 5,
+    "materiID": 2,
     "alatMusik": "gitar",
     "owner": "3a17b9b5-e6f1-4e58-8464-ce80b2b0d821",
     "data": {
@@ -189,7 +137,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 6,
+    "materiID": 3,
     "alatMusik": "gitar",
     "owner": "aa1a2295-fdcf-47d3-acd9-fd187288ebd7",
     "data": {
@@ -254,7 +202,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 7,
+    "materiID": 4,
     "alatMusik": "gitar",
     "owner": "862b6cb7-7579-493d-a9b6-dd92ed4ee0cc",
     "data": {
@@ -340,7 +288,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 8,
+    "materiID": 5,
     "alatMusik": "gitar",
     "owner": "258234d6-f69c-4a48-a229-f4faf24197e5",
     "data": {
@@ -421,7 +369,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 9,
+    "materiID": 6,
     "alatMusik": "gitar",
     "owner": "258234d6-f69c-4a48-a229-f4faf24197e5",
     "data": {
@@ -457,7 +405,7 @@ const materi_gitar = [
     }
   },
   {
-    "materiID": 10,
+    "materiID": 7,
     "alatMusik": "gitar",
     "owner": "325647e3-6cc5-4f23-a304-ca16ed12c85c",
     "data": {
@@ -490,7 +438,7 @@ const materi_gitar = [
 ]
 const materi_biola = [
   {
-      "materiID": 3,
+      "materiID": 0,
       "alatMusik": "biola",
       "owner": "258234d6-f69c-4a48-a229-f4faf24197e5",
       "data": {
@@ -516,7 +464,7 @@ const materi_biola = [
       }
   },
   {
-      "materiID": 4,
+      "materiID": 1,
       "alatMusik": "biola",
       "owner": "3a17b9b5-e6f1-4e58-8464-ce80b2b0d821",
       "data": {
@@ -557,7 +505,7 @@ const materi_biola = [
       }
   },
   {
-      "materiID": 5,
+      "materiID": 2,
       "alatMusik": "biola",
       "owner": "aa1a2295-fdcf-47d3-acd9-fd187288ebd7",
       "data": {
@@ -603,7 +551,7 @@ const materi_biola = [
       }
   },
   {
-      "materiID": 6,
+      "materiID": 3,
       "alatMusik": "biola",
       "owner": "258234d6-f69c-4a48-a229-f4faf24197e5",
       "data": {
@@ -729,7 +677,7 @@ const materi_biola = [
       }
   },
   {
-      "materiID": 7,
+      "materiID": 4,
       "alatMusik": "biola",
       "owner": "258234d6-f69c-4a48-a229-f4faf24197e5",
       "data": {
@@ -770,7 +718,7 @@ const materi_biola = [
       }
   },
   {
-      "materiID": 8,
+      "materiID": 5,
       "alatMusik": "biola",
       "owner": "e6adfbb7-36ac-4418-90f5-f022a5d436c5",
       "data": {
