@@ -8,12 +8,16 @@ import OwnerAndStatsSection from "../../components/Materi/DynamicMateri/OwnerAnd
 import MainSection from "../../components/Materi/DynamicMateri/MainSection";
 import RatingSection from "../../components/Materi/DynamicMateri/RatingSection";
 
-const Materi = () => {
+interface IProps {
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+const Materi = (props: IProps) => {
+  const { setLoginModal } = props;
+
   const { alatmusik, id } = useParams();
   const [materi, setMateri] = useState<TListMateri>({} as TListMateri);
   const [isOwner, setIsOwner] = useState(false);
   const [currentUser, setCurrentUser] = useState('');
-  const [rating, setRating] = useState(-1);
 
   // fetch data materi dan owner
   const fetchMateriOwnerAndRating = async () => {
@@ -67,9 +71,8 @@ const Materi = () => {
       </div>
 
       <div className={`mt-4 ${isOwner && 'hidden'}`}>
-        <RatingSection alatmusik={alatmusik || ''} id={id || ''} 
-        rating={rating} setRating={setRating} 
-        currentUser={currentUser} setParentMateri={setMateri}/>
+        <RatingSection alatmusik={alatmusik || ''} id={id || ''}
+          currentUser={currentUser} setParentMateri={setMateri} setLoginModal={setLoginModal} />
       </div>
     </div>
   )

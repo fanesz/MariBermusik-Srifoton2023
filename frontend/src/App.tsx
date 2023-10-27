@@ -40,7 +40,7 @@ function App() {
           <Route path='/profile/:id' element={<Profile />} />
 
           <Route path='/materi' element={<ListMateri setLoginModal={setLoginModal} />} />
-          <Route path='/materi/:alatmusik/:id' element={<Materi />} />
+          <Route path='/materi/:alatmusik/:id' element={<Materi setLoginModal={setLoginModal} />} />
 
           <Route path='/forum' element={<Forum setLoginModal={setLoginModal} />} />
 

@@ -9,13 +9,13 @@ interface TProps {
   alatmusik: string,
   id: string,
   currentUser: string,
-  rating: number,
-  setRating: React.Dispatch<React.SetStateAction<number>>,
-  setParentMateri: React.Dispatch<React.SetStateAction<TListMateri>>
+  setParentMateri: React.Dispatch<React.SetStateAction<TListMateri>>,
+  setLoginModal: React.Dispatch<React.SetStateAction<boolean>>
 };
 const RatingSection = (props: TProps) => {
-  const { alatmusik, id, currentUser, rating, setRating, setParentMateri } = props;
+  const { alatmusik, id, currentUser, setParentMateri, setLoginModal } = props;
 
+  const [rating, setRating] = useState(-1);
   const [errSuccessMsg, setErrSuccessMsg] = useState<IErrSuccessMsg>({
     type: "", message: ""
   });
@@ -29,7 +29,7 @@ const RatingSection = (props: TProps) => {
         setRating(currentUserRating ? currentUserRating[1] : 0);
       };
     };
-    currentUser && fetchData();
+    currentUser ? fetchData() : setRating(0);
   }, [currentUser]);
 
   // handler untuk menampilkan pesan error/success
@@ -42,6 +42,7 @@ const RatingSection = (props: TProps) => {
 
   // handler untuk update rating
   const handleUpdateRating = async (input: number) => {
+    if (!currentUser) return setLoginModal(true);
     setRating(input);
     const res = await updateRating(alatmusik || '', id || '', currentUser, input.toString());
     if (res.status) {
