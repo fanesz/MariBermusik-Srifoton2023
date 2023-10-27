@@ -42,7 +42,7 @@ const OwnedPost = (props: TProps) => {
             <div className='text-xl mb-2.5 font-medium text-gray-800'>
               Forum Post
             </div>
-            {currentUser && listPost?.map((post, index) => (
+            {listPost?.map((post, index) => (
               <TransitionIn key={index} from='bottom' delay={index * 200}>
                 <div className="mt-3">
                   <PostPreview
