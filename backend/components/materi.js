@@ -83,14 +83,14 @@ export const createMateri = async (req, res) => {
 }
 
 export const editMateriByID = async (req, res) => {
-  try { // body: { alatMusik, materiID, loginID, materi }
+  try { // body: { alatMusik, newAlatMusik?, materiID, loginID, materi }
     const materi = await db_materi.get(req.body.alatMusik);
     const materiToUpdate = materi.find(m => m.materiID == req.body.materiID);
     const newMateri = materi.filter(m => m.materiID != req.body.materiID);
     const userInput = req.body.materi;
     const updatedMateri = {
       "materiID": materiToUpdate.materiID,
-      "alatMusik": materiToUpdate.alatMusik,
+      "alatMusik": req.body.newAlatMusik || materiToUpdate.alatMusik,
       "owner": materiToUpdate.owner,
       "data": {
         "nama": userInput.nama,
@@ -103,7 +103,12 @@ export const editMateriByID = async (req, res) => {
         "daftarMateri": userInput.daftarMateri
       }
     };
-    await db_materi.set(req.body.alatMusik, [...newMateri, updatedMateri]);
+    if(req.body.newAlatMusik == req.body.alatMusik) {
+      await db_materi.set(req.body.alatMusik, [...newMateri, updatedMateri]);
+    } else {
+      await db_materi.set(req.body.newAlatMusik, [...newMateri, updatedMateri]);
+      await db_materi.set(req.body.alatMusik, [...newMateri]);
+    }
     res.json({ status: true });
   } catch (error) {
     console.log(error);

@@ -9,6 +9,7 @@ import { IErrSuccessMsg } from '../../types/Types';
 import ErrSuccessMsg from '../../components/_shared/ErrSuccessMsg';
 import Dropzone from 'react-dropzone';
 import { Tooltip } from '@material-tailwind/react';
+import profile from '../../assets/profile.png';
 
 type TUser = {
   email: string,
@@ -141,20 +142,19 @@ const Setting = () => {
           </div>
 
           <div className='flex justify-center mt-6'>
-            <div className='border border-black border-opacity-50 w-fit rounded-full'>
-              <Dropzone onDrop={acceptedFiles => handleUploadImage(acceptedFiles)}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <Tooltip content="change" placement="top" className="mt-5 bg-opacity-30">
-                      <div {...getRootProps()} className='bg-gray-400 rounded-full'>
-                        <input {...getInputProps()} />
-                        <img src={user.img} className='w-24 h-24 rounded-full cursor-pointer hover:opacity-70 duration-200 object-cover shadow-md' />
-                      </div>
-                    </Tooltip>
-                  </section>
-                )}
-              </Dropzone>
-            </div>
+            <Dropzone onDrop={acceptedFiles => handleUploadImage(acceptedFiles)}>
+              {({ getRootProps, getInputProps }) => (
+                <section>
+                  <Tooltip content="change" placement="top" className="mt-5 bg-opacity-30">
+                    <div {...getRootProps()} className='bg-gray-400 rounded-full'>
+                      <input {...getInputProps()} />
+                      <img src={user.img || profile} alt='profile'
+                        className='w-24 h-24 border rounded-full cursor-pointer hover:opacity-70 duration-200 object-cover shadow-md' />
+                    </div>
+                  </Tooltip>
+                </section>
+              )}
+            </Dropzone>
           </div>
 
           <div className='mt-5'>

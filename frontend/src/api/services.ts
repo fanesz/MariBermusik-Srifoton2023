@@ -129,6 +129,7 @@ export const editMateriByID = async (alatMusik: string, materiID: number, materi
     const res = await api.patch(ENDPOINT.materi, {
       loginID: loginID,
       alatMusik: alatMusik,
+      newAlatMusik: materi.alatMusik,
       materiID: materiID,
       materi: materi
     });

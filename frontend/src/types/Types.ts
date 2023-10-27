@@ -15,6 +15,7 @@ export type TListMateri = {
 };
 export type TMateriToPost = {
   nama: string,
+  alatMusik?: string,
   deskripsi: string,
   tingkatan: string,
   daftarMateri: TDaftarMateri[]

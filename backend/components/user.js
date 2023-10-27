@@ -27,7 +27,7 @@ export const getUserByParam = async (req, res) => {
       const user = (await db_user.all()).find(u => u.value.username === params.username);
       if (user?.id) {
         const img = getImage(user.id);
-        if (img) user['img'] = img;
+        if (img) user.value['img'] = img;
         return res.json({ status: true, data: user });
       }
     } else if (params.UUID) {

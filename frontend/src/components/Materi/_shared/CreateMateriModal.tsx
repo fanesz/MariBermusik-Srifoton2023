@@ -137,13 +137,15 @@ const CreateMateriModal = (props: IProps) => {
     setIsLoading(true);
     const res = await editMateriByID(prevMateri.alatMusik.toLowerCase(), prevMateri.materiID, {
       nama: materi.nama,
+      alatMusik: materi.alatMusik.toLowerCase(),
       deskripsi: materi.deskripsi,
       tingkatan: materi.tingkatan.toLocaleLowerCase(),
       daftarMateri: daftarMateri
     });
     setIsLoading(false);
     if (res.status) {
-      // setModal(false);
+      setModal(false);
+      navigate(`/materi/${materi.alatMusik.toLowerCase()}/${prevMateri.materiID}`);
       window.location.reload();
     } else {
       handleSetErrmsg("Something went wrong, please login / try again later");
@@ -163,7 +165,7 @@ const CreateMateriModal = (props: IProps) => {
             value={materi.alatMusik} onChange={(e: any) => handleSetMateri('alatMusik', e.target.value)} />
         </div>
         <div className="lg:mt-0 mt-3">
-          <Select label='Tingkatan'>
+          <Select label='Tingkatan' value={materi.tingkatan.charAt(0).toUpperCase() + materi.tingkatan.slice(1)}>
             {['Pemula', 'Menengah', 'Sulit'].map((tingkatan, index) => (
               <Option key={index} value={tingkatan}
                 onClick={() => handleSetMateri('tingkatan', tingkatan)}>
@@ -250,7 +252,7 @@ const CreateMateriModal = (props: IProps) => {
                 <Dialog.Title className="text-lg text-center font-semibold text-gray-600">
                   <div className="flex justify-between">
                     <div className='w-full'>
-                      Buat Materi
+                      {Object.keys(prevMateri).length === 0 ? 'Buat Materi' : 'Edit Materi'}
                     </div>
                     <div className='mt-auto mb-auto'>
                       <XMarkIcon className="h-5 cursor-pointer hover:bg-gray-300 rounded" onClick={() => setModal(false)} />
