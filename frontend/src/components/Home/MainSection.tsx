@@ -144,10 +144,12 @@ const MainSection = () => {
     },
   ];
 
+  const randomAlatMusik = [...new Set(alatMusikCarousel)].sort(() => Math.random() - 0.5).slice(0, 4);
+
   const carousel = (
     <TransitionIn from="right" delay={500}>
       <Carousel className="rounded-lg shadow-md" autoplay={true} autoplayDelay={6000}>
-        {alatMusikCarousel.sort(() => Math.random() - 0.5).slice(0, 4).map((item, index) => (
+        {randomAlatMusik.map((item, index) => (
           <div className="relative" key={index}>
             <img src={getAlatMusikImg(item.alatMusik)} alt={item.alatMusik} className="object-cover w-full rounded-md h-72" />
             <div className="absolute inset-0 grid w-full h-full bg-black/75">
