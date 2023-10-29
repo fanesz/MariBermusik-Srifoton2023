@@ -7,6 +7,7 @@ import gitarListrik from "../assets/alatMusik/gitarListrik.webp";
 import piano from "../assets/alatMusik/piano.webp";
 import trompoet from "../assets/alatMusik/trompet.webp";
 import ukulele from "../assets/alatMusik/ukulele.webp";
+import question from "../assets/question.jpg";
 
 type TAlatMusik = {
   nama: string;
@@ -24,5 +25,5 @@ const alatMusikList: TAlatMusik[] = [
   {nama: 'ukulele', img: ukulele},
 ];
 export const getAlatMusikImg = (alatMusik: string) => {
-  return alatMusikList.find((item) => item.nama === alatMusik)?.img;
+  return alatMusikList.find((item) => item.nama === alatMusik)?.img || question;
 }
