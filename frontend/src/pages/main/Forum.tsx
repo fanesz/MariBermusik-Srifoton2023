@@ -39,9 +39,7 @@ const Forum = (props: IProps) => {
   const fetchListPost = async () => {
     const res = await getPost();
     if (res.status) {
-      const groupedListPost = res.data.reduce((ac: TListPost[], cv: TCurrentValue) => {
-        return ac.concat(cv.value);
-      }, []);
+      const groupedListPost = res.data.flatMap((item: TCurrentValue) => item.value);
       const sortedByDateListPost = groupedListPost.sort((a: TListPost, b: TListPost) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });

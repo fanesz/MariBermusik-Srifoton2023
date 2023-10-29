@@ -44,13 +44,9 @@ const ListMateri = (props: IProps) => {
   // mendapatkan semua data materi
   const fetchMateri = async () => {
     const res = await getMateriByAlatMusik();
-    if (res.status) {
-      const result = res.data.reduce((ac: TListMateri[], cv: TCurrentValue) => {
-        return ac.concat(cv.value);
-      }, []);
-      setMateri(result);
-      setFilteredMateri(result);
-    };
+    const mappedMateri = res.data.flatMap((item: TCurrentValue) => item.value);
+    setMateri(mappedMateri);
+    setFilteredMateri(mappedMateri);
   };
   useEffect(() => {
     fetchMateri();
