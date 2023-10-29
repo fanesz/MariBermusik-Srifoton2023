@@ -9,7 +9,7 @@ import ErrSuccessMsg from "../_shared/ErrSuccessMsg";
 import PostPreview from "./PostPreview";
 import { convertCreatedAt } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/profile.webp";
 
 interface IProps {
   isOpen: boolean,

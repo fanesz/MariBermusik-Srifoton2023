@@ -3,7 +3,7 @@ import { TListMateri, TUser } from "../../../types/Types"
 import { convertCreatedAt, ratingAverage } from "../../../utils/utils"
 import TransitionIn from "../../_shared/TransitionIn"
 import { useNavigate } from "react-router-dom"
-import profile from '../../../assets/profile.png';
+import profile from '../../../assets/profile.webp';
 import { useEffect, useState } from "react"
 import { getUserByParams } from "../../../api/services"
 

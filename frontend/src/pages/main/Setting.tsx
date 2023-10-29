@@ -9,7 +9,7 @@ import { IErrSuccessMsg } from '../../types/Types';
 import ErrSuccessMsg from '../../components/_shared/ErrSuccessMsg';
 import Dropzone from 'react-dropzone';
 import { Tooltip } from '@material-tailwind/react';
-import profile from '../../assets/profile.png';
+import profile from '../../assets/profile.webp';
 
 type TUser = {
   email: string,

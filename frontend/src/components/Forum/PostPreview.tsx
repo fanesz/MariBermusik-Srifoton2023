@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import PostModal from "./PostModal";
 import CreatePostModal from "./CreatePostModal";
 import { Popover, PopoverContent, PopoverHandler } from "@material-tailwind/react";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/profile.webp";
 import DeletePostAlert from "./DeletePostAlert";
 
 interface IProps {

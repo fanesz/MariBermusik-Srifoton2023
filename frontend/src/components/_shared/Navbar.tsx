@@ -1,6 +1,6 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import logo from "../../assets/logo.svg";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/profile.webp";
 import { Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";

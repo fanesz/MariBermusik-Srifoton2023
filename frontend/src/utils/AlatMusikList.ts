@@ -7,7 +7,7 @@ import gitarListrik from "../assets/alatMusik/gitarListrik.webp";
 import piano from "../assets/alatMusik/piano.webp";
 import trompoet from "../assets/alatMusik/trompet.webp";
 import ukulele from "../assets/alatMusik/ukulele.webp";
-import question from "../assets/question.jpg";
+import question from "../assets/question.webp";
 
 type TAlatMusik = {
   nama: string;

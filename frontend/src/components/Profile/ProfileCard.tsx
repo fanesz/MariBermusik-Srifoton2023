@@ -1,5 +1,5 @@
 import { TProfileUser } from "../../types/Types"
-import profile from '../../assets/profile.png';
+import profile from '../../assets/profile.webp';
 import { convertCreatedAt } from "../../utils/utils";
 
 interface TProps {
