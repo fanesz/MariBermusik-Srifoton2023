@@ -8,6 +8,7 @@ import MenuFilter from "../../components/Materi/ListMateri/MenuFilter";
 import CreateMateriButton from "../../components/Materi/ListMateri/CreateMateriButton";
 import FilterMenuModal from "../../components/Materi/ListMateri/FilterMenuModal";
 import MateriSection from "../../components/Materi/ListMateri/MateriSection";
+import { ratingAverage } from "../../utils/utils";
 
 type TCurrentValue = {
   id: string,
@@ -45,9 +46,16 @@ const ListMateri = (props: IProps) => {
   const fetchMateri = async () => {
     const res = await getMateriByAlatMusik();
     const mappedMateri = res.data.flatMap((item: TCurrentValue) => item.value);
-    setMateri(mappedMateri);
-    setFilteredMateri(mappedMateri);
+    const sortedByPengunjung = mappedMateri.sort((a: TListMateri, b: TListMateri) => {
+      return b.data.pengunjung - a.data.pengunjung;
+    });
+    const sortedByRating = sortedByPengunjung.sort((a: TListMateri, b: TListMateri) => {
+      return Number(ratingAverage(b.data.rating)) - Number(ratingAverage(a.data.rating));
+    });
+    setMateri(sortedByRating);
+    setFilteredMateri(sortedByRating);
   };
+
   useEffect(() => {
     fetchMateri();
     fetchIsLogin();
