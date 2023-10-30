@@ -5,6 +5,10 @@ Perlombaan dimulai sejak 20 Agustus 2023 hingga tenggat pengumpulan terakhir 18 
 ## Latar Belakang
 Project ini dibangun oleh [Fanes Pratama](https://github.com/fanesz), [Usman](https://github.com/UsmanYap), dan [Rendy Pratama](https://github.com/Rendy752) yang dikerjakan dalam waktu kurang lebih 3 minggu, mulai dari perancangan ide awal, hingga tahap deployment sebagai demo online, yang dapat diakses disini: [🔗 maribermusik.fanesp.online](https://maribermusik.fanesp.online/).
 
+Setelah melalui proses penilaian juri, kelompok kami, RPL-4 mendapatkan juara 2 dengan juara 1 yang ditempati oleh Tim Bis dari Universitas Indonesia dan juara 3 oleh Tim Maba Masih Pemula dari Universitas Diponegoro.
+
+![Foto Penerimaan Sertifikat](https://i.imgur.com/fnKhO0k.jpg)
+
 ## Informasi Project
 
 ![Home Page](https://i.imgur.com/qokrSii.png)
@@ -43,6 +47,17 @@ Website ini memiliki halaman Forum untuk berdiskusi satu sama lain, dilengkapi d
 ![Forum Page](https://i.imgur.com/VqWqkmj.png)
 
 ![Forum Post](https://i.imgur.com/EXsldOq.png)
+
+## Penilaian Project oleh Juri Lomba
+Terdapat 7 indeks penilaian dengan total skala 0-100 dan terdapat 3 juri yang melakukan penilaian project.
+- Originality & Creativity: 44/60
+- Effectivity: 33/45
+- Relevance: 24/30
+- Impact: 32/45
+- Source Code: 37/45
+- UI/UX: 22/30
+- Integrasi Data: 34/45
+- <b>Total: 226/300 atau 75.3/100</b>
 
 ## Informasi Tambahan
 Website dibangun dari nol, tanpa menggunakan templete ataupun AI. Diharapkan dengan open-sourcenya code ini, dapat menjadi referensi dan dimohon untuk tidak digunakan sebagai bahan komersial. Terima kasih.
