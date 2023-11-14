@@ -193,7 +193,7 @@ const PostModal = (props: IProps) => {
                   </div>
                 </Dialog.Title>
 
-                <div className="rounded-md bg-white bg-opacity-70 px-5 py-3 mt-2">
+                <div className="rounded-md bg-white bg-opacity-70 sm:px-5 px-3 py-3 mt-2">
                   <div className="">
                     {main_section}
                   </div>

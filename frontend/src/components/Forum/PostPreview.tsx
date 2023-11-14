@@ -125,9 +125,9 @@ const PostPreview = (props: IProps) => {
     </div>
   );
   const footer = (
-    <div className="flex gap-4">
+    <div className="flex md:gap-4 gap-2">
       <div
-        className={`opacity-70 flex gap-1.5 ${!isFromModal && 'cursor-pointer group'}`}
+        className={`opacity-70 md:flex hidden gap-1.5 ${!isFromModal && 'cursor-pointer group'}`}
         onClick={() => !isFromModal && setPostModal(true)}>
         <ChatBubbleLeftEllipsisIcon className="w-5 h-5 pt-0.5 opacity-80 group-hover:opacity-100" />
         <div className="text-xs my-auto text-gray-700 group-hover:text-gray-900">
@@ -155,20 +155,20 @@ const PostPreview = (props: IProps) => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className={`${(!isOwner || !isFromModal) && 'hidden'} flex gap-3`}>
-        <div className="font-extrabold">·</div>
+      <div className={`${(!isOwner || !isFromModal) && 'hidden'} flex md:gap-3 gap-2`}>
+        <div className="font-extrabold md:block hidden">·</div>
         <div
           className="my-auto text-xs flex gap-1 cursor-pointer text-gray-700 hover:text-gray-900"
           onClick={handleEditPost}>
           <PencilIcon className="w-3 h-3 my-auto" />
-          Edit
+          <span className="">Edit</span>
         </div>
         <div className="font-extrabold">·</div>
         <div
           className="my-auto text-xs flex gap-1 cursor-pointer text-gray-700 hover:text-gray-900"
           onClick={handleDeletePost}>
           <TrashIcon className="w-3 h-3 my-auto" />
-          Delete
+          <span className="">Delete</span>
         </div>
       </div>
     </div>
