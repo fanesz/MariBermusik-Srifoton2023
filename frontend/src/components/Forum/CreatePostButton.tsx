@@ -10,7 +10,7 @@ const CreatePostButton = (props: IProps) => {
 
   const [createPostModal, setCreatePostModal] = useState(false);
   const handleSetCreatePostModal = () => {
-    if (currentUser) {
+    if (currentUser && currentUser !== '-1') {
       setCreatePostModal(true);
     } else {
       setLoginModal(true);
