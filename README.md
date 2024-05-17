@@ -3,7 +3,7 @@ Adalah sebuah website yang dirancang untuk mengikuti perlombaan di [SRIFOTON](ht
 Perlombaan dimulai sejak 20 Agustus 2023 hingga tenggat pengumpulan terakhir 18 Oktober 2023.
 
 ## Latar Belakang
-Project ini dibangun oleh [Fanes Pratama](https://github.com/fanesz), [Usman](https://github.com/UsmanYap), dan [Rendy Pratama](https://github.com/Rendy752) yang dikerjakan dalam waktu kurang lebih 3 minggu, mulai dari perancangan ide awal, hingga tahap deployment sebagai demo online, yang dapat diakses disini: [🔗 maribermusik.fanesp.online](https://maribermusik.fanesp.online/).
+Project ini dibangun oleh [Fanes Pratama](https://github.com/fanesz), [Usman](https://github.com/UsmanYap), dan [Rendy Pratama](https://github.com/Rendy752) yang dikerjakan dalam waktu kurang lebih 3 minggu, mulai dari perancangan ide awal, hingga tahap deployment sebagai demo online.
 
 Setelah melalui proses penilaian juri, kelompok kami, RPL-4 mendapatkan juara 2 dengan juara 1 yang ditempati oleh Tim Bis dari Universitas Indonesia dan juara 3 oleh Tim Maba Masih Pemula dari Universitas Diponegoro.
 
